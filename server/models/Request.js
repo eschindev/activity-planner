@@ -12,9 +12,10 @@ const requestSchema = new Schema({
   status: {
     type: String,
     enum: ["pending", "accepted", "rejected"],
+    default: "pending",
   },
 });
 
-const Request = model("request", requestSchema);
+const Request = model("Request", requestSchema);
 
 module.exports = Request;

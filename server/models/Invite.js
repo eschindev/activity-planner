@@ -16,9 +16,10 @@ const inviteSchema = new Schema({
   status: {
     type: String,
     enum: ["pending", "accepted", "rejected", "maybe"],
+    default: "pending",
   },
 });
 
-const Invite = model("invite", inviteSchema);
+const Invite = model("Invite", inviteSchema);
 
 module.exports = Invite;

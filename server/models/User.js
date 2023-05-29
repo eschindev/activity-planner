@@ -47,6 +47,12 @@ const userSchema = new Schema({
       ref: "Invite",
     },
   ],
+  requests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Request",
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {
@@ -72,6 +78,6 @@ userSchema.methods.comparePassword = async function (password) {
   }
 };
 
-const User = model("user", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;
