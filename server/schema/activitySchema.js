@@ -17,12 +17,15 @@ const activitySchema = gql`
   type Query {
     getActivityById(_id: ID!): Activity
     getAllActivities: [Activity]
+    getActivitiesByIds($ids: [ID!]!): [Activity]
   }
 
   type Mutation {
     createActivity(input: ActivityInput): Activity
     updateActivity(_id: ID!, input: ActivityUpdateInput): Activity
     deleteActivity(_id: ID!): Boolean
+    addComment(_id: ID!, input: CommentInput): Activity
+    deleteComment(_id: ID!, commentId: ID!): Activity
   }
 
   input ActivityUpdateInput {
