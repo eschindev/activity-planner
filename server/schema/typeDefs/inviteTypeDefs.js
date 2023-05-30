@@ -11,9 +11,7 @@ const inviteSchema = gql`
 
   type Query {
     getInviteById(_id: ID!): Invite
-    getInvitesByActivity(activity: ID!): [Invite]
-    getInvitesByRecipient(recipient: ID!): [Invite]
-    getInvitesBySender(sender: ID!): [Invite]
+    getInvitesByIds(ids: [ID!]!): [Invite]
   }
 
   type Mutation {

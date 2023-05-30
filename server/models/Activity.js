@@ -1,5 +1,8 @@
 const { Schema, model } = require("mongoose");
 const commentSchema = require("./Comment");
+// const { User, Invite } = require("./index");
+const User = require("./User");
+const Invite = require("./Invite");
 
 const activitySchema = new Schema({
   name: {
@@ -42,6 +45,26 @@ const activitySchema = new Schema({
   ],
   comments: [commentSchema],
 });
+
+activitySchema.pre(
+  "findOneAndDelete",
+  { document: true },
+  async function (next) {
+    const participantIds = this.participants.map((userId) => userId.toString());
+    const inviteIds = this.invites.map((inviteId) => inviteId.toString());
+
+    await User.updateMany(
+      { _id: { $in: participantIds } },
+      { $pull: { activities: this._id } }
+    );
+
+    for (inviteId of inviteIds) {
+      await Invite.findByIdAndDelete(inviteId);
+    }
+
+    next();
+  }
+);
 
 const Activity = model("Activity", activitySchema);
 
