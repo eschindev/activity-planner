@@ -22,7 +22,18 @@ const resolvers = {
   Mutation: {
     createInvite: async (_, { input }) => {
       try {
-        const activity = await Activity.findById(input.activity);
+        //first check if user has already received an invite to this activity
+        const { recipient, activity } = input;
+        const existingInvite = await Invite.findOne({
+          recipient,
+          activity,
+        });
+
+        if (existingInvite) {
+          throw new Error(
+            "This user has already been invited to this activity."
+          );
+        }
 
         const invite = await Invite.create(input);
         return invite;

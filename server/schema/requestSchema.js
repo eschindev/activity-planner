@@ -10,8 +10,7 @@ const requestSchema = gql`
 
   type Query {
     getRequestById(_id: ID!): Request
-    getRequestsByRecipient(recipient: ID!): [Request]
-    getRequestsBySender(sender: ID!): [Request]
+    getRequestsByIds(ids: [ID!]!): [Request]
   }
 
   type Mutation {
