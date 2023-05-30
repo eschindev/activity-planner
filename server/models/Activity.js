@@ -1,6 +1,8 @@
 const { Schema, model } = require("mongoose");
 const commentSchema = require("./Comment");
-const { User, Invite } = require("./index");
+// const { User, Invite } = require("./index");
+const User = require("./User");
+const Invite = require("./Invite");
 
 const activitySchema = new Schema({
   name: {

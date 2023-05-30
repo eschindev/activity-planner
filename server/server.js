@@ -1,18 +1,13 @@
 const express = require("express");
 const db = require("./config/connection");
-const routes = require("./routes");
 const path = require("path");
 const { ApolloServer } = require("apollo-server-express");
-const typeDefs = require("./schema");
-const resolvers = require("./resolvers");
+const schema = require("./schema");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+const server = new ApolloServer({ schema });
 
 app.use(express.static(path.join(__dirname, "../client/public")));
 

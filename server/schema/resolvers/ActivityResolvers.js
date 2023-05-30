@@ -1,4 +1,4 @@
-const { Activity, User, Invite } = require("../models");
+const { Activity, User, Invite } = require("../../models");
 
 const resolvers = {
   Query: {

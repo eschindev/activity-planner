@@ -5,7 +5,8 @@ const activitySchema = gql`
     _id: ID!
     name: String!
     description: String
-    date: Date!
+    date: String!
+    # for date, GraphQL has no Date type, so let's format as a string: YYYY-MM-DDTHH:MM:SSZ
     location: String!
     private: Boolean
     owner: User
@@ -14,10 +15,17 @@ const activitySchema = gql`
     comments: [Comment]
   }
 
+  type Comment {
+    _id: ID!
+    commentBody: String!
+    user_id: ID!
+    username: String!
+  }
+
   type Query {
     getActivityById(_id: ID!): Activity
     getAllActivities: [Activity]
-    getActivitiesByIds($ids: [ID!]!): [Activity]
+    getActivitiesByIds(ids: [ID!]!): [Activity]
   }
 
   type Mutation {
@@ -31,7 +39,8 @@ const activitySchema = gql`
   input ActivityUpdateInput {
     name: String
     description: String
-    date: Date
+    date: String
+    # for date, GraphQL has no Date type, so let's format as a string: YYYY-MM-DDTHH:MM:SSZ
     location: String
     private: Boolean
     participants: [ID]
@@ -42,7 +51,8 @@ const activitySchema = gql`
   input ActivityInput {
     name: String!
     description: String
-    date: Date!
+    date: String!
+    # for date, GraphQL has no Date type, so let's format as a string: YYYY-MM-DDTHH:MM:SSZ
     location: String!
     private: Boolean
     owner: ID!

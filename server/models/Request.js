@@ -1,4 +1,3 @@
-const { request } = require("express");
 const { Schema, model } = require("mongoose");
 const User = require("./User");
 

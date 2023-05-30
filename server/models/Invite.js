@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
-const { User, Activity } = require("./index");
+//const { User, Activity } = require("./index");
+const User = require("./User");
+const Activity = require("./Activity");
 
 const inviteSchema = new Schema({
   sender: {

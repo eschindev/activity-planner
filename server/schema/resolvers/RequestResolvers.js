@@ -1,4 +1,4 @@
-const { Request, User } = require("../models");
+const { Request, User } = require("../../models");
 
 const resolvers = {
   Query: {
