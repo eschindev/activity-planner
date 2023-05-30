@@ -59,7 +59,7 @@ const resolvers = {
       try {
         const activity = await Activity.findByIdAndUpdate(
           _id,
-          { $push: { comments: input } },
+          { $addToSet: { comments: input } },
           { new: true }
         );
         return activity;
