@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server-express");
 
 const activitySchema = gql`
+
   type Activity {
     _id: ID!
     name: String!
@@ -20,6 +21,7 @@ const activitySchema = gql`
     commentBody: String!
     user_id: ID!
     username: String!
+    timestamp: String!
   }
 
   type Query {

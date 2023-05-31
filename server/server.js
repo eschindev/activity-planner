@@ -9,6 +9,22 @@ const app = express();
 
 const server = new ApolloServer({ schema });
 
+// import { makeExecutableSchema } from '@graphql-tools/schema';
+// import { DateTimeResolver, DateTimeTypeDefinition } from "graphql-scalars"
+
+// const server = new ApolloServer({
+//   schema: makeExecutableSchema({
+//     typeDefs: [
+//       ...DateTimeTypeDefinition
+//     ],
+//     resolvers: {
+//       ...DateTimeResolver
+//     },
+//   }),
+// });
+
+
+
 app.use(express.static(path.join(__dirname, "../client/public")));
 
 app.use(express.urlencoded({ extended: false }));
