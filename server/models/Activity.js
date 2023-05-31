@@ -18,7 +18,7 @@ const activitySchema = new Schema({
     type: Date,
     required: true,
   },
-  locaton: {
+  location: {
     type: String,
     required: true,
     trim: true,

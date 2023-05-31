@@ -1,4 +1,10 @@
 const { Schema, Types } = require("mongoose");
+const dayjs = require('dayjs');
+const dateFormat = (timestamp) => { 
+  let day = dayjs(timestamp);
+  return day.format('MM/DD/YYYY')
+} 
+
 
 const commentSchema = new Schema({
   commentId: {
@@ -18,6 +24,11 @@ const commentSchema = new Schema({
     type: String,
     required: true,
   },
-});
+  timestamp: {
+    type: String,
+    default: dateFormat(Date.now())
+  }
+}
+);
 
 module.exports = commentSchema;
