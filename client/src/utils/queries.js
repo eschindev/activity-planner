@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 //query = looking for data (gql similar to SQL)
 export const QUERY_USER = gql`
   query user($username: String!) {
@@ -22,11 +22,17 @@ export const QUERY_USER = gql`
       }
       invites {
         _id
+        activity {
+            name
+            date
+        }
+        status
       }
       requests {
         _id
+        sender
+        status
       }
-      
     }
   }
 `;
