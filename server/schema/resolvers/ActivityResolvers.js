@@ -1,83 +1,125 @@
 const { Activity, User, Invite } = require("../../models");
+const { AuthenticationError } = require("apollo-server-express");
+const { isAuthenticated } = require("../../utils/auth");
 
 const resolvers = {
   Query: {
-    getAllActivities: async () => {
-      try {
-        const activities = await Activity.find();
-        return activities;
-      } catch (error) {
-        throw error;
-      }
+    getAllActivities: async (_, __, context) => {
+      isAuthenticated(context, "You must be logged in to view activities.");
+      const activities = await Activity.find();
+      return activities;
     },
-    getActivityById: async (_, { _id }) => {
-      try {
-        const activity = await Activity.findById(_id);
-        return activity;
-      } catch (error) {
-        throw error;
-      }
+
+    getActivityById: async (_, { _id }, context) => {
+      isAuthenticated(context, "You must be logged in to view activities.");
+      const activity = await Activity.findById(_id)
+        .populate("owner")
+        .populate("participants")
+        .populate({
+          path: "invites",
+          populate: {
+            path: "sender recipient",
+            model: "User",
+          },
+        })
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user",
+            model: "User",
+          },
+        });
+      return activity;
     },
-    getActivitiesByIds: async (_, { ids }) => {
-      try {
-        const activities = await Activity.find({ _id: { $in: ids } });
-        return activities;
-      } catch (error) {
-        throw error;
+
+    searchActivities: async (_, { searchTerm }, context) => {
+      isAuthenticated(context, "You must be logged in to search activities.");
+      const activities = await Activity.find({
+        $text: { $search: searchTerm },
+        private: false,
+      });
+      if (!activities) {
+        throw new Error("No activities found matching your search.");
       }
+      return activities;
+    },
+
+    getActivitiesByIds: async (_, { ids }, context) => {
+      isAuthenticated(context, "You must be logged in to view activities.");
+      const activities = await Activity.find({ _id: { $in: ids } });
+      return activities;
     },
   },
+
   Mutation: {
-    createActivity: async (_, { input }) => {
-      try {
-        const activity = await Activity.create(input);
-        return activity;
-      } catch (error) {
-        throw error;
-      }
+    createActivity: async (_, { input }, context) => {
+      isAuthenticated(context, "You must be logged in to create activities.");
+      const activity = await Activity.create({
+        ...input,
+        owner: context.user._id,
+      });
+      return activity;
     },
-    updateActivity: async (_, { _id, input }) => {
-      try {
-        const activity = await Activity.findByIdAndUpdate(_id, input, {
-          new: true,
-        });
-        return activity;
-      } catch (error) {
-        throw error;
+
+    updateActivity: async (_, { _id, input }, context) => {
+      isAuthenticated(context, "You must be logged in to update activities.");
+      let activity = await Activity.findById(_id);
+      if (!activity) {
+        throw new Error("No activity found with this id.");
+      } else if (activity.owner !== context.user._id) {
+        throw new AuthenticationError("You do not own this activity.");
       }
+      activity = await Activity.findByIdAndUpdate(_id, input, {
+        new: true,
+      });
+      return activity;
     },
-    deleteActivity: async (_, { _id }) => {
-      try {
-        await Activity.findByIdAndDelete(_id);
-        return true;
-      } catch (error) {
-        throw error;
+
+    deleteActivity: async (_, { _id }, context) => {
+      isAuthenticated(context, "You must be logged in to delete activities.");
+      let activity = await Activity.findById(_id);
+      if (!activity) {
+        throw new Error("No activity found with this id.");
+      } else if (activity.owner !== context.user._id) {
+        throw new AuthenticationError("You do not own this activity.");
       }
+      await Activity.findByIdAndDelete(_id);
+      return true;
       // hooks on the Activity and Invite schemas handle deletion of associated records
     },
-    addComment: async (_, { _id, input }) => {
-      try {
-        const activity = await Activity.findByIdAndUpdate(
-          _id,
-          { $addToSet: { comments: input } },
-          { new: true }
-        );
-        return activity;
-      } catch (error) {
-        throw error;
-      }
+
+    addComment: async (_, { _id, commentBody }, context) => {
+      isAuthenticated(context, "You must be logged in to add comments.");
+      comment = {
+        commentBody,
+        user: context.user._id,
+        username: context.user.username,
+        timestamp: new Date().toISOString(),
+      };
+      const activity = await Activity.findByIdAndUpdate(
+        _id,
+        { $addToSet: { comments: comment } },
+        { new: true }
+      );
+      return activity;
     },
-    deleteComment: async (_, { _id, commentId }) => {
-      try {
-        const activity = await Activity.findByIdAndUpdate(
-          _id,
-          { $pull: { comments: { commentId } } },
-          { new: true }
+
+    deleteComment: async (_, { commentId }, context) => {
+      isAuthenticated(context, "You must be logged in to delete comments.");
+      const activity = await Activity.findOneAndUpdate(
+        {
+          "comments.commentId": commentId,
+          "comments.user": context.user._id,
+        },
+        { $pull: { comments: { commentId } } },
+        { new: true }
+      );
+      if (!activity) {
+        throw new Error(
+          "Comment not found or you do not have permission to delete."
         );
-        return activity;
-      } catch (error) {
-        throw error;
       }
+      return activity;
     },
   },
 };

@@ -1,10 +1,9 @@
 const { Schema, Types } = require("mongoose");
-const dayjs = require('dayjs');
-const dateFormat = (timestamp) => { 
-  let day = dayjs(timestamp);
-  return day.format('MM/DD/YYYY')
-} 
-
+const dayjs = require("dayjs");
+// const dateFormat = (timestamp) => {
+//   let day = dayjs(timestamp);
+//   return day.format("MM/DD/YYYY");
+// };
 
 const commentSchema = new Schema({
   commentId: {
@@ -14,11 +13,12 @@ const commentSchema = new Schema({
   commentBody: {
     type: String,
     required: true,
-    maxlength: 280,
+    maxlength: 1000,
   },
-  user_id: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   username: {
     type: String,
@@ -26,9 +26,9 @@ const commentSchema = new Schema({
   },
   timestamp: {
     type: String,
-    default: dateFormat(Date.now())
-  }
-}
-);
+    // default: dateFormat(Date.now()),
+    default: new Date().toISOString(),
+  },
+});
 
 module.exports = commentSchema;

@@ -66,6 +66,8 @@ activitySchema.pre(
   }
 );
 
+activitySchema.index({ name: "text", description: "text" });
+
 const Activity = model("Activity", activitySchema);
 
 module.exports = Activity;
