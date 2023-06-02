@@ -12,7 +12,23 @@ const resolvers = {
 
     getActivityById: async (_, { _id }, context) => {
       isAuthenticated(context, "You must be logged in to view activities.");
-      const activity = await Activity.findById(_id);
+      const activity = await Activity.findById(_id)
+        .populate("owner")
+        .populate("participants")
+        .populate({
+          path: "invites",
+          populate: {
+            path: "sender recipient",
+            model: "User",
+          },
+        })
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user",
+            model: "User",
+          },
+        });
       return activity;
     },
 
@@ -20,6 +36,7 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to search activities.");
       const activities = await Activity.find({
         $text: { $search: searchTerm },
+        private: false,
       });
       if (!activities) {
         throw new Error("No activities found matching your search.");
@@ -37,7 +54,10 @@ const resolvers = {
   Mutation: {
     createActivity: async (_, { input }, context) => {
       isAuthenticated(context, "You must be logged in to create activities.");
-      const activity = await Activity.create(input);
+      const activity = await Activity.create({
+        ...input,
+        owner: context.user._id,
+      });
       return activity;
     },
 
@@ -72,8 +92,9 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to add comments.");
       comment = {
         commentBody,
-        user_id: context.user._id,
+        user: context.user._id,
         username: context.user.username,
+        timestamp: new Date().toISOString(),
       };
       const activity = await Activity.findByIdAndUpdate(
         _id,
@@ -88,7 +109,7 @@ const resolvers = {
       const activity = await Activity.findOneAndUpdate(
         {
           "comments.commentId": commentId,
-          "comments.user_id": context.user._id,
+          "comments.user": context.user._id,
         },
         { $pull: { comments: { commentId } } },
         { new: true }

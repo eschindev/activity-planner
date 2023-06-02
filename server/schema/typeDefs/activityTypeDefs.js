@@ -18,7 +18,7 @@ const activitySchema = gql`
   type Comment {
     _id: ID!
     commentBody: String!
-    user_id: ID!
+    user: User!
     username: String!
     timestamp: String!
   }
@@ -26,7 +26,7 @@ const activitySchema = gql`
   type Query {
     getAllActivities: [Activity]
     getActivityById(_id: ID!): Activity
-    searchActivites(searchTerm: String!): [Activity]
+    searchActivities(searchTerm: String!): [Activity]
     getActivitiesByIds(ids: [ID!]!): [Activity]
   }
 
@@ -45,9 +45,6 @@ const activitySchema = gql`
     # for date, GraphQL has no Date type, so let's format as a string: YYYY-MM-DDTHH:MM:SSZ
     location: String
     private: Boolean
-    participants: [ID]
-    invites: [ID]
-    comments: [CommentInput]
   }
 
   input ActivityInput {
@@ -57,7 +54,6 @@ const activitySchema = gql`
     # for date, GraphQL has no Date type, so let's format as a string: YYYY-MM-DDTHH:MM:SSZ
     location: String!
     private: Boolean
-    owner: ID!
   }
 `;
 

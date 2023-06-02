@@ -24,10 +24,9 @@ const resolvers = {
   },
 
   Mutation: {
-    createInvite: async (_, { input }, context) => {
+    createInvite: async (_, { recipient, activity }, context) => {
       try {
         //first check if user has already received an invite to this activity
-        const { recipient, activity } = input;
         if (context.user) {
           const existingInvite = await Invite.findOne({
             recipient,
@@ -41,7 +40,8 @@ const resolvers = {
           }
 
           const invite = await Invite.create({
-            ...input,
+            recipient,
+            activity,
             sender: context.user._id,
           });
           return invite;
@@ -66,24 +66,6 @@ const resolvers = {
       const invite = await Invite.findByIdAndUpdate(_id, input, {
         new: true,
       });
-      switch (input.status) {
-        case "accepted":
-          await Activity.findByIdAndUpdate(invite.activity, {
-            $addToSet: { participants: invite.recipient },
-          });
-          await User.findByIdAndUpdate(invite.recipient, {
-            $addToSet: { activities: invite.activity },
-          });
-          break;
-        case "rejected":
-          await Activity.findByIdAndUpdate(invite.activity, {
-            $pull: { participants: invite.recipient },
-          });
-          await User.findByIdAndUpdate(invite.recipient, {
-            $pull: { activities: invite.activity },
-          });
-          break;
-      }
       return invite;
     },
 

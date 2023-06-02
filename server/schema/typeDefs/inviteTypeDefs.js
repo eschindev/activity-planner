@@ -15,18 +15,9 @@ const inviteSchema = gql`
   }
 
   type Mutation {
-    createInvite(input: InviteInput): Invite
-    updateInvite(_id: ID!, input: InviteUpdateInput): Invite
+    createInvite(recipient: ID!, activity: ID!): Invite
+    updateInvite(_id: ID!, status: String!): Invite
     deleteInvite(_id: ID!): Boolean
-  }
-
-  input InviteUpdateInput {
-    status: String!
-  }
-
-  input InviteInput {
-    recipient: ID!
-    activity: ID!
   }
 `;
 

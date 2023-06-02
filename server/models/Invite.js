@@ -33,6 +33,24 @@ inviteSchema.post("create", async function (doc) {
   });
 });
 
+inviteSchema.post("findOneAndUpdate", async function (doc) {
+  if (this._update.status === "accepted") {
+    await Activity.findByIdAndUpdate(doc.activity, {
+      $addToSet: { participants: doc.recipient },
+    });
+    await User.findByIdAndUpdate(doc.recipient, {
+      $addToSet: { activities: doc.activity },
+    });
+  } else if (this._update.status === "rejected") {
+    await Activity.findByIdAndUpdate(doc.activity, {
+      $pull: { participants: doc.recipient },
+    });
+    await User.findByIdAndUpdate(doc.recipient, {
+      $pull: { activities: doc.activity },
+    });
+  }
+});
+
 inviteSchema.pre("findOneAndDelete", { document: true }, async function (next) {
   await User.findByIdAndUpdate(this.recipient, {
     $pull: { invites: this._id },

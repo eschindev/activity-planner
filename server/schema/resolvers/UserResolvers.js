@@ -11,24 +11,25 @@ const resolvers = {
       return users;
     },
 
-    searchUsers: async (_, { searchTerm }, context) => {
-      isAuthenticated(context, "You must be logged in to search users.");
-      const users = await User.find({
-        $text: { $search: searchTerm },
-        _id: { $ne: context.user._id },
-      });
-      if (!users) {
-        throw new Error("No users found matching your search.");
-      }
-      return users;
-    },
+    // getUserById: async (_, { _id }, context) => {
+    //   isAuthenticated(context, "You must be logged in to view other users.");
+    //   const user = await User.findById(_id);
+    //   return user;
+    // },
 
     getUserById: async (_, { _id }, context) => {
-      isAuthenticated(context, "You must be logged in to view other users.");
+      // previously getFullUserById
+      isAuthenticated(context, "You must be logged in to view user profiles.");
       const user = await User.findById(_id)
         .populate("friends")
         .populate("activites");
       return user;
+    },
+
+    getUsersByIds: async (_, { ids }, context) => {
+      isAuthenticated(context, "You must be logged in to view other users.");
+      const users = await User.find({ _id: { $in: ids } });
+      return users;
     },
 
     getMyUser: async (_, __, context) => {
@@ -59,17 +60,15 @@ const resolvers = {
       return user;
     },
 
-    getFullUserById: async (_, { _id }, context) => {
-      isAuthenticated(context, "You must be logged in to view user profiles.");
-      const user = await User.findById(_id)
-        .populate("friends")
-        .populate("activites");
-      return user;
-    },
-
-    getUsersByIds: async (_, { ids }, context) => {
-      isAuthenticated(context, "You must be logged in to view other users.");
-      const users = await User.find({ _id: { $in: ids } });
+    searchUsers: async (_, { searchTerm }, context) => {
+      isAuthenticated(context, "You must be logged in to search users.");
+      const users = await User.find({
+        $text: { $search: searchTerm },
+        _id: { $ne: context.user._id },
+      });
+      if (!users) {
+        throw new Error("No users found matching your search.");
+      }
       return users;
     },
   },
@@ -106,6 +105,7 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to delete your profile.");
       if (_id === context.user._id) {
         await User.findByIdAndDelete(_id);
+        // hooks handle follow-up deletions and removals
         return true;
       } else {
         throw new AuthenticationError("You may only delete your own profile.");

@@ -43,6 +43,8 @@ requestSchema.pre(
     await User.findByIdAndUpdate(this.recipient, {
       $pull: { requests: this._id },
     });
+
+    next();
   }
 );
 
