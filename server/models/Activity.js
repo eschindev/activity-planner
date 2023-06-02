@@ -52,7 +52,7 @@ const activitySchema = new Schema({
   comments: [commentSchema],
 });
 
-activitySchema.post("save", async function (doc, next) {
+activitySchema.post("create", async function (doc, next) {
   User.findByIdAndUpdate(doc.owner, { $addToSet: { activities: doc._id } });
 
   next();
