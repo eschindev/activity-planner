@@ -17,6 +17,12 @@ const activitySchema = new Schema({
   date: {
     type: Date,
     required: true,
+    set: function (value) {
+      return new Date(value);
+    },
+    get: function (value) {
+      return value.toISOString();
+    },
   },
   location: {
     type: String,
@@ -44,6 +50,17 @@ const activitySchema = new Schema({
     },
   ],
   comments: [commentSchema],
+});
+
+activitySchema.statics.bulkWrite = async function (operations) {
+  const collection = this.collection;
+  return collection.bulkWrite(operations);
+};
+
+activitySchema.post("create", async function (doc, next) {
+  User.findByIdAndUpdate(doc.owner, { $addToSet: { activities: doc._id } });
+
+  next();
 });
 
 activitySchema.pre(

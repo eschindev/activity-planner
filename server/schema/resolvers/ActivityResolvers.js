@@ -57,6 +57,7 @@ const resolvers = {
       const activity = await Activity.create({
         ...input,
         owner: context.user._id,
+        participants: [context.user._id],
       });
       return activity;
     },
