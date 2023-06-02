@@ -25,9 +25,16 @@ const commentSchema = new Schema({
     required: true,
   },
   timestamp: {
-    type: String,
+    // type: String,
     // default: dateFormat(Date.now()),
-    default: new Date().toISOString(),
+    type: Date,
+    default: new Date(),
+    set: function (value) {
+      return new Date(value);
+    },
+    get: function (value) {
+      return value.toISOString();
+    },
   },
 });
 
