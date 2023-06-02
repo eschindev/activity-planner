@@ -52,6 +52,11 @@ const activitySchema = new Schema({
   comments: [commentSchema],
 });
 
+activitySchema.statics.bulkWrite = async function (operations) {
+  const collection = this.collection;
+  return collection.bulkWrite(operations);
+};
+
 activitySchema.post("create", async function (doc, next) {
   User.findByIdAndUpdate(doc.owner, { $addToSet: { activities: doc._id } });
 

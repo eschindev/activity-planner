@@ -10,20 +10,22 @@ db.once("open", async () => {
     await Invite.deleteMany({});
     await Request.deleteMany({});
 
-    const users = await User.create(userSeeds);
-    const userIds = users.map(({ _id }) => _id);
+    await User.create(userSeeds);
+
+    const users = await User.find({});
+    const userIds = users.map((user) => user._id);
 
     const date = new Date().toISOString();
 
     for (let i = 0; i < activitySeeds.length; i++) {
       const owner = userIds[Math.floor(Math.random() * userIds.length)];
-      let participants;
-      let nonParticipants;
-      for (id in userIds) {
-        if ((userId) => userId === owner || Math.random() < 0.08) {
-          participants.push(userId);
+      let participants = [];
+      let nonParticipants = [];
+      for (id of userIds) {
+        if ((id) => id === owner || Math.random() < 0.15) {
+          participants.push(id);
         } else {
-          nonParticipants.push(userId);
+          nonParticipants.push(id);
         }
       }
       const activity = await Activity.create({
@@ -32,12 +34,12 @@ db.once("open", async () => {
         owner,
         participants,
       });
-      for (userId in participants) {
-        await User.findByIdAndUpdate(userId, {
-          $addToSet: { activities: activity._id },
+      for (id of participants) {
+        await User.findByIdAndUpdate(id, {
+          $addToSet: { activities: activity.id },
         });
         await Invite.create({
-          sender: userId,
+          sender: id,
           recipient: nonParticipants.pop(),
           activity: activity._id,
         });

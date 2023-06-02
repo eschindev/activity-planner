@@ -36,7 +36,7 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to view your profile.");
       const user = await User.findById(context.user._id)
         .populate("friends")
-        .populate("activites")
+        .populate("activities")
         .populate({
           path: "invites",
           populate: [
