@@ -1,7 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const activitySchema = gql`
-
   type Activity {
     _id: ID!
     name: String!
@@ -25,8 +24,9 @@ const activitySchema = gql`
   }
 
   type Query {
-    getActivityById(_id: ID!): Activity
     getAllActivities: [Activity]
+    getActivityById(_id: ID!): Activity
+    searchActivites(searchTerm: String!): [Activity]
     getActivitiesByIds(ids: [ID!]!): [Activity]
   }
 
@@ -34,7 +34,7 @@ const activitySchema = gql`
     createActivity(input: ActivityInput): Activity
     updateActivity(_id: ID!, input: ActivityUpdateInput): Activity
     deleteActivity(_id: ID!): Boolean
-    addComment(_id: ID!, input: CommentInput): Activity
+    addComment(_id: ID!, commentBody: String!): Activity
     deleteComment(_id: ID!, commentId: ID!): Activity
   }
 
@@ -58,12 +58,6 @@ const activitySchema = gql`
     location: String!
     private: Boolean
     owner: ID!
-  }
-
-  input CommentInput {
-    commentBody: String!
-    user_id: ID!
-    username: String!
   }
 `;
 

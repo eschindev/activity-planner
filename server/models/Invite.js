@@ -45,6 +45,31 @@ inviteSchema.pre("findOneAndDelete", { document: true }, async function (next) {
   next();
 });
 
+inviteSchema.pre("deleteMany", async function (next) {
+  const deletedInvites = await this.model.find(this.getFilter());
+  const userUpdateOperations = deletedInvites.map((invite) => {
+    return {
+      updateOne: {
+        filter: { _id: invite.recipient },
+        update: { $pull: { invites: invite._id } },
+      },
+    };
+  });
+  const activityUpdateOperations = deletedInvites.map((invite) => {
+    return {
+      updateOne: {
+        filter: { _id: invite.activity },
+        update: { $pull: { invites: invite._id } },
+      },
+    };
+  });
+
+  await User.bulkWrite(userUpdateOperations);
+  await Activity.bulkWrite(activityUpdateOperations);
+
+  next();
+});
+
 const Invite = model("Invite", inviteSchema);
 
 module.exports = Invite;

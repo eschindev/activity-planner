@@ -25,7 +25,6 @@ const inviteSchema = gql`
   }
 
   input InviteInput {
-    sender: ID!
     recipient: ID!
     activity: ID!
   }
