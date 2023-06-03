@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -16,6 +13,8 @@ import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 
 import Auth from '../utils/auth';
 
@@ -57,12 +56,18 @@ const LoginForm = (props) => {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
+        <Box className="box"
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '400px',
+            padding: '40px',
+            background: 'rgba(0, 0, 0, 0.1)',
+            boxSizing: 'border-box',
+            boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
+            borderRadius: '10px',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -95,10 +100,6 @@ const LoginForm = (props) => {
               autoComplete="current-password"
               value={formState.password}
               onChange={handleChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
