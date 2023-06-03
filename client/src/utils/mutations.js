@@ -101,6 +101,18 @@ export const DELETE_ACTIVITY = gql`
   }
 `;
 
+export const JOIN_ACTIVITY = gql`
+  mutation joinActivity($id: ID!) {
+    joinActivity(_id: $id)
+  }
+`;
+
+export const LEAVE_ACTIVITY = gql`
+  mutation leaveActivity($id: ID!) {
+    leaveActivity(_id: $id)
+  }
+`;
+
 export const ADD_COMMENT = gql`
   mutation addComment($id: ID!, $commentBody: String!) {
     addComment(_id: $id, commentBody: $commentBody) {
