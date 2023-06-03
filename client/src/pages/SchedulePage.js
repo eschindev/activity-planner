@@ -26,11 +26,14 @@ const SchedulePage = () => {
     console.log(user);
     return (
         <div>
-           <p> {user.username}</p>
-            <p>{user.firstName}</p>
-            <p>{user.lastName}</p>
-            <p>{user.activities}</p>
-            <Link to="/create-activity"><button>Create Activity</button></Link>
+           <p>Welcome {user.username} !</p>
+            <p>Profile of : {user.fullName}</p>
+            <p> Your latest invite: {user.invites}</p>
+            <p>Your Activity List: {user.activity}</p>
+            <p>Your friends: {user.friends}</p>
+            <p>Your latest friend requests: {user.requests}</p>
+            
+            <Link to="/create-activity"><button>Create New Activity</button></Link>
         </div>
     )
 }
