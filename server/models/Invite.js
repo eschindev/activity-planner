@@ -1,7 +1,4 @@
 const { Schema, model } = require("mongoose");
-//const { User, Activity } = require("./index");
-const User = require("./User");
-const Activity = require("./Activity");
 
 const inviteSchema = new Schema({
   sender: {
@@ -23,40 +20,40 @@ const inviteSchema = new Schema({
   },
 });
 
-inviteSchema.post("create", async function (doc) {
-  await User.findByIdAndUpdate(doc.recipient, {
+inviteSchema.post("save", async function (doc) {
+  await model("User").findByIdAndUpdate(doc.recipient, {
     $addToSet: { invites: doc._id },
   });
 
-  await Activity.findByIdAndUpdate(doc.activity, {
+  await model("Activity").findByIdAndUpdate(doc.activity, {
     $addToSet: { invites: doc.id },
   });
 });
 
 inviteSchema.post("findOneAndUpdate", async function (doc) {
   if (this._update.status === "accepted") {
-    await Activity.findByIdAndUpdate(doc.activity, {
+    await model("Activity").findByIdAndUpdate(doc.activity, {
       $addToSet: { participants: doc.recipient },
     });
-    await User.findByIdAndUpdate(doc.recipient, {
+    await model("User").findByIdAndUpdate(doc.recipient, {
       $addToSet: { activities: doc.activity },
     });
   } else if (this._update.status === "rejected") {
-    await Activity.findByIdAndUpdate(doc.activity, {
+    await model("Activity").findByIdAndUpdate(doc.activity, {
       $pull: { participants: doc.recipient },
     });
-    await User.findByIdAndUpdate(doc.recipient, {
+    await model("User").findByIdAndUpdate(doc.recipient, {
       $pull: { activities: doc.activity },
     });
   }
 });
 
 inviteSchema.pre("findOneAndDelete", { document: true }, async function (next) {
-  await User.findByIdAndUpdate(this.recipient, {
+  await model("User").findByIdAndUpdate(this.recipient, {
     $pull: { invites: this._id },
   });
 
-  await Activity.findByIdAndUpdate(this.activity, {
+  await model("Activity").findByIdAndUpdate(this.activity, {
     $pull: { invites: this._id },
   });
 
@@ -82,8 +79,8 @@ inviteSchema.pre("deleteMany", async function (next) {
     };
   });
 
-  await User.bulkWrite(userUpdateOperations);
-  await Activity.bulkWrite(activityUpdateOperations);
+  await model("User").bulkWrite(userUpdateOperations);
+  await model("Activity").bulkWrite(activityUpdateOperations);
 
   next();
 });

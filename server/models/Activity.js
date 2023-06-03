@@ -1,8 +1,5 @@
 const { Schema, model } = require("mongoose");
 const commentSchema = require("./Comment");
-// const { User, Invite } = require("./index");
-const User = require("./User");
-const Invite = require("./Invite");
 
 const activitySchema = new Schema({
   name: {
@@ -53,13 +50,15 @@ const activitySchema = new Schema({
   comments: [commentSchema],
 });
 
-activitySchema.statics.bulkWrite = async function (operations) {
-  const collection = this.collection;
-  return collection.bulkWrite(operations);
-};
+// activitySchema.statics.bulkWrite = async function (operations) {
+//   const collection = this.collection;
+//   return collection.bulkWrite(operations);
+// };
 
-activitySchema.post("create", async function (doc, next) {
-  User.findByIdAndUpdate(doc.owner, { $addToSet: { activities: doc._id } });
+activitySchema.post("save", async function (doc, next) {
+  model("User").findByIdAndUpdate(doc.owner, {
+    $addToSet: { activities: doc._id },
+  });
 
   next();
 });
@@ -71,13 +70,13 @@ activitySchema.pre(
     const participantIds = this.participants.map((userId) => userId.toString());
     const inviteIds = this.invites.map((inviteId) => inviteId.toString());
 
-    await User.updateMany(
+    await model("User").updateMany(
       { _id: { $in: participantIds } },
       { $pull: { activities: this._id } }
     );
 
     for (inviteId of inviteIds) {
-      await Invite.findByIdAndDelete(inviteId);
+      await model("Invite").findByIdAndDelete(inviteId);
     }
 
     next();

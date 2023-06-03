@@ -76,7 +76,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.pre("findOneAndDelete", { document: true }, async function (next) {
   const friendIds = this.friends.map((userId) => userId.toString());
-  await User.updateMany(
+  await model("User").updateMany(
     { _id: { $in: friendIds } },
     { $pull: { friends: this._id } }
   );
@@ -84,16 +84,16 @@ userSchema.pre("findOneAndDelete", { document: true }, async function (next) {
   const activityIds = this.activities.map((activityId) =>
     activityId.toString()
   );
-  await Activity.updateMany(
+  await model("Activity").updateMany(
     { _id: { $in: activityIds } },
     { $pull: { participants: this._id } }
   );
   console.log("User pre-findOneAndDelete removed deleted User from activities");
-  await Invite.deleteMany({
+  await model("Invite").deleteMany({
     $or: [{ sender: this._id }, { recipient: this._id }],
   });
   console.log("User pre-findOneAndDelete deleted associated invites");
-  await Request.deleteMany({
+  await model("Request").deleteMany({
     $or: [{ sender: this._id }, { recipient: this._id }],
   });
   console.log("User pre-findOneAndDelete deleted associated requests");
