@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER  } from '../utils/mutations';
+import { CREATE_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -66,6 +66,31 @@ const SignupForm = () => {
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="firstName"
+              label="First Name"
+              type="text"
+              id="firstName"
+              autoComplete="given-name"
+              value={formState.firstName}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="lastName"
+              label="Last Name"
+              type="text"
+              id="lastName"
+              autoComplete="family-name"
+              value={formState.lastName}
+              onChange={handleChange}
+            />
+
             <TextField
               margin="normal"
               required
