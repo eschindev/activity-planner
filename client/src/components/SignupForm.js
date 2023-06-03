@@ -24,7 +24,9 @@ const SignupForm = () => {
     email: '',
     password: '',
   });
-  const [createUser, { error, data }] = useMutation(CREATE_USER);
+
+  const [addUser, { error, data }] = useMutation(CREATE_USER);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,8 +42,10 @@ const SignupForm = () => {
     console.log(formState);
 
     try {
-      const { data } = await createUser({
-        variables: { ...formState },
+
+      const { data } = await addUser({
+        variables: {input: formState },
+
       });
 
       Auth.login(data.createUser.token);
@@ -77,6 +81,30 @@ const SignupForm = () => {
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"
+            //   autoComplete="firstname"
+              autoFocus
+              value={formState.firstName}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+            //   autoComplete="firstname"
+              autoFocus
+              value={formState.lastName}
+              onChange={handleChange}
+            />
             <TextField
               margin="normal"
               required

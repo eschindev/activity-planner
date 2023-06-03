@@ -22,7 +22,7 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to view user profiles.");
       const user = await User.findById(_id)
         .populate("friends")
-        .populate("activites");
+        .populate("activities");
       return user;
     },
 
@@ -42,11 +42,9 @@ const resolvers = {
           populate: [
             {
               path: "sender recipient",
-              model: "User",
             },
             {
               path: "activity",
-              model: "Activity",
             },
           ],
         })
@@ -54,7 +52,6 @@ const resolvers = {
           path: "requests",
           populate: {
             path: "sender recipient",
-            model: "User",
           },
         });
       return user;

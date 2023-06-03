@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 //query = looking for data (gql similar to SQL)
-export const QUERY_USER = gql`
+export const QUERY_ME = gql`
   # get data for your own profile
   query getMyUser {
     getMyUser {
@@ -53,8 +53,8 @@ export const QUERY_USER = gql`
         }
       }
     }
-  }
-
+  }`
+  export const QUERY_USER = gql`
   # get data for someone else's profile
   query getUserById($id: ID!) {
     getUserById(_id: $id) {
@@ -78,7 +78,8 @@ export const QUERY_USER = gql`
       }
     }
   }
-
+`
+export const QUERY_USERS = gql`
   # search for users
   query searchUsers($searchTerm: String!) {
     searchUsers(searchTerm: $searchTerm) {
@@ -88,8 +89,9 @@ export const QUERY_USER = gql`
       lastName
       fullName
     }
-  }
+  }`
 
+  export const QUERY_ACTIVITY = gql`
   # get activity page data
   query getActivityById($id: ID!) {
     getActivityById(_id: $id) {
@@ -141,8 +143,8 @@ export const QUERY_USER = gql`
         timestamp
       }
     }
-  }
-
+  }`
+  export const QUERY_ACTIVITIES = gql`
   # search for activities
   query searchActivities($searchTerm: String!) {
     searchActivities(searchTerm: $searchTerm) {
