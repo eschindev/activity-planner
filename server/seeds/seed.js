@@ -22,7 +22,7 @@ db.once("open", async () => {
       let participants = [];
       let nonParticipants = [];
       for (id of userIds) {
-        if ((id) => id === owner || Math.random() < 0.15) {
+        if (id === owner || Math.random() < 0.15) {
           participants.push(id);
         } else {
           nonParticipants.push(id);
@@ -38,11 +38,12 @@ db.once("open", async () => {
         await User.findByIdAndUpdate(id, {
           $addToSet: { activities: activity.id },
         });
-        await Invite.create({
+        const invite = new Invite({
           sender: id,
           recipient: nonParticipants.pop(),
           activity: activity._id,
         });
+        await invite.save();
       }
     }
 
@@ -57,15 +58,16 @@ db.once("open", async () => {
         friends[recipient] !== sender
       ) {
         if (Math.random() < 0.3) {
-          await Request.create({
+          const request = new Request({
             sender,
             recipient,
           });
+          await request.save();
         } else {
-          User.findByIdAndUpdate(sender, {
+          await User.findByIdAndUpdate(sender, {
             $addToSet: { friends: recipient },
           });
-          User.findByIdAndUpdate(recipient, {
+          await User.findByIdAndUpdate(recipient, {
             $addToSet: { friends: sender },
           });
         }

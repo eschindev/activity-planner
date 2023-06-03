@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 //const { User, Activity } = require("./index");
-const User = require("./User");
 const Activity = require("./Activity");
+const User = require("./User");
 
 const inviteSchema = new Schema({
   sender: {
@@ -23,7 +23,7 @@ const inviteSchema = new Schema({
   },
 });
 
-inviteSchema.post("create", async function (doc) {
+inviteSchema.post("save", async function (doc) {
   await User.findByIdAndUpdate(doc.recipient, {
     $addToSet: { invites: doc._id },
   });
@@ -83,7 +83,7 @@ inviteSchema.pre("deleteMany", async function (next) {
   });
 
   await User.bulkWrite(userUpdateOperations);
-  await Activity.bulkWrite(activityUpdateOperations);
+  //await Activity.bulkWrite(activityUpdateOperations);
 
   next();
 });

@@ -17,7 +17,7 @@ const requestSchema = new Schema({
   },
 });
 
-requestSchema.post("create", async function (doc) {
+requestSchema.post("save", async function (doc) {
   await User.findByIdAndUpdate(doc.recipient, {
     $addToSet: { requests: doc._id },
   });
