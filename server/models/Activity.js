@@ -32,6 +32,7 @@ const activitySchema = new Schema({
   private: {
     type: Boolean,
     default: true,
+    required: true,
   },
   owner: {
     type: Schema.Types.ObjectId,
