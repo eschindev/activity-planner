@@ -89,6 +89,28 @@ const resolvers = {
       // hooks on the Activity and Invite schemas handle deletion of associated records
     },
 
+    joinActivity: async (_, { _id }, context) => {
+      isAuthenticated(context, "You must be logged in to join activities.");
+      await Activity.findByIdAndUpdate(_id, {
+        $addToSet: { participants: context.user._id },
+      });
+      await User.findByIdAndUpdate(context.user._id, {
+        $addToSet: { activities: _id },
+      });
+      return true;
+    },
+
+    leaveActivity: async (_, { _id }, context) => {
+      isAuthenticated(context, "You must be logged in to leave activities.");
+      await Activity.findByIdAndUpdate(_id, {
+        $pull: { participants: context.user._id },
+      });
+      await User.findByIdAndUpdate(context.user._id, {
+        $pull: { activities: _id },
+      });
+      return true;
+    },
+
     addComment: async (_, { _id, commentBody }, context) => {
       isAuthenticated(context, "You must be logged in to add comments.");
       comment = {
