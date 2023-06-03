@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { CREATE_USER  } from '../utils/mutations';
 import Auth from '../utils/auth';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -21,7 +21,7 @@ const SignupForm = () => {
     email: '',
     password: '',
   });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [createUser, { error, data }] = useMutation(CREATE_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,11 +37,11 @@ const SignupForm = () => {
     console.log(formState);
 
     try {
-      const { data } = await addUser({
+      const { data } = await createUser({
         variables: { ...formState },
       });
 
-      Auth.login(data.addUser.token);
+      Auth.login(data.createUser.token);
     } catch (e) {
       console.error(e);
     }
