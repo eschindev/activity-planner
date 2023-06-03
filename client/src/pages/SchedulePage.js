@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 
 const SchedulePage = () => {
@@ -8,9 +9,12 @@ const SchedulePage = () => {
    //are not logged in, then it's empty string
 
     const username = Auth.loggedIn() ? Auth.getProfile().data.username: '';
-    const {loading, data} = useQuery(QUERY_USER, {
-        variables: {username: username}
+    console.log(Auth.getProfile());
+    console.log(username);
+    const {loading, data} = useQuery(QUERY_ME, {
+        // variables: {username: username}
     });
+    console.log(data);
     if (!Auth.loggedIn()){
         return `Please log in`
     }
@@ -18,15 +22,15 @@ const SchedulePage = () => {
     if (loading) {
         return <div>Loading...</div>;
       }
-      const user = data?.user || {};
-    
+      const user = data?.getMyUser || {};
+    console.log(user);
     return (
         <div>
-            {user.username}
-            {user.firstName}
-            {user.lastName}
-            {user.activities}
-            
+           <p> {user.username}</p>
+            <p>{user.firstName}</p>
+            <p>{user.lastName}</p>
+            <p>{user.activities}</p>
+            <Link to="/create-activity"><button>Create Activity</button></Link>
         </div>
     )
 }
