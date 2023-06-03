@@ -37,7 +37,7 @@ const resolvers = {
       const activities = await Activity.find({
         $text: { $search: searchTerm },
         private: false,
-      });
+      }).populate("owner");
       if (!activities) {
         throw new Error("No activities found matching your search.");
       }
