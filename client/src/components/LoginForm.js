@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+
 import Auth from '../utils/auth';
 
 const defaultTheme = createTheme();
@@ -54,12 +56,18 @@ const LoginForm = (props) => {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
+        <Box className="box"
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '400px',
+            padding: '40px',
+            background: 'rgba(0, 0, 0, 0.1)',
+            boxSizing: 'border-box',
+            boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
+            borderRadius: '10px',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

@@ -23,5 +23,8 @@
   "homepage": "https://github.com/eschindev/activity-planner#readme",
   "devDependencies": {
     "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "@mui/material": "^5.13.3"
   }
 }

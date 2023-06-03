@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+
 
 const defaultTheme = createTheme();
 
@@ -48,7 +51,8 @@ const SignupForm = () => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider 
+    theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -57,6 +61,13 @@ const SignupForm = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '400px',
+            padding: '40px',
+            background: 'rgba(0, 0, 0, 0.1)',
+            boxSizing: 'border-box',
+            boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
+            borderRadius: '10px',
+         
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -134,6 +145,14 @@ const SignupForm = () => {
             >
               Submit
             </Button>
+            <Grid container>
+              <Grid item>
+              <Link component={RouterLink} to="/" variant="body2">
+                  {"Back to Sign In"}
+                </Link>
+              </Grid>
+            </Grid>
+            
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
                 {error.message}
