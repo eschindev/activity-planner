@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER } from '../utils/mutations';
+import { useState } from 'react';
 import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
+import { CREATE_ACTIVITY } from '../utils/mutations';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,41 +15,48 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
-
-const SignupForm = () => {
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const [addUser, { error, data }] = useMutation(CREATE_USER);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-
-    try {
-      const { data } = await addUser({
-        variables: {input: formState },
+const CreateActivityPage = () => {
+ 
+    const [formState, setFormState] = useState({
+        name: '',
+        date: '',
+        location: '',
+        description: '',
+        private: ''
       });
-
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
+      const [addActivity, { error, data }] = useMutation(CREATE_ACTIVITY);
+    
+      const handleChange = (event) => {
+        const { name, value } = event.target;
+    
+        setFormState({
+          ...formState,
+          [name]: value,
+        });
+      };
+    
+      const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formState);
+    
+        try {
+          const { data } = await addActivity({
+            variables: {input: formState },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    
+    
+    if (!Auth.loggedIn()){
+        return `Please log in`
     }
-  };
 
-  return (
-    <ThemeProvider theme={defaultTheme}>
+   
+    return (
+        <div>
+          <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -63,66 +71,65 @@ const SignupForm = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            Create Activity
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
               margin="normal"
               required
               fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
+              id="name" //match model
+              label="Activity Name"
+              name="name" //match field in our form match model
             //   autoComplete="firstname"
               autoFocus
-              value={formState.firstName}
+              value={formState.name}
               onChange={handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
+              id="date"
+              label="Date"
+              name="date"
             //   autoComplete="firstname"
               autoFocus
-              value={formState.lastName}
+              value={formState.date}
               onChange={handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id="location"
+              label="Location"
+              name="location"
+            //   autoComplete=""
               autoFocus
-              value={formState.username}
+              value={formState.location}
               onChange={handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={formState.email}
+              id="description"
+              label="Description"
+              name="description"
+            //   autoComplete=""
+              value={formState.description}
               onChange={handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={formState.password}
+              name="private"
+              label="Private"
+              id="private"
+            //   autoComplete="current-password"
+              value={formState.private}
               onChange={handleChange}
             />
             <Button
@@ -131,7 +138,7 @@ const SignupForm = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Submit
+              Create Activity!
             </Button>
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
@@ -150,7 +157,7 @@ const SignupForm = () => {
         </Box>
       </Container>
     </ThemeProvider>
-  );
-};
-
-export default SignupForm;
+        </div>
+    )
+}
+export default CreateActivityPage;

@@ -11,11 +11,12 @@ import LoginPage from './pages/LoginPage';
 import SchedulePage from './pages/SchedulePage';
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUpPage from './pages/SignUpPage';
+import CreateActivityPage from './pages/CreateActivityPage';
 
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'graphql',
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -45,8 +46,12 @@ function App() {
           {/* <Header /> */}
           <div className="container">
             <Routes>
+              <Route
+                path="/"
+                element={<SchedulePage/>}
+                />
               <Route 
-                path="/" 
+                path="/login" 
                 element={<LoginPage />} 
               />
                <Route 
@@ -56,6 +61,10 @@ function App() {
                <Route 
                 path="/schedule" 
                 element={<SchedulePage />} 
+              />
+              <Route
+              path="/create-activity"
+              element={<CreateActivityPage/>}
               />
               
             </Routes>
