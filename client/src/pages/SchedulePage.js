@@ -3,6 +3,7 @@ import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 import ActivityCard from '../components/ActivityCard';
+import InviteCard from '../components/InviteCard';
 
 const SchedulePage = () => {
    //declare username to be, if they are logged in, get it from their profile, if they
@@ -36,6 +37,7 @@ const SchedulePage = () => {
             <div className="activities-container">
             {user.activities.map( a => {
                 return <ActivityCard data={a}/>
+            
             })
             }</div>
             

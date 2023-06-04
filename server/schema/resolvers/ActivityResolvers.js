@@ -11,7 +11,7 @@ const resolvers = {
     },
 
     getActivityById: async (_, { _id }, context) => {
-      isAuthenticated(context, "You must be logged in to view activities.");
+      // isAuthenticated(context, "You must be logged in to view activities.");
       const activity = await Activity.findById(_id)
         .populate("owner")
         .populate("participants")

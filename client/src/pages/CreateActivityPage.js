@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Checkbox from '@mui/material/Checkbox';
 
 const defaultTheme = createTheme();
 const CreateActivityPage = () => {
@@ -22,7 +23,7 @@ const CreateActivityPage = () => {
         date: '',
         location: '',
         description: '',
-        private: ''
+        private: true
       });
       const [addActivity, { error, data }] = useMutation(CREATE_ACTIVITY);
     
@@ -39,13 +40,13 @@ const CreateActivityPage = () => {
         event.preventDefault();
         console.log(formState);
     
-        try {
+        // try {
           const { data } = await addActivity({
             variables: {input: formState },
           });
-        } catch (e) {
-          console.error(e);
-        }
+        // } catch (e) {
+        //   console.error(e);
+        // }
       };
     
     
@@ -121,7 +122,7 @@ const CreateActivityPage = () => {
               value={formState.description}
               onChange={handleChange}
             />
-            <TextField
+            <Checkbox
               margin="normal"
               required
               fullWidth
