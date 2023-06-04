@@ -4,6 +4,7 @@ import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 import ActivityCard from '../components/ActivityCard';
 import InviteCard from '../components/InviteCard';
+import InvitedCard from '../components/InvitedCard';
 
 const SchedulePage = () => {
    //declare username to be, if they are logged in, get it from their profile, if they
@@ -33,13 +34,24 @@ const SchedulePage = () => {
             <p>Your Activity List: {user.activity}</p> */}
             {/* <p>Your friends: {user.friends}</p> */}
             {/* <p>Your latest friend requests: {user.requests}</p> */}
+            <h2>You've been invited to: </h2>
+            <div className="invites-container">
+                {user.invites.map ( i => {
+                    return <InvitedCard data={i}/>
+                })}
+            </div>
+
+
             <h2>Your upcoming activities:</h2>
             <div className="activities-container">
             {user.activities.map( a => {
                 return <ActivityCard data={a}/>
             
             })
-            }</div>
+            }
+            
+            
+            </div>
             
 
             <Link to="/create-activity"><button>Create New Activity</button></Link>

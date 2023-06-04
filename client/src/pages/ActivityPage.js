@@ -37,6 +37,8 @@ return (
         }}
       >
         {Activity.description}
+        <p>Location: {Activity.location}</p>
+        <h2>Already invited: </h2>
         {Activity.invites.map( i => {
             return <InviteCard data={i}/>
         })}
