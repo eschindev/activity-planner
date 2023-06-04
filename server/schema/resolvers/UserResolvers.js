@@ -42,9 +42,11 @@ const resolvers = {
           populate: [
             {
               path: "sender recipient",
+              model: "User"
             },
             {
               path: "activity",
+              model: "Activity"
             },
           ],
         })

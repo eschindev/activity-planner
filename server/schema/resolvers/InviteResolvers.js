@@ -56,14 +56,18 @@ const resolvers = {
       // post-create hook on Invite model handles adding invite to activity's and recipient's invites arrays
     },
 
-    updateInvite: async (_, { _id, input }, context) => {
+    updateInvite: async (_, { id, status }, context) => {
       isAuthenticated(context, "You must be logged in to respond to invites.");
-      if (context.user._id !== input.recipient) {
-        throw new AuthenticationError(
-          "You can only respond to invites addressed to you."
-        );
-      }
-      const invite = await Invite.findByIdAndUpdate(_id, input, {
+      
+      console.log(status);
+      console.log(id);
+     
+      // if (context.user._id !== input.recipient) {
+      //   throw new AuthenticationError(
+      //     "You can only respond to invites addressed to you."
+      //   );
+      // }
+      const invite = await Invite.findByIdAndUpdate(id, {status: status}, {
         new: true,
       });
       return invite;
