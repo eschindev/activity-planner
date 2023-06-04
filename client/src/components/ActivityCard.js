@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const ActivityCard = ({data}) => {
   
  
 
 
     return (
+        <Link to={`/activity/${data._id}`}>
         <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
         {data.name} <br />
@@ -26,9 +27,10 @@ const ActivityCard = ({data}) => {
           {data.location}
         </blockquote>
       </div>
-
+     
       
     </div>
+    </Link>
   );
 
    
