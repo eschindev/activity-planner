@@ -13,7 +13,7 @@ import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import textFieldStyles from './TextFieldStyles';
 
 
 import Auth from '../utils/auth';
@@ -57,8 +57,8 @@ const LoginForm = (props) => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box className="box"
-          sx={{
-            marginTop: 8,
+           
+          sx={{marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -76,8 +76,9 @@ const LoginForm = (props) => {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 2 }}>
             <TextField
+              style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -90,6 +91,7 @@ const LoginForm = (props) => {
               onChange={handleChange}
             />
             <TextField
+              style={textFieldStyles}
               margin="normal"
               required
               fullWidth
