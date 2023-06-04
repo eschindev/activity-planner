@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
-
+import ActivityCard from '../components/ActivityCard';
 
 const SchedulePage = () => {
    //declare username to be, if they are logged in, get it from their profile, if they
@@ -26,13 +26,20 @@ const SchedulePage = () => {
     console.log(user);
     return (
         <div>
-           <p>Welcome {user.username} !</p>
+           <h2>Welcome {user.username} !</h2>
             <p>Profile of : {user.fullName}</p>
-            <p> Your latest invite: {user.invites}</p>
-            <p>Your Activity List: {user.activity}</p>
-            <p>Your friends: {user.friends}</p>
-            <p>Your latest friend requests: {user.requests}</p>
+            {/* <p> Your latest invite: {user.invites}</p>
+            <p>Your Activity List: {user.activity}</p> */}
+            {/* <p>Your friends: {user.friends}</p> */}
+            {/* <p>Your latest friend requests: {user.requests}</p> */}
+            <h2>Your upcoming activities:</h2>
+            <div className="activities-container">
+            {user.activities.map( a => {
+                return <ActivityCard data={a}/>
+            })
+            }</div>
             
+
             <Link to="/create-activity"><button>Create New Activity</button></Link>
         </div>
     )

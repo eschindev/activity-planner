@@ -1,0 +1,8 @@
+.activities-container{
+    height: 45vh;
+    overflow-y: scroll;
+    border: solid 2px black;
+    padding: 10px;
+    margin-bottom: 15px;
+    
+}
