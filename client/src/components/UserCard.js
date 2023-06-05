@@ -1,27 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const ActivityCard = ({ data }) => {
+export default function UserCard({ user }) {
   return (
     <Card sx={{ margin: "10px" }}>
       <CardContent>
-        <Link to={`/activity/${data._id}`}>
+        <Link to={`/user/${user._id}`}>
           <Typography variant="h5" component="div">
-            {data.name}
+            {user.username}
           </Typography>
         </Link>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {data.date}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {data.location}
+          {user.fullName}
         </Typography>
       </CardContent>
     </Card>
   );
-};
-
-export default ActivityCard;
+}
