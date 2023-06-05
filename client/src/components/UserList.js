@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UserCard from "./UserCard";
+import Container from "@mui/material/Container";
 
 export default function UserList({ users }) {
   console.log(users);
   return (
-    <div>
+    <Container maxWidth="sm">
       {users ? (
         users.map((user) => {
           return <UserCard key={user._id} user={user} />;
@@ -13,6 +14,6 @@ export default function UserList({ users }) {
       ) : (
         <div>No users found</div>
       )}
-    </div>
+    </Container>
   );
 }

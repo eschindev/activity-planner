@@ -9,7 +9,6 @@ import ActivityList from "../components/ActivityList";
 export default function SearchResultPage() {
   let { searchType, searchTerm } = useParams();
   searchTerm = decodeURIComponent(searchTerm);
-  console.log("searchTerm: ", searchTerm);
   const { loading, data } = useQuery(
     searchType === "users" ? QUERY_USERS : QUERY_ACTIVITIES,
     { variables: { searchTerm } }
@@ -17,8 +16,6 @@ export default function SearchResultPage() {
 
   if (loading) {
     return <div>Loading...</div>;
-  } else {
-    console.log(data);
   }
 
   switch (searchType) {

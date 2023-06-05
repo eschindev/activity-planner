@@ -1,41 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-const ActivityCard = ({data}) => {
-  
- 
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
-
-    return (
+const ActivityCard = ({ data }) => {
+  return (
+    <Card sx={{ margin: "10px" }}>
+      <CardContent>
         <Link to={`/activity/${data._id}`}>
-        <div className="my-3">
-      <h3 className="card-header bg-dark text-light p-2 m-0">
-        {data.name} <br />
-        <span style={{ fontSize: '1rem' }}>
-          is happening on {data.date}
-        </span>
-      </h3>
-      <div className="bg-light py-4">
-        <blockquote
-          className="p-4"
-          style={{
-            fontSize: '1.5rem',
-            fontStyle: 'italic',
-            border: '2px dotted #1a1a1a',
-            lineHeight: '1.5',
-          }}
-        >
+          <Typography variant="h5" component="div">
+            {data.name}
+          </Typography>
+        </Link>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          {data.date}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {data.location}
-        </blockquote>
-      </div>
-     
-      
-    </div>
-    </Link>
+        </Typography>
+      </CardContent>
+    </Card>
   );
-
-   
-
-}
-
+};
 
 export default ActivityCard;
