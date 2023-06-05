@@ -64,7 +64,7 @@ const LoginForm = (props) => {
             alignItems: 'center',
             width: '400px',
             padding: '40px',
-            background: 'rgba(255,255,255,0.5564819677871149)',
+            background: 'rgba(255,255,255, 0.8)',
             boxSizing: 'border-box',
             boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
             borderRadius: '10px',
