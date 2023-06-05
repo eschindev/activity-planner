@@ -47,7 +47,7 @@ console.log(data);
           <h2>Already invited: </h2>
           {Activity.invites ? Activity.invites.map((i) => {
             console.log(i);
-            return <InviteCard key={i._id} currentUserId={currentUserId} data={i} />;
+            return <InviteCard key={i._id} currentUserId={currentUserId} data={{activity: {...i}}} />;
           }) : null}
         </blockquote>
       </div>
