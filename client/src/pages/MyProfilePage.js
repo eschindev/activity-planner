@@ -40,7 +40,7 @@ const MyProfilePage = ({ currentUserId }) => {
       <h2>You've been invited to: </h2>
       <div className="invites-container">
         {user.invites.map((i) => {
-          return <InvitedCard data={i} />;
+          return <InviteCard data={i} />;
         })}
       </div>
 

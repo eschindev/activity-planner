@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 const InviteCard = ({ data, currentUserId }) => {
   return (
@@ -24,7 +25,7 @@ const InviteCard = ({ data, currentUserId }) => {
           </Link>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {data.activity.date}
+          {dayjs(data.activity.date).format("DD-MM-YYYY HH:MM")}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {data.activity.location}
