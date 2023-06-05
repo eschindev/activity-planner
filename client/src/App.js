@@ -8,7 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-// import SchedulePage from "./pages/SchedulePage";
+// import SchedulePage from "./pages/MyProfilePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUpPage from "./pages/SignUpPage";
 import CreateActivityPage from "./pages/CreateActivityPage";
@@ -51,10 +51,10 @@ function App() {
           <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <div className="container">
             <Routes>
-              {/* <Route path="/" element={<SchedulePage />} /> */}
+              {/* <Route path="/" element={<MyProfilePage />} /> */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUpPage />} />
-              {/* <Route path="/schedule" element={<SchedulePage />} /> */}
+              {/* <Route path="/schedule" element={<MyProfilePage />} /> */}
               <Route path="/create-activity" element={<CreateActivityPage />} />
               <Route path="/activity/:id" element={<ActivityPage />} />
               <Route
