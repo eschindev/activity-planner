@@ -14,6 +14,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 const defaultTheme = createTheme();
 const CreateActivityPage = ({ currentUserId }) => {
@@ -127,17 +131,20 @@ const CreateActivityPage = ({ currentUserId }) => {
                 value={formState.description}
                 onChange={handleChange}
               />
-              <Checkbox
-                margin="normal"
-                required
-                fullWidth
-                name="private"
-                label="Private"
-                id="private"
-                //   autoComplete="current-password"
-                value={formState.private}
-                onChange={handleChange}
-              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Private</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formState.private}
+                  label="Private Event"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"Yes"}>Yes</MenuItem>
+                  <MenuItem value={"No"}>No</MenuItem>
+                </Select>
+              </FormControl>
+
               <Button
                 type="submit"
                 fullWidth
