@@ -11,18 +11,21 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import textFieldStyles from './TextFieldStyles';
+import '../style/theme.css'
 
 
-const defaultTheme = createTheme();
 
 const SignupForm = () => {
   const [formState, setFormState] = useState({
     username: '',
     email: '',
     password: '',
+    firstName: '',
+    lastName: '',
+    
   });
 
   const [addUser, { error, data }] = useMutation(CREATE_USER);
@@ -55,8 +58,7 @@ const SignupForm = () => {
   };
 
   return (
-    <ThemeProvider 
-    theme={defaultTheme}>
+  
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -66,8 +68,9 @@ const SignupForm = () => {
             flexDirection: 'column',
             alignItems: 'center',
             width: '400px',
+            height: 'auto',
             padding: '40px',
-            background: 'rgba(0, 0, 0, 0.1)',
+            background: 'rgba(255,255,255,0.5564819677871149)',
             boxSizing: 'border-box',
             boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
             borderRadius: '10px',
@@ -82,6 +85,7 @@ const SignupForm = () => {
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
+                 style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -94,6 +98,7 @@ const SignupForm = () => {
               onChange={handleChange}
             />
             <TextField
+               style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -106,6 +111,7 @@ const SignupForm = () => {
               onChange={handleChange}
             />
             <TextField
+               style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -118,6 +124,7 @@ const SignupForm = () => {
               onChange={handleChange}
             />
             <TextField
+                style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -131,6 +138,7 @@ const SignupForm = () => {
             />
 
             <TextField
+               style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -143,6 +151,7 @@ const SignupForm = () => {
               onChange={handleChange}
             />
             <TextField
+               style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -154,6 +163,7 @@ const SignupForm = () => {
               onChange={handleChange}
             />
             <TextField
+               style={textFieldStyles}
               margin="normal"
               required
               fullWidth
@@ -175,7 +185,7 @@ const SignupForm = () => {
             </Button>
             <Grid container>
               <Grid item>
-              <Link component={RouterLink} to="/" variant="body2">
+              <Link component={RouterLink} to="/login" variant="body2">
                   {"Back to Sign In"}
                 </Link>
               </Grid>
@@ -197,7 +207,7 @@ const SignupForm = () => {
           )}
         </Box>
       </Container>
-    </ThemeProvider>
+  
   );
 };
 

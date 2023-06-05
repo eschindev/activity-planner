@@ -12,13 +12,13 @@ import Box from '@mui/material/Box';
 import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import textFieldStyles from './TextFieldStyles';
 
+import textFieldStyles from './TextFieldStyles';
+import '../style/theme.css'
 
 import Auth from '../utils/auth';
 
-const defaultTheme = createTheme();
+
 
 const LoginForm = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -53,10 +53,10 @@ const LoginForm = (props) => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+  
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box className="box"
+        <Box
            
           sx={{marginTop: 8,
             display: 'flex',
@@ -64,7 +64,7 @@ const LoginForm = (props) => {
             alignItems: 'center',
             width: '400px',
             padding: '40px',
-            background: 'rgba(0, 0, 0, 0.1)',
+            background: 'rgba(255,255,255,0.5564819677871149)',
             boxSizing: 'border-box',
             boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
             borderRadius: '10px',
@@ -130,7 +130,7 @@ const LoginForm = (props) => {
           ) : null}
         </Box>
       </Container>
-    </ThemeProvider>
+
   );
 };
 

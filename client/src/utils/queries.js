@@ -16,6 +16,7 @@ export const QUERY_ME = gql`
         location
       }
       invites {
+        _id
         sender {
           _id
           username
@@ -23,17 +24,17 @@ export const QUERY_ME = gql`
           lastName
           fullName
         }
-        activity {
-          _id
-          name
-          date
-          owner {
+        recipient {
             _id
             username
             firstName
             lastName
             fullName
           }
+        activity {
+          _id
+          name
+          date
         }
       }
       friends {
