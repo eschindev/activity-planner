@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import {
   AppBar,
@@ -56,19 +55,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({ searchTerm, setSearchTerm }) {
+export default function Header() {
   const searchTypeFromUrl = window.location.pathname.split("/")[2];
   let searchTermFromUrl = window.location.pathname.split("/")[3];
   if (searchTermFromUrl) {
     searchTermFromUrl = decodeURIComponent(searchTermFromUrl);
   }
-  console.log(searchTypeFromUrl, searchTermFromUrl);
   const [searchTemp, setSearchTemp] = useState(searchTermFromUrl || "");
   const [searchType, setSearchType] = useState(searchTypeFromUrl || "users");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
     if (searchTemp !== "" && event.key === "Enter") {
-      console.log("handleSearch executed");
       setSearchTerm(searchTemp);
     }
   };

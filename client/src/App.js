@@ -34,6 +34,11 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const token = localStorage.getItem("id_token");
+const decodedToken = token ? JSON.parse(atob(token.split(".")[1])) : null;
+const currentUserId = decodedToken?.data?._id;
+//const currentUserId = "";
+
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
@@ -41,25 +46,35 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           {/* <Header /> */}
-          <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Header currentUserId={currentUserId} />
           <div className="container">
             <Routes>
-              {/* <Route path="/" element={<MyProfilePage />} /> */}
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
+              {/* <Route path="/" element={<MyProfilePage currentUserId={currentUserId}/>} /> */}
+              <Route
+                path="/login"
+                element={<LoginPage currentUserId={currentUserId} />}
+              />
+              <Route
+                path="/signup"
+                element={<SignUpPage currentUserId={currentUserId} />}
+              />
               {/* <Route path="/schedule" element={<MyProfilePage />} /> */}
-              <Route path="/create-activity" element={<CreateActivityPage />} />
-              <Route path="/activity/:id" element={<ActivityPage />} />
+              <Route
+                path="/create-activity"
+                element={<CreateActivityPage currentUserId={currentUserId} />}
+              />
+              <Route
+                path="/activity/:id"
+                element={<ActivityPage currentUserId={currentUserId} />}
+              />
               <Route
                 path="/search/:searchType/:searchTerm"
-                element={<SearchResultPage />}
+                element={<SearchResultPage currentUserId={currentUserId} />}
               />
             </Routes>
           </div>
