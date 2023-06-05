@@ -6,9 +6,12 @@ import ActivityCard from "../components/ActivityCard";
 import InviteCard from "../components/InviteCard";
 import InvitedCard from "../components/InvitedCard";
 
-const MyProfilePage = () => {
+const MyProfilePage = ({ currentUserId }) => {
   //declare username to be, if they are logged in, get it from their profile, if they
   //are not logged in, then it's empty string
+  if (!currentUserId) {
+    window.location.replace("/login");
+  }
 
   const username = Auth.loggedIn() ? Auth.getProfile().data.username : "";
   console.log(Auth.getProfile());

@@ -9,6 +9,7 @@ import {
   InputBase,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -55,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header() {
+export default function Header({ currentUserId }) {
   const searchTypeFromUrl = window.location.pathname.split("/")[2];
   let searchTermFromUrl = window.location.pathname.split("/")[3];
   if (searchTermFromUrl) {
@@ -66,9 +67,17 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
-    if (searchTemp !== "" && event.key === "Enter") {
+    if (
+      searchTemp !== "" &&
+      (event.key === "Enter" || event.type === "click")
+    ) {
       setSearchTerm(searchTemp);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("id_token");
+    window.location.replace("/login");
   };
 
   useEffect(() => {
@@ -96,7 +105,7 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            Actio
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -121,6 +130,17 @@ export default function Header() {
             <MenuItem value={"users"}>Users</MenuItem>
             <MenuItem value={"activities"}>Activities</MenuItem>
           </Select>
+          <Button variant="outlined" color="inherit" onClick={handleSearch}>
+            Search
+          </Button>
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={handleLogout}
+            style={{ marginLeft: "2%" }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -6,7 +6,11 @@ import { QUERY_ACTIVITIES, QUERY_USERS } from "../utils/queries";
 import UserList from "../components/UserList";
 import ActivityList from "../components/ActivityList";
 
-export default function SearchResultPage() {
+export default function SearchResultPage({ currentUserId }) {
+  if (!currentUserId) {
+    window.location.replace("/login");
+  }
+
   let { searchType, searchTerm } = useParams();
   searchTerm = decodeURIComponent(searchTerm);
   const { loading, data } = useQuery(
@@ -16,6 +20,10 @@ export default function SearchResultPage() {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>Search failed. Confirm that you are logged in and</div>;
   }
 
   switch (searchType) {
