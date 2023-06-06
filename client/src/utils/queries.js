@@ -132,6 +132,12 @@ export const QUERY_ACTIVITY = gql`
           lastName
           fullName
         }
+        activity {
+          _id
+          name
+          date
+          location
+        }
         status
       }
       comments {
