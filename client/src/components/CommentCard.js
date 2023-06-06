@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_COMMENT } from '../../utils/mutations';
+import { ADD_COMMENT } from '../utils/mutations';
 
-import Auth from '../../utils/auth';
+import Auth from '../utils/auth';
 
-const CommentCard = ({ commentId }) => {
+const CommentCard = ({ activityId }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -14,14 +14,13 @@ const CommentCard = ({ commentId }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    const id = activityId;
+    const commentBody = commentBody;
     try {
       const { data } = await addComment({
         variables: {
-          activityId,
-          commentBody,
-          username: Auth.getProfile().data.username,
-        },
+          id,
+          commentBody},
       });
 
       setCommentText('');
@@ -41,7 +40,7 @@ const CommentCard = ({ commentId }) => {
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>Comments</h4>
 
       {Auth.loggedIn() ? (
         <>

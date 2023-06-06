@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import UserCard from "./UserCard";
-import Container from "@mui/material/Container";
 
-export default function CommentList({ users }) {
-  console.log(users);
+import Container from "@mui/material/Container";
+import CommentCard from "./CommentCard";
+
+export default function CommentList({ comments }) {
+  console.log(comments);
+
   return (
     <Container maxWidth="sm">
-      {users ? (
-        comments.map((user) => {
-          return <CommentCard key={user._id} user={user} />;
+      {comments ? (
+        comments.map((comment) => {
+          return <CommentCard key={comment._id} user={comment.username} />;
         })
       ) : (
-        <div>No users found</div>
+        <div>No comments found</div>
       )}
     </Container>
   );

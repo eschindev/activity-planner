@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { QUERY_ACTIVITY } from "../utils/queries";
 import InviteList from "../components/InviteList";
 import UserList from "../components/UserList";
+import CommentList from "../components/CommentList";
 
 const ActivityPage = ({ currentUserId }) => {
   if (!currentUserId) {
@@ -49,6 +50,7 @@ const ActivityPage = ({ currentUserId }) => {
             invites={Activity.invites}
             currentUserId={currentUserId}
           />
+          <CommentList comments={Activity.comments}></CommentList>
         </blockquote>
       </div>
     </div>
