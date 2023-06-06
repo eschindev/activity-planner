@@ -8,17 +8,16 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { Link as RouterLink } from "react-router-dom";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import auth from "../utils/auth.js";
+import textFieldStyles from "../components/TextFieldStyles";
+import EditCalendarTwoToneIcon from "@mui/icons-material/EditCalendarTwoTone";
 
-const defaultTheme = createTheme();
 const CreateActivityPage = () => {
   if (!auth.loggedIn()) {
     window.location.replace("/login");
@@ -60,116 +59,146 @@ const CreateActivityPage = () => {
 
   return (
     <div>
-      <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "400px",
+            padding: "40px",
+            background: "rgba(255,255,255, 0.8)",
+            boxSizing: "border-box",
+            boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
+            borderRadius: "10px",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <EditCalendarTwoToneIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Create Activity
+          </Typography>
           <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            component="form"
+            onSubmit={handleFormSubmit}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Create Activity
-            </Typography>
-            <Box
-              component="form"
-              onSubmit={handleFormSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name" //match model
-                label="Activity Name"
-                name="name" //match field in our form match model
-                //   autoComplete="firstname"
-                autoFocus
-                value={formState.name}
+            <TextField
+              sx={{
+                "& label": {
+                  marginTop: "-10px", // Adjust the value to position the label higher
+                },
+              }}
+              style={textFieldStyles}
+              margin="normal"
+              required
+              fullWidth
+              id="name" //match model
+              label="Activity Name"
+              name="name" //match field in our form match model
+              //   autoComplete="firstname"
+              autoFocus
+              value={formState.name}
+              onChange={handleChange}
+            />
+            <TextField
+              sx={{
+                "& label": {
+                  marginTop: "-10px", // Adjust the value to position the label higher
+                },
+              }}
+              style={textFieldStyles}
+              margin="normal"
+              required
+              fullWidth
+              id="date"
+              label="Date"
+              name="date"
+              autoFocus
+              value={formState.date}
+              onChange={handleChange}
+            />
+            <TextField
+              sx={{
+                "& label": {
+                  marginTop: "-10px", // Adjust the value to position the label higher
+                },
+              }}
+              style={textFieldStyles}
+              margin="normal"
+              required
+              fullWidth
+              id="location"
+              label="Location"
+              name="location"
+              //   autoComplete=""
+              autoFocus
+              value={formState.location}
+              onChange={handleChange}
+            />
+            <TextField
+              sx={{
+                "& label": {
+                  marginTop: "-10px", // Adjust the value to position the label higher
+                },
+              }}
+              style={textFieldStyles}
+              margin="normal"
+              required
+              fullWidth
+              id="description"
+              label="Description"
+              name="description"
+              //   autoComplete=""
+              value={formState.description}
+              onChange={handleChange}
+            />
+            <FormControl sx={{ mt: 1.5 }} fullWidth>
+              <InputLabel sx={{ mt: -1 }} id="demo-simple-select-label">
+                Private
+              </InputLabel>
+              <Select
+                style={textFieldStyles}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formState.private}
+                label="Private Event"
+                name="private"
                 onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="date"
-                label="Date"
-                name="date"
-                //   autoComplete="firstname"
-                autoFocus
-                value={formState.date}
-                onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="location"
-                label="Location"
-                name="location"
-                //   autoComplete=""
-                autoFocus
-                value={formState.location}
-                onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="description"
-                label="Description"
-                name="description"
-                //   autoComplete=""
-                value={formState.description}
-                onChange={handleChange}
-              />
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Private</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formState.private}
-                  label="Private Event"
-                  name="private"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={true}>Yes</MenuItem>
-                  <MenuItem value={false}>No</MenuItem>
-                </Select>
-              </FormControl>
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
               >
-                Create Activity!
-              </Button>
-              {error && (
-                <div className="my-3 p-3 bg-danger text-white">
-                  {error.message}
-                </div>
-              )}
-            </Box>
-            {data && (
-              <Typography variant="body1" mt={2}>
-                Success! You may now head{" "}
-                <RouterLink to="/" variant="body1">
-                  back to the homepage.
-                </RouterLink>
-              </Typography>
+                <MenuItem value={true}>Yes</MenuItem>
+                <MenuItem value={false}>No</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Create Activity!
+            </Button>
+            {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
             )}
           </Box>
-        </Container>
-      </ThemeProvider>
+          {data && (
+            <Typography variant="body1" mt={2}>
+              Success! You may now head{" "}
+              <RouterLink to="/" variant="body1">
+                back to the homepage.
+              </RouterLink>
+            </Typography>
+          )}
+        </Box>
+      </Container>
     </div>
   );
 };
