@@ -11,8 +11,9 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { Link } from "react-router-dom";
+const logo = process.env.PUBLIC_URL + "/actio_logo.png";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -92,22 +93,24 @@ export default function Header({ currentUserId }) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "teal" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link to="/">
+            <img
+              src={logo}
+              alt="logo"
+              style={{ height: "50px", borderRadius: "50%" }}
+            />
+          </Link>
           <Typography
-            variant="h6"
+            variant="h3"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+              marginLeft: "1%",
+            }}
           >
             Actio
           </Typography>
@@ -137,14 +140,25 @@ export default function Header({ currentUserId }) {
           <Button variant="outlined" color="inherit" onClick={handleSearch}>
             Search
           </Button>
-          <Button
-            variant="text"
-            color="inherit"
-            onClick={handleLogout}
-            style={{ marginLeft: "2%" }}
-          >
-            Logout
-          </Button>
+          {currentUserId ? (
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={handleLogout}
+              style={{ marginLeft: "2%" }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              variant="text"
+              color="inherit"
+              style={{ marginLeft: "2%" }}
+              onClick={handleLogout}
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
