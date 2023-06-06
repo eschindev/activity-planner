@@ -38,9 +38,11 @@ db.once("open", async () => {
         await User.findByIdAndUpdate(id, {
           $addToSet: { activities: activity.id },
         });
+        const randomIndex = Math.floor(Math.random() * nonParticipants.length);
+        const recipient = nonParticipants.splice(randomIndex, 1)[0];
         const invite = new Invite({
           sender: id,
-          recipient: nonParticipants.pop(),
+          recipient,
           activity: activity._id,
         });
         await invite.save();
@@ -57,7 +59,7 @@ db.once("open", async () => {
         friends[sender] !== recipient &&
         friends[recipient] !== sender
       ) {
-        if (Math.random() < 0.3) {
+        if (Math.random() < 0.5) {
           const request = new Request({
             sender,
             recipient,
