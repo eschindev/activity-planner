@@ -1,7 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import Auth from "../utils/auth";
-import { Link } from "react-router-dom";
 import { CREATE_ACTIVITY } from "../utils/mutations";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,15 +12,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import auth from "../utils/auth.js";
 
 const defaultTheme = createTheme();
-const CreateActivityPage = ({ currentUserId }) => {
-  if (!currentUserId) {
+const CreateActivityPage = () => {
+  if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
   const [formState, setFormState] = useState({

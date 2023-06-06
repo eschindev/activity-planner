@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-import Auth from "../utils/auth";
+import auth from "../utils/auth";
 import { Link } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import ActivityList from "../components/ActivityList";
@@ -8,18 +8,15 @@ import UserList from "../components/UserList";
 import InviteList from "../components/InviteList";
 import RequestList from "../components/RequestList";
 
-const MyProfilePage = ({ currentUserId }) => {
-  //declare username to be, if they are logged in, get it from their profile, if they
-  //are not logged in, then it's empty string
-  if (!currentUserId) {
+const MyProfilePage = () => {
+  if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
 
-  const { loading, data } = useQuery(QUERY_ME);
+  const token = auth.getProfile();
+  const currentUserId = token.data._id;
 
-  if (!Auth.loggedIn()) {
-    return `Please log in`;
-  }
+  const { loading, data } = useQuery(QUERY_ME);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -39,15 +36,15 @@ const MyProfilePage = ({ currentUserId }) => {
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography variant="h4">Friends:</Typography>
-        <UserList users={user.friends} currentUserId={currentUserId} />
+        <UserList users={user.friends} />
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography variant="h4">Activity Invites:</Typography>
-        <InviteList invites={user.invites} currentUserId={currentUserId} />
+        <InviteList invites={user.invites} />
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography variant="h4">Friend Requests:</Typography>
-        <RequestList requests={user.requests} currentUserId={currentUserId} />
+        <RequestList requests={user.requests} />
       </Grid>
     </Grid>
   );

@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
+import auth from "../utils/auth.js";
+
 const logo = process.env.PUBLIC_URL + "/actio_logo.png";
 
 const Search = styled("div")(({ theme }) => ({
@@ -57,7 +59,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({ currentUserId }) {
+export default function Header() {
+  const loggedIn = auth.loggedIn();
+
   let searchTypeFromUrl = "users";
   let searchTermFromUrl = "";
   if (window.location.pathname.split("/")[1] === "search") {
@@ -140,7 +144,7 @@ export default function Header({ currentUserId }) {
           <Button variant="outlined" color="inherit" onClick={handleSearch}>
             Search
           </Button>
-          {currentUserId ? (
+          {loggedIn ? (
             <Button
               variant="text"
               color="inherit"
