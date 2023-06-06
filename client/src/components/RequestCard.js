@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import dayjs from "dayjs";
+
 import Button from "@mui/material/Button";
-import { ApolloLink, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CREATE_REQUEST } from "../utils/mutations";
 
 const RequestCard = ({ user }) => {
