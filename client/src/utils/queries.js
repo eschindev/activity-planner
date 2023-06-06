@@ -61,6 +61,7 @@ export const QUERY_USER = gql`
   # get data for someone else's profile
   query getUserById($id: ID!) {
     getUserById(_id: $id) {
+      _id
       username
       firstName
       lastName
@@ -72,6 +73,9 @@ export const QUERY_USER = gql`
         firstName
         lastName
         fullName
+        friends {
+          _id
+        }
       }
       activities {
         _id
@@ -87,6 +91,7 @@ export const QUERY_USERNAME = gql`
   # get data for someone else's profile
   query getUserByUsername($username: String!) {
     getUserByUsername(username: $username) {
+      _id
       username
       firstName
       lastName
