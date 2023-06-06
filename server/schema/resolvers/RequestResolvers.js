@@ -47,11 +47,11 @@ const resolvers = {
       // post-create hook for adding request to recipient's requests array
     },
 
-    updateRequest: async (_, { _id, status }, context) => {
+    updateRequest: async (_, { id, status }, context) => {
       isAuthenticated(context, "You must be logged in to respond to requests.");
-      if (context.user._id === request.recipient) {
+      // if (context.user._id === id) {
         const request = await Request.findByIdAndUpdate(
-          _id,
+          id,
           { status },
           {
             new: true,
@@ -61,11 +61,11 @@ const resolvers = {
         // that same hook then deletes the request document
         // a pre-delete hook removes the request ID from both users' requests arrays
         return request;
-      } else {
-        throw new AuthenticationError(
-          "You may only respond to requests sent to you."
-        );
-      }
+      // } else {
+      //   throw new AuthenticationError(
+      //     "You may only respond to requests sent to you."
+      //   );
+      // }
     },
 
     deleteRequest: async (_, { _id }) => {
