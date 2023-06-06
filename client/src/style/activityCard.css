@@ -1,8 +1,14 @@
+.activity-container{
+  display: flex;
+  justify-content: center;
+
+}
+
 .activity-content{
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 40px;
+  margin: 30px;
   height: 200px;
   width: 450px;
   background: rgba(255, 255, 255, 0.8);
