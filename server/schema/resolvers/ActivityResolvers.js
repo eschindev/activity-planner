@@ -130,7 +130,7 @@ const resolvers = {
         { $addToSet: { comments: comment } },
         { new: true }
       );
-      return activity;
+      return true;
     },
 
     deleteComment: async (_, { commentId }, context) => {
@@ -148,7 +148,7 @@ const resolvers = {
           "Comment not found or you do not have permission to delete."
         );
       }
-      return activity;
+      return true;
     },
   },
 };

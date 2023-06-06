@@ -1,4 +1,4 @@
-.user-container{
+.user-container {
   display: flex;
   justify-content: center;
 }
@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: start;
   margin: 15px;
-  height: 100px;
+  height: auto;
   width: 400px;
   background: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
@@ -18,7 +18,5 @@
 
 .custom-icon {
   font-size: 50px;
-  margin-bottom: 20px;
   color: rgba(92, 4, 156, 0.854);
- 
 }

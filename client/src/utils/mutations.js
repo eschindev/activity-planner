@@ -115,39 +115,13 @@ export const LEAVE_ACTIVITY = gql`
 
 export const ADD_COMMENT = gql`
   mutation addComment($id: ID!, $commentBody: String!) {
-    addComment(_id: $id, commentBody: $commentBody) {
-      comments {
-        _id
-        commentBody
-        user {
-          _id
-          username
-          firstName
-          lastName
-          fullName
-        }
-        username
-        timestamp
-      }
-    }
+    addComment(_id: $id, commentBody: $commentBody)
   }
 `;
 
 export const DELETE_COMMENT = gql`
   mutation deleteComment($id: ID!, $commentId: ID!) {
-    deleteComment(_id: $id, commentId: $commentId) {
-      comments {
-        _id
-        commentBody
-        user {
-          _id
-          username
-          firstName
-          lastName
-          fullName
-        }
-      }
-    }
+    deleteComment(_id: $id, commentId: $commentId)
   }
 `;
 // id argument is for activity id
@@ -211,7 +185,6 @@ export const CREATE_REQUEST = gql`
   mutation createRequest($recipient: ID!) {
     createRequest(recipient: $recipient) {
       _id
-
     }
   }
 `;
