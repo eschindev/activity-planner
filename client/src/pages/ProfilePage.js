@@ -23,7 +23,7 @@ const ProfilePage = ({ currentUserId }) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography variant="h2">{user.username} !</Typography>
+        <Typography variant="h2">{user.username}</Typography>
         <Typography variant="h5">{user.fullName}</Typography>
       </Grid>
       <Grid item xs={12} lg={6}>
