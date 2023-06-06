@@ -2,7 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ACTIVITIES, QUERY_USERS } from "../utils/queries";
-import RequestList from "../components/RequestList";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import UserList from "../components/UserList";
 import ActivityList from "../components/ActivityList";
 
@@ -19,7 +20,14 @@ export default function SearchResultPage({ currentUserId }) {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   if (!data) {
@@ -28,7 +36,7 @@ export default function SearchResultPage({ currentUserId }) {
 
   switch (searchType) {
     case "users":
-      return <RequestList users={data.searchUsers} />;
+      return <UserList users={data.searchUsers} />;
     case "activities":
       return <ActivityList activities={data.searchActivities} />;
     default:
