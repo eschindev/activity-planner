@@ -17,6 +17,8 @@ const RequestCard = ({ user }) => {
     console.log(createResponse);}
     catch (error) {
         console.error (error);
+        alert(error)
+        
     }
   };
 

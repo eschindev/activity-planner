@@ -211,21 +211,7 @@ export const CREATE_REQUEST = gql`
   mutation createRequest($recipient: ID!) {
     createRequest(recipient: $recipient) {
       _id
-      sender {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      recipient {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      status
+
     }
   }
 `;
