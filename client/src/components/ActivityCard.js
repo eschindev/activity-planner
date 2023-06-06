@@ -16,7 +16,8 @@ const ActivityCard = ({ data }) => {
         stiffness: 260,
         damping: 20
       }}
-    >
+    >  
+
       <CardContent>
         <Link to={`/activity/${data._id}`}>
           <Typography variant="h5" component="div">
@@ -33,7 +34,9 @@ const ActivityCard = ({ data }) => {
           {data.location}
         </Typography>
       </CardContent>
+    
     </motion.div>
+    
   );
 };
 

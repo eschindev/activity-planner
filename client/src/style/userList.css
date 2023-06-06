@@ -1,0 +1,11 @@
+.search-user{
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.search-box {
+  border-radius: 5px;
+  border: ridge;
+  border-color: rgba(43, 129, 204, 0.612);
+}
