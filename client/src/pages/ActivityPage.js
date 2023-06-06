@@ -17,10 +17,7 @@ const ActivityPage = ({ currentUserId }) => {
   });
 
   const Activity = data?.getActivityById || {};
-console.log(data);
-  console.log(Activity);
-  console.log(Activity.invites);
-  if (loading && Activity == {}) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -45,10 +42,18 @@ console.log(data);
           {Activity.description}
           <p>Location: {Activity.location}</p>
           <h2>Already invited: </h2>
-          {Activity.invites ? Activity.invites.map((i) => {
-            console.log(i);
-            return <InviteCard key={i._id} currentUserId={currentUserId} data={{activity: {...i}}} />;
-          }) : null}
+          {Activity.invites
+            ? Activity.invites.map((i) => {
+                return (
+                  <InviteCard
+                    key={i._id}
+                    currentUserId={currentUserId}
+                    data={{ ...i }}
+                    activity={Activity}
+                  />
+                );
+              })
+            : null}
         </blockquote>
       </div>
     </div>

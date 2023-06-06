@@ -30,14 +30,13 @@ export default function SearchResultPage({ currentUserId }) {
     );
   }
 
-
   if (!data) {
     return <div>Search failed. Confirm that you are logged in and</div>;
   }
 
   switch (searchType) {
     case "users":
-      return <RequestList users={data.searchUsers} />;
+      return <UserList users={data.searchUsers} />;
     case "activities":
       return <ActivityList activities={data.searchActivities} />;
     default:
