@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import "../style/activityCard.css"
 
 const ActivityCard = ({ data }) => {
-  return (
+  return ( 
+    <div className="activity-container">
     <motion.div
       className="activity-content"
       initial={{ scale: 0 }}
@@ -36,6 +37,7 @@ const ActivityCard = ({ data }) => {
       </CardContent>
     
     </motion.div>
+    </div>
     
   );
 };

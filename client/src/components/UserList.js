@@ -59,7 +59,7 @@ export default function UserList({ users }) {
         <div>No users found</div>
       )}
       <Box display="flex" justifyContent="center" marginTop={2}>
-        <Pagination
+        <Pagination variant="outlined" color="secondary"
           count={Math.ceil(filterUsers.length / usersPerPage)}
           page={currentPage}
           onChange={handlePageChange}
