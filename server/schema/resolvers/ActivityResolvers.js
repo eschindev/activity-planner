@@ -17,10 +17,16 @@ const resolvers = {
         .populate("participants")
         .populate({
           path: "invites",
-          populate: {
-            path: "sender recipient",
-            model: "User",
-          },
+          populate: [
+            {
+              path: "sender recipient",
+              model: "User",
+            },
+            {
+              path: "activity",
+              model: "Activity",
+            },
+          ],
         })
         .populate({
           path: "comments",

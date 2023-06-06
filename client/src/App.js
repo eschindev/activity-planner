@@ -54,7 +54,10 @@ function App() {
           <Header currentUserId={currentUserId} />
           <div className="container">
             <Routes>
-              <Route path="/" element={<MyProfilePage currentUserId={currentUserId}/>} />
+              <Route
+                path="/"
+                element={<MyProfilePage currentUserId={currentUserId} />}
+              />
               <Route
                 path="/login"
                 element={<LoginPage currentUserId={currentUserId} />}

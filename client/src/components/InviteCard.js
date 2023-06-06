@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
 import { UPDATE_INVITE } from "../utils/mutations";
 
-const InviteCard = ({ data, currentUserId, activity }) => {
+const InviteCard = ({ data, currentUserId }) => {
   const isRecipient = data.recipient._id === currentUserId;
 
   const [updateInvite, { error, inviteData }] = useMutation(UPDATE_INVITE);
@@ -34,13 +34,16 @@ const InviteCard = ({ data, currentUserId, activity }) => {
               {data.recipient.firstName}
             </Link>
           )}{" "}
-          to <Link to={`/activity/${activity._id}`}>{activity.name}</Link>
+          to{" "}
+          <Link to={`/activity/${data.activity._id}`}>
+            {data.activity.name}
+          </Link>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {dayjs(activity.date).format("DD-MM-YYYY HH:MM")}
+          {dayjs(data.activity.date).format("DD-MM-YYYY HH:MM")}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {activity.location}
+          {data.activity.location}
         </Typography>
         {isRecipient ? (
           <>

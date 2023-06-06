@@ -4,7 +4,8 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 import { QUERY_ACTIVITY } from "../utils/queries";
-import InviteCard from "../components/InviteCard";
+import InviteList from "../components/InviteList";
+import UserList from "../components/UserList";
 
 const ActivityPage = ({ currentUserId }) => {
   if (!currentUserId) {
@@ -41,19 +42,13 @@ const ActivityPage = ({ currentUserId }) => {
         >
           {Activity.description}
           <p>Location: {Activity.location}</p>
+          <h2>Participants:</h2>
+          <UserList users={Activity.participants}></UserList>
           <h2>Already invited: </h2>
-          {Activity.invites
-            ? Activity.invites.map((i) => {
-                return (
-                  <InviteCard
-                    key={i._id}
-                    currentUserId={currentUserId}
-                    data={{ ...i }}
-                    activity={Activity}
-                  />
-                );
-              })
-            : null}
+          <InviteList
+            invites={Activity.invites}
+            currentUserId={currentUserId}
+          />
         </blockquote>
       </div>
     </div>
