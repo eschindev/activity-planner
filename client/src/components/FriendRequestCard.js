@@ -11,7 +11,7 @@ const FriendRequestCard = ({ request }) => {
   const handleRequestResponse = async (event, status) => {
     const id = request._id;
     console.log(request);
-    
+
     console.log(event.target.parentElement);
     const { updateData } = await updateRequest({
       variables: { id: id, status: status},
@@ -20,7 +20,7 @@ const FriendRequestCard = ({ request }) => {
 
   return (
    
-          <li key={request._id} reqId={request._id}> {/*Do NOT get rid of this key when formatting!!! */}
+          <li key={request._id} reqId={request._id}> 
             {request.sender.fullName}
             <Button onClick={(event) => handleRequestResponse(event, "accepted")}>
               Accept
@@ -33,17 +33,4 @@ const FriendRequestCard = ({ request }) => {
 
 export default FriendRequestCard;
 
-// export default function RequestsReceived({ requests }) {
-//   console.log(requests);
-//   return (
-//     <Container maxWidth="sm">
-//       {users ? (
-//         requests.map((request) => {
-//           return <Request key={user._id} user={user} />;
-//         })
-//       ) : (
-//         <div>No users found</div>
-//       )}
-//     </Container>
-//   );
-// }
+
