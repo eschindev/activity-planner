@@ -3,25 +3,24 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_INVITE } from "../utils/mutations";
 
 const InvitedCard = ({ data }) => {
-    const [ visible, setVisible ] = useState(true); 
+  const [visible, setVisible] = useState(true);
   const [updateInvite, { error, inviteData }] = useMutation(UPDATE_INVITE);
 
   const handleInviteResponse = async (event) => {
-console.log(event.target.innerText);
+    console.log(event.target.innerText);
     const id = data._id;
 
     const status = "accepted";
     console.log(id);
-    
-    const { updateData } = await updateInvite({
 
-        variables: { id: id, status: status },
-      });
-      console.log(updateData);
-      setVisible(false);
+    const { updateData } = await updateInvite({
+      variables: { id: id, status: status },
+    });
+    console.log(updateData);
+    setVisible(false);
   };
   if (!visible) {
-    return <div></div>
+    return <div></div>;
   }
   return (
     <div className="my-3">

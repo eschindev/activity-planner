@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ActivityCard from "../components/ActivityCard";
 import InviteCard from "../components/InviteCard";
 import InvitedCard from "../components/InvitedCard";
+import FriendRequestList from '../components/FriendRequestList';
 
 const MyProfilePage = ({ currentUserId }) => {
   //declare username to be, if they are logged in, get it from their profile, if they
@@ -43,7 +44,7 @@ const MyProfilePage = ({ currentUserId }) => {
           return <InviteCard currentUserId={currentUserId} data={i} />;
         })}
       </div>
-
+        <FriendRequestList requests={user.requests}/>
       <h2>Your upcoming activities:</h2>
       <div className="activities-container">
         {user.activities.map((a) => {

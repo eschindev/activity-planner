@@ -45,6 +45,7 @@ export const QUERY_ME = gql`
         fullName
       }
       requests {
+        _id
         sender {
           _id
           username
