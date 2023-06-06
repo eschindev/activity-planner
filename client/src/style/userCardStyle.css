@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 30px;
-  height: 200px;
+  margin: 15px;
+  height: 100px;
   width: 400px;
   background: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
@@ -18,8 +18,7 @@
 
 .custom-icon {
   font-size: 50px;
-  margin-bottom: 25px;
-  color: rgba(0, 0, 255, 0.556);
+  margin-bottom: 20px;
+  color: rgba(92, 4, 156, 0.854);
  
-
 }
