@@ -138,10 +138,11 @@ const CreateActivityPage = ({ currentUserId }) => {
                   id="demo-simple-select"
                   value={formState.private}
                   label="Private Event"
+                  name="private"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"Yes"}>Yes</MenuItem>
-                  <MenuItem value={"No"}>No</MenuItem>
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
                 </Select>
               </FormControl>
 

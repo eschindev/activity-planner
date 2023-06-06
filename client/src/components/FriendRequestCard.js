@@ -10,7 +10,7 @@ const FriendRequestCard = ({ request }) => {
   const [updateRequest, { error, requestData }] = useMutation(UPDATE_REQUEST);
   const handleRequestResponse = async (event, status) => {
     const id = request._id;
-    console.log(request);
+    console.log("request: ", request);
 
     console.log(event.target.parentElement);
     const { updateData } = await updateRequest({
