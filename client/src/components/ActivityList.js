@@ -16,3 +16,5 @@ export default function ActivityList({ activities }) {
     </Container>
   );
 }
+//fuzzy search for activity list
+//Todo--- styling for the searchresultspage/styling to all list components

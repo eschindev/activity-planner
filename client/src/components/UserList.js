@@ -17,3 +17,4 @@ export default function UserList({ users }) {
     </Container>
   );
 }
+//a search box using fuzzy search
