@@ -6,15 +6,15 @@ import { UPDATE_REQUEST } from "../utils/mutations";
 import Button from "@mui/material/Button";
 import FriendRequestCard from "./FriendRequestCard";
 
-const FriendRequestList = ({ requests }) => {
-
+const FriendRequestList = ( {requests} ) => {
+console.log("here is:", requests);
 
   return (
     <div>
       <h2>Friend Requests</h2>
       <ul>
         {requests.map((request) => (
-          <li key={request._id} reqId={request._id}> {/*Do NOT get rid of this key when formatting!!! */}
+          <li key={request._id} reqId={request._id}>
             <FriendRequestCard request={request}/>
           </li>
         ))}
