@@ -16,6 +16,7 @@ import ActivityPage from "./pages/ActivityPage";
 import Header from "./components/Header";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyProfilePage from "./pages/MyProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -59,6 +60,10 @@ function App() {
                 element={<MyProfilePage currentUserId={currentUserId} />}
               />
               <Route
+                path="user/:userId"
+                element={<ProfilePage currentUserId={currentUserId} />}
+              />
+              <Route
                 path="/login"
                 element={<LoginPage currentUserId={currentUserId} />}
               />
@@ -66,9 +71,6 @@ function App() {
                 path="/signup"
                 element={<SignUpPage currentUserId={currentUserId} />}
               />
-              {/* <Route 
-                // path="/schedule" 
-                // element={<MyProfilePage currentUserId={currentUserId}/>} /> */}
               <Route
                 path="/create-activity"
                 element={<CreateActivityPage currentUserId={currentUserId} />}
