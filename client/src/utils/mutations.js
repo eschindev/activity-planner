@@ -208,7 +208,7 @@ export const DELETE_INVITE = gql`
 `;
 
 export const CREATE_REQUEST = gql`
-  mutation createInvite($recipient: ID!) {
+  mutation createRequest($recipient: ID!) {
     createRequest(recipient: $recipient) {
       _id
       sender {
@@ -231,7 +231,7 @@ export const CREATE_REQUEST = gql`
 `;
 
 export const UPDATE_REQUEST = gql`
-  mutation createInvite($id: ID!, $status: String!) {
+  mutation updateRequest($id: ID!, $status: String!) {
     updateRequest(_id: $id, status: $status) {
       _id
       sender {
@@ -254,7 +254,7 @@ export const UPDATE_REQUEST = gql`
 `;
 
 export const DELETE_REQUEST = gql`
-  mutation createInvite($id: ID!) {
+  mutation deleteRequest($id: ID!) {
     deleteRequest(_id: $id)
   }
 `;
