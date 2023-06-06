@@ -57,13 +57,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header({ currentUserId }) {
-  const searchTypeFromUrl = window.location.pathname.split("/")[2];
-  let searchTermFromUrl = window.location.pathname.split("/")[3];
-  if (searchTermFromUrl) {
-    searchTermFromUrl = decodeURIComponent(searchTermFromUrl);
+  let searchTypeFromUrl = "users";
+  let searchTermFromUrl = "";
+  if (window.location.pathname.split("/")[1] === "search") {
+    searchTypeFromUrl = window.location.pathname.split("/")[2];
+    searchTermFromUrl = window.location.pathname.split("/")[3];
+    if (searchTermFromUrl) {
+      searchTermFromUrl = decodeURIComponent(searchTermFromUrl);
+    }
   }
-  const [searchTemp, setSearchTemp] = useState(searchTermFromUrl || "");
-  const [searchType, setSearchType] = useState(searchTypeFromUrl || "users");
+  const [searchTemp, setSearchTemp] = useState(searchTermFromUrl);
+  const [searchType, setSearchType] = useState(searchTypeFromUrl);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
