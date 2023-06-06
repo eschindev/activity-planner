@@ -16,13 +16,12 @@ export default function UserCard({ user }) {
         transition={{
           type: "spring",
           stiffness: 260,
-          damping: 20
+          damping: 20,
         }}
       >
-
         <CardContent>
           <AccountBoxIcon className="custom-icon" style={{ fontSize: 60 }} />
-          <Link to={`/user/${user._id}`}>
+          <Link to={`/user/${user.username}`}>
             <Typography variant="h5" component="div">
               {user.username}
             </Typography>

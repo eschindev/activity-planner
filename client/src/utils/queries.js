@@ -82,6 +82,32 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_USERNAME = gql`
+  # get data for someone else's profile
+  query getUserByUsername($username: String!) {
+    getUserByUsername(username: $username) {
+      username
+      firstName
+      lastName
+      fullName
+      email
+      friends {
+        _id
+        username
+        firstName
+        lastName
+        fullName
+      }
+      activities {
+        _id
+        name
+        date
+        location
+      }
+    }
+  }
+`;
 export const QUERY_USERS = gql`
   # search for users
   query searchUsers($searchTerm: String!) {

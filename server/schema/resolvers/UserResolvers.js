@@ -26,6 +26,15 @@ const resolvers = {
       return user;
     },
 
+    getUserByUsername: async (_, { username }, context) => {
+      // previously getFullUserById
+      isAuthenticated(context, "You must be logged in to view user profiles.");
+      const user = await User.findOne({ username })
+        .populate("friends")
+        .populate("activities");
+      return user;
+    },
+
     getUsersByIds: async (_, { ids }, context) => {
       isAuthenticated(context, "You must be logged in to view other users.");
       const users = await User.find({ _id: { $in: ids } });
@@ -42,11 +51,11 @@ const resolvers = {
           populate: [
             {
               path: "sender recipient",
-              model: "User"
+              model: "User",
             },
             {
               path: "activity",
-              model: "Activity"
+              model: "Activity",
             },
           ],
         })

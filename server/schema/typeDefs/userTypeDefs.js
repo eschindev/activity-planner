@@ -21,6 +21,7 @@ const userSchema = gql`
 
   type Query {
     getUserById(_id: ID!): User
+    getUserByUsername(username: String!): User
     # getFullUserById(_id: ID!): User
     getAllUsers: [User]
     getUsersByIds(ids: [ID!]!): [User]
