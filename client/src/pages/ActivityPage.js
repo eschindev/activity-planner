@@ -7,6 +7,7 @@ import { QUERY_ACTIVITY } from "../utils/queries";
 import InviteList from "../components/InviteList";
 import UserList from "../components/UserList";
 import CommentList from "../components/CommentList";
+import CommentForm from "../components/CommentForm";
 
 const ActivityPage = ({ currentUserId }) => {
   if (!currentUserId) {
@@ -51,6 +52,7 @@ const ActivityPage = ({ currentUserId }) => {
             currentUserId={currentUserId}
           />
           <CommentList comments={Activity.comments}></CommentList>
+          <CommentForm activityId={id}/>
         </blockquote>
       </div>
     </div>
