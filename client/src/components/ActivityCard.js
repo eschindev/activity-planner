@@ -6,7 +6,8 @@ import Typography from "@mui/material/Typography";
 import "../style/activityCard.css"
 
 const ActivityCard = ({ data }) => {
-  return (
+  return ( 
+    <div className="activity-container">
     <motion.div
       className="activity-content"
       initial={{ scale: 0 }}
@@ -16,7 +17,8 @@ const ActivityCard = ({ data }) => {
         stiffness: 260,
         damping: 20
       }}
-    >
+    >  
+
       <CardContent>
         <Link to={`/activity/${data._id}`}>
           <Typography variant="h5" component="div">
@@ -33,7 +35,10 @@ const ActivityCard = ({ data }) => {
           {data.location}
         </Typography>
       </CardContent>
+    
     </motion.div>
+    </div>
+    
   );
 };
 

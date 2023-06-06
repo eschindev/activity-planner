@@ -44,7 +44,7 @@ export default function ActivityList({ activities }) {
         <input
           className="search-box"
           type="text"
-          placeholder="Search activities..."
+          placeholder="Filter activities..."
           value={searchQuery}
           onChange={handleSearchChange}
         />
@@ -58,11 +58,11 @@ export default function ActivityList({ activities }) {
       )}
       {filteredActivities.length > activitiesPerPage && (
         <Box display="flex" justifyContent="center" marginTop={2}>
-        <Pagination variant="outlined" color="secondary"
-          count={Math.ceil(filteredActivities.length / activitiesPerPage)}
-          page={currentPage}
-          onChange={handlePageChange}
-        />
+          <Pagination variant="outlined" color="secondary"
+            count={Math.ceil(filteredActivities.length / activitiesPerPage)}
+            page={currentPage}
+            onChange={handlePageChange}
+          />
         </Box>
       )}
     </Container>

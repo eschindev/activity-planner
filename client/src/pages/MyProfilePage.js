@@ -2,10 +2,11 @@ import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
-import ActivityCard from "../components/ActivityCard";
-import InviteCard from "../components/InviteCard";
-import InvitedCard from "../components/InvitedCard";
-import FriendRequestList from '../components/FriendRequestList';
+import { Grid, Typography } from "@mui/material";
+import ActivityList from "../components/ActivityList";
+import UserList from "../components/UserList";
+import InviteList from "../components/InviteList";
+import RequestList from "../components/RequestList";
 
 const MyProfilePage = ({ currentUserId }) => {
   //declare username to be, if they are logged in, get it from their profile, if they
@@ -14,13 +15,8 @@ const MyProfilePage = ({ currentUserId }) => {
     window.location.replace("/login");
   }
 
-  const username = Auth.loggedIn() ? Auth.getProfile().data.username : "";
-  console.log(Auth.getProfile());
-  console.log(username);
-  const { loading, data } = useQuery(QUERY_ME, {
-    // variables: {username: username}
-  });
-  console.log(data);
+  const { loading, data } = useQuery(QUERY_ME);
+
   if (!Auth.loggedIn()) {
     return `Please log in`;
   }
@@ -28,34 +24,32 @@ const MyProfilePage = ({ currentUserId }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  const user = data?.getMyUser || {};
-  console.log(user);
-  return (
-    <div>
-      <h2>Welcome {user.username} !</h2>
-      <p>Profile of : {user.fullName}</p>
-      {/* <p> Your latest invite: {user.invites}</p>
-            <p>Your Activity List: {user.activity}</p> */}
-      {/* <p>Your friends: {user.friends}</p> */}
-      {/* <p>Your latest friend requests: {user.requests}</p> */}
-      <h2>You've been invited to: </h2>
-      <div className="invites-container">
-        {user.invites.map((i) => {
-          return <InviteCard currentUserId={currentUserId} data={i} />;
-        })}
-      </div>
-        <FriendRequestList requests={user.requests}/>
-      <h2>Your upcoming activities:</h2>
-      <div className="activities-container">
-        {user.activities.map((a) => {
-          return <ActivityCard data={a} />;
-        })}
-      </div>
 
-      <Link to="/create-activity">
-        <button>Create New Activity</button>
-      </Link>
-    </div>
+  const user = data?.getMyUser || {};
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h2">Welcome, {user.username}!</Typography>
+        <Typography variant="h5">{user.fullName}</Typography>
+      </Grid>
+      <Grid item xs={12} lg={6}>
+        <Typography variant="h4">Activities:</Typography>
+        <ActivityList activities={user.activities} />
+      </Grid>
+      <Grid item xs={12} lg={6}>
+        <Typography variant="h4">Friends:</Typography>
+        <UserList users={user.friends} currentUserId={currentUserId} />
+      </Grid>
+      <Grid item xs={12} lg={6}>
+        <Typography variant="h4">Activity Invites:</Typography>
+        <InviteList invites={user.invites} currentUserId={currentUserId} />
+      </Grid>
+      <Grid item xs={12} lg={6}>
+        <Typography variant="h4">Friend Requests:</Typography>
+        <RequestList requests={user.requests} currentUserId={currentUserId} />
+      </Grid>
+    </Grid>
   );
 };
 export default MyProfilePage;
