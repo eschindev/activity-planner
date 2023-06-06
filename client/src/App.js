@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -36,11 +36,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const token = localStorage.getItem("id_token");
-const decodedToken = token ? JSON.parse(atob(token.split(".")[1])) : null;
-const currentUserId = decodedToken?.data?._id;
-//const currentUserId = "";
-
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
@@ -52,36 +47,18 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          <Header currentUserId={currentUserId} />
+          <Header />
           <div className="container">
             <Routes>
-              <Route
-                path="/"
-                element={<MyProfilePage currentUserId={currentUserId} />}
-              />
-              <Route
-                path="user/:username"
-                element={<ProfilePage currentUserId={currentUserId} />}
-              />
-              <Route
-                path="/login"
-                element={<LoginPage currentUserId={currentUserId} />}
-              />
-              <Route
-                path="/signup"
-                element={<SignUpPage currentUserId={currentUserId} />}
-              />
-              <Route
-                path="/create-activity"
-                element={<CreateActivityPage currentUserId={currentUserId} />}
-              />
-              <Route
-                path="/activity/:id"
-                element={<ActivityPage currentUserId={currentUserId} />}
-              />
+              <Route path="/" element={<MyProfilePage />} />
+              <Route path="user/:username" element={<ProfilePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/create-activity" element={<CreateActivityPage />} />
+              <Route path="/activity/:id" element={<ActivityPage />} />
               <Route
                 path="/search/:searchType/:searchTerm"
-                element={<SearchResultPage currentUserId={currentUserId} />}
+                element={<SearchResultPage />}
               />
             </Routes>
           </div>
