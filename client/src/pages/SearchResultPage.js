@@ -37,7 +37,7 @@ export default function SearchResultPage({ currentUserId }) {
 
   switch (searchType) {
     case "users":
-      return <UserList users={data.searchUsers} />;
+      return <RequestList users={data.searchUsers} />;
     case "activities":
       return <ActivityList activities={data.searchActivities} />;
     default:
