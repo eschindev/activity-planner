@@ -24,27 +24,30 @@ const MyProfilePage = ({ currentUserId }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   const user = data?.getMyUser || {};
-  console.log(user);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h2">Welcome, {user.username}!</Typography>
         <Typography variant="h5">{user.fullName}</Typography>
       </Grid>
-      <Grid item xs={12} lg={5}>
+      <Grid item xs={12} lg={6}>
         <Typography variant="h4">Activities:</Typography>
         <ActivityList activities={user.activities} />
       </Grid>
-      <Grid item xs={12} lg={5}>
+      <Grid item xs={12} lg={6}>
         <Typography variant="h4">Friends:</Typography>
         <UserList users={user.friends} currentUserId={currentUserId} />
       </Grid>
-      <Grid item xs={12} lg={2}>
+      <Grid item xs={12} lg={6}>
         <Typography variant="h4">Activity Invites:</Typography>
-        <InviteList users={user.invites} currentUserId={currentUserId} />
+        <InviteList invites={user.invites} currentUserId={currentUserId} />
+      </Grid>
+      <Grid item xs={12} lg={6}>
         <Typography variant="h4">Friend Requests:</Typography>
-        <RequestList users={user.requests} currentUserId={currentUserId} />
+        <RequestList requests={user.requests} currentUserId={currentUserId} />
       </Grid>
     </Grid>
   );

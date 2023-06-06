@@ -3,16 +3,15 @@ import { Link } from "react-router-dom";
 import RequestCard from "./RequestCard";
 import Container from "@mui/material/Container";
 
-export default function RequestList({ users }) {
-  console.log(users);
+export default function RequestList({ requests }) {
   return (
     <Container maxWidth="sm">
-      {users ? (
-        users.map((user) => {
-          return <RequestCard key={user._id} user={user} />;
+      {requests ? (
+        requests.map((request) => {
+          return <RequestCard key={request._id} request={request} />;
         })
       ) : (
-        <div>No users found</div>
+        <div>No requests found</div>
       )}
     </Container>
   );

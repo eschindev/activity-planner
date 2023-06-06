@@ -6,29 +6,31 @@ import { Link } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
-import { CREATE_REQUEST } from "../utils/mutations";
+import { UPDATE_REQUEST } from "../utils/mutations";
 
-const RequestCard = ({ user }) => {
-  console.log(user);
-  const [createRequest, { error, requestData }] = useMutation(CREATE_REQUEST);
-  const handleAddFriend = async () => {
-    try {
-    const { createResponse } = await createRequest({variables: { recipient: user._id }});
-    console.log(createResponse);}
-    catch (error) {
-        console.error (error);
-        alert(error)
-        
-    }
+const RequestCard = ({ request }) => {
+  console.log(request);
+  const [updateRequest, { error, requestData }] = useMutation(UPDATE_REQUEST);
+  const handleRequestResponse = async (status) => {
+    await updateRequest({
+      variables: { id: request._id, status: status },
+    });
   };
 
   return (
     <Card sx={{ margin: "10px" }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          <Link to={`/user/${user._id}`}>{user.firstName}</Link>{" "}
+          <Link to={`/user/${request.sender.username}`}>
+            {request.sender.fullName}
+          </Link>{" "}
         </Typography>
-        <Button onClick={handleAddFriend}>Add Friend</Button>
+        <Button onClick={() => handleRequestResponse("accepted")}>
+          Accept
+        </Button>
+        <Button onClick={() => handleRequestResponse("rejected")}>
+          Reject
+        </Button>
       </CardContent>
     </Card>
   );
