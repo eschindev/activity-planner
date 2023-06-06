@@ -7,8 +7,11 @@ import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
 import { UPDATE_INVITE } from "../utils/mutations";
+import auth from "../utils/auth.js";
 
-const InviteCard = ({ data, currentUserId }) => {
+const InviteCard = ({ data }) => {
+  const token = auth.getProfile();
+  const currentUserId = token.data._id;
   const isRecipient = data.recipient._id === currentUserId;
 
   const [updateInvite, { error, inviteData }] = useMutation(UPDATE_INVITE);
@@ -25,12 +28,14 @@ const InviteCard = ({ data, currentUserId }) => {
     <Card sx={{ margin: "10px" }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          <Link to={`/user/${data.sender._id}`}>{data.sender.firstName}</Link>{" "}
+          <Link to={`/user/${data.sender.username}`}>
+            {data.sender.firstName}
+          </Link>{" "}
           has invited{" "}
           {isRecipient ? (
             "you"
           ) : (
-            <Link to={`/user/${data.recipient._id}`}>
+            <Link to={`/user/${data.recipient.username}`}>
               {data.recipient.firstName}
             </Link>
           )}{" "}
@@ -57,26 +62,6 @@ const InviteCard = ({ data, currentUserId }) => {
       </CardContent>
     </Card>
   );
-
-  // return (
-  //   <div className="my-3">
-  //     <h3 className="card-header bg-dark text-light p-2 m-0">
-  //       {data.sender.fullName} <br />
-  //       <span style={{ fontSize: "1rem" }}>status: {data.status}</span>
-  //     </h3>
-  //     <div className="bg-light py-4">
-  //       <blockquote
-  //         className="p-4"
-  //         style={{
-  //           fontSize: "1.5rem",
-  //           fontStyle: "italic",
-  //           border: "2px dotted #1a1a1a",
-  //           lineHeight: "1.5",
-  //         }}
-  //       ></blockquote>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default InviteCard;

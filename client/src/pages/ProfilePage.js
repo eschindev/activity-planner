@@ -4,11 +4,15 @@ import { useParams } from "react-router-dom";
 import ActivityList from "../components/ActivityList";
 import UserList from "../components/UserList";
 import { Grid, Typography } from "@mui/material";
+import auth from "../utils/auth.js";
 
-const ProfilePage = ({ currentUserId }) => {
-  if (!currentUserId) {
+const ProfilePage = () => {
+  if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
+  const token = auth.getProfile();
+  const currentUserId = token.data._id;
+
   const { username } = useParams();
   const { loading, data } = useQuery(QUERY_USERNAME, {
     variables: { username: username },
@@ -31,7 +35,7 @@ const ProfilePage = ({ currentUserId }) => {
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography variant="h4">Friends:</Typography>
-        <UserList users={user.friends} currentUserId={currentUserId} />
+        <UserList users={user.friends} />
       </Grid>
     </Grid>
   );

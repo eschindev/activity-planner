@@ -6,9 +6,10 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import UserList from "../components/UserList";
 import ActivityList from "../components/ActivityList";
+import auth from "../utils/auth.js";
 
 export default function SearchResultPage({ currentUserId }) {
-  if (!currentUserId) {
+  if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
 
@@ -31,7 +32,9 @@ export default function SearchResultPage({ currentUserId }) {
   }
 
   if (!data) {
-    return <div>Search failed. Confirm that you are logged in and</div>;
+    return (
+      <div>Search failed. Confirm that you are logged in and try again.</div>
+    );
   }
 
   switch (searchType) {
