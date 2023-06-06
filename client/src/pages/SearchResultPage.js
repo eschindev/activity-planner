@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ACTIVITIES, QUERY_USERS } from "../utils/queries";
-
+import RequestList from "../components/RequestList";
 import UserList from "../components/UserList";
 import ActivityList from "../components/ActivityList";
 
@@ -28,7 +28,7 @@ export default function SearchResultPage({ currentUserId }) {
 
   switch (searchType) {
     case "users":
-      return <UserList users={data.searchUsers} />;
+      return <RequestList users={data.searchUsers} />;
     case "activities":
       return <ActivityList activities={data.searchActivities} />;
     default:
