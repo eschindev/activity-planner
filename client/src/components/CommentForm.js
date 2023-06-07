@@ -5,6 +5,9 @@ import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../utils/mutations";
 
 import Auth from "../utils/auth";
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import { Button } from "@mui/material";
 
 const CommentForm = ({ activityId, comments, setComments }) => {
   const [commentText, setCommentText] = useState("");
@@ -46,11 +49,21 @@ const CommentForm = ({ activityId, comments, setComments }) => {
   };
   const characterCount = commentText.length;
   return (
+    <Box
+       sx={{
+        width: 500,
+        maxWidth: '100%',
+        bgcolor: "white",
+        padding: "20px",
+        borderRadius: "5px"
+      }}
+    >
     <div>
       <h4>Comments</h4>
 
       {Auth.loggedIn() ? (
         <>
+       
           <p
             className={`m-0 ${
               characterCount === 280 || error ? "text-danger" : ""
@@ -63,21 +76,22 @@ const CommentForm = ({ activityId, comments, setComments }) => {
             className="flex-row justify-center justify-space-between-md align-center"
             onSubmit={handleFormSubmit}
           >
-            <div className="col-12 col-lg-9">
-              <textarea
+            <div>
+            <TextField 
                 name="commentText"
                 placeholder="Add your comment..."
                 value={commentText}
                 className="form-input w-100"
-                style={{ lineHeight: "1.5", resize: "vertical" }}
+                style={{ lineHeight: "1.5", resize: "vertical", width: "60vw"}}
                 onChange={handleChange}
-              ></textarea>
+              ></TextField>
             </div>
-
+          
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+            <Button variant="contained" sx={{ margin: '10px', whiteSpace: "nowrap"}}
+              type="submit">
                 Add Comment
-              </button>
+              </Button>
             </div>
           </form>
         </>
@@ -88,6 +102,7 @@ const CommentForm = ({ activityId, comments, setComments }) => {
         </p>
       )}
     </div>
+    </Box>
   );
 };
 
