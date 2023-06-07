@@ -8,6 +8,7 @@ import ActivityList from "../components/ActivityList";
 import UserList from "../components/UserList";
 import InviteList from "../components/InviteList";
 import RequestList from "../components/RequestList";
+import "../style/myProfile.css"
 
 const MyProfilePage = () => {
   if (!auth.loggedIn()) {
@@ -72,19 +73,19 @@ const MyProfilePage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activities:</Typography>
+        <Typography className="header-style" sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activities:</Typography>
         <ActivityList activities={user.activities} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friends:</Typography>
+        <Typography className="header-style" sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friends:</Typography>
         <UserList users={user.friends} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activity Invites:</Typography>
+        <Typography className="header-style" sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activity Invites:</Typography>
         <InviteList invites={user.invites} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friend Requests:</Typography>
+        <Typography className="header-style" sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friend Requests:</Typography>
         <RequestList requests={user.requests} />
       </Grid>
     </Grid>
