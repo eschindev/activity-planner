@@ -71,15 +71,20 @@ const resolvers = {
         owner: context.user._id,
         participants: [context.user._id],
       });
+      await User.findByIdAndUpdate(context.user._id, {
+        $addToSet: { activities: activity._id },
+      });
       return activity;
     },
 
     updateActivity: async (_, { _id, input }, context) => {
       isAuthenticated(context, "You must be logged in to update activities.");
-      let activity = await Activity.findById(_id);
+      let activity = await Activity.findById(_id).populate("owner");
+      console.log(activity.owner._id);
+      console.log(context.user._id);
       if (!activity) {
         throw new Error("No activity found with this id.");
-      } else if (activity.owner !== context.user._id) {
+      } else if (!(activity.owner._id == context.user._id)) {
         throw new AuthenticationError("You do not own this activity.");
       }
       activity = await Activity.findByIdAndUpdate(_id, input, {
@@ -93,7 +98,7 @@ const resolvers = {
       let activity = await Activity.findById(_id);
       if (!activity) {
         throw new Error("No activity found with this id.");
-      } else if (activity.owner !== context.user._id) {
+      } else if (!(activity.owner._id == context.user._id)) {
         throw new AuthenticationError("You do not own this activity.");
       }
       await Activity.findByIdAndDelete(_id);

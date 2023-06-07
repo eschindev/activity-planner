@@ -50,19 +50,6 @@ const activitySchema = new Schema({
   comments: [commentSchema],
 });
 
-// activitySchema.statics.bulkWrite = async function (operations) {
-//   const collection = this.collection;
-//   return collection.bulkWrite(operations);
-// };
-
-activitySchema.post("save", async function (doc, next) {
-  model("User").findByIdAndUpdate(doc.owner, {
-    $addToSet: { activities: doc._id },
-  });
-
-  next();
-});
-
 activitySchema.pre(
   "findOneAndDelete",
   { document: true },

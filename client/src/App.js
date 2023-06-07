@@ -17,8 +17,9 @@ import Header from "./components/Header";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import ProfilePage from "./pages/ProfilePage";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import EditActivityPage from "./pages/EditActivityPage";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -47,28 +48,35 @@ const client = new ApolloClient({
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <ApolloProvider client={client}>
-      <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
-          <Header />
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<MyProfilePage />} />
-              <Route path="user/:username" element={<ProfilePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/create-activity" element={<CreateActivityPage />} />
-              <Route path="/activity/:id" element={<ActivityPage />} />
-              <Route
-                path="/search/:searchType/:searchTerm"
-                element={<SearchResultPage />}
-              />
-            </Routes>
+      <ApolloProvider client={client}>
+        <Router>
+          <div className="flex-column justify-flex-start min-100-vh">
+            <Header />
+            <div className="container">
+              <Routes>
+                <Route path="/" element={<MyProfilePage />} />
+                <Route path="user/:username" element={<ProfilePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route
+                  path="/create-activity"
+                  element={<CreateActivityPage />}
+                />
+                <Route
+                  path="/edit-activity/:id"
+                  element={<EditActivityPage />}
+                />
+                <Route path="/activity/:id" element={<ActivityPage />} />
+                <Route
+                  path="/search/:searchType/:searchTerm"
+                  element={<SearchResultPage />}
+                />
+              </Routes>
+            </div>
+            {/* <Footer /> */}
           </div>
-          {/* <Footer /> */}
-        </div>
-      </Router>
-    </ApolloProvider>
+        </Router>
+      </ApolloProvider>
     </LocalizationProvider>
   );
 }

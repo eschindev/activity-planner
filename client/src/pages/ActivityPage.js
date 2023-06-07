@@ -3,7 +3,11 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 import { QUERY_ACTIVITY, QUERY_ME } from "../utils/queries";
-import { JOIN_ACTIVITY, LEAVE_ACTIVITY } from "../utils/mutations";
+import {
+  JOIN_ACTIVITY,
+  LEAVE_ACTIVITY,
+  DELETE_ACTIVITY,
+} from "../utils/mutations";
 import InviteList from "../components/InviteList";
 import UserList from "../components/UserList";
 import { Grid, Typography, Button } from "@mui/material";
@@ -17,7 +21,6 @@ const ActivityPage = () => {
   }
 
   const token = auth.getProfile();
-  const currentUser = token.data;
   const currentUserId = token.data._id;
   const [comments, setComments] = useState([]);
   const [participants, setParticipants] = useState([]);
@@ -27,10 +30,11 @@ const ActivityPage = () => {
   const { loading, data } = useQuery(QUERY_ACTIVITY, {
     variables: { id: id },
   });
-  const [getMyData, { myLoading, myData }] = useLazyQuery(QUERY_ME);
+  const [getMyData] = useLazyQuery(QUERY_ME);
 
-  const [leaveActivity, { leaveError }] = useMutation(LEAVE_ACTIVITY);
-  const [joinActivity, { joinError }] = useMutation(JOIN_ACTIVITY);
+  const [leaveActivity] = useMutation(LEAVE_ACTIVITY);
+  const [joinActivity] = useMutation(JOIN_ACTIVITY);
+  const [deleteActivity] = useMutation(DELETE_ACTIVITY);
 
   const handleLeaveActivity = async () => {
     try {
@@ -54,6 +58,19 @@ const ActivityPage = () => {
       setParticipants([...participants, myUser.data.getMyUser]);
     } catch (error) {
       window.alert(error);
+    }
+  };
+
+  const handleDeleteActivity = async () => {
+    if (window.confirm("Are you sure you want to delete this activity?")) {
+      try {
+        await deleteActivity({
+          variables: { id: id },
+        });
+        window.location.replace("/");
+      } catch (error) {
+        window.alert(error);
+      }
     }
   };
 
@@ -89,11 +106,21 @@ const ActivityPage = () => {
           <Grid item xs={12} md={4}>
             {activity.owner._id === currentUserId ? (
               <div>
-                <Button variant="contained" sx={{ margin: "20px" }}>
-                  Delete Activity
-                </Button>
-                <Button variant="contained" sx={{ margin: "20px" }}>
+                <Button
+                  variant="contained"
+                  sx={{ margin: "20px" }}
+                  onClick={() =>
+                    window.location.replace(`/edit-activity/${id}`)
+                  }
+                >
                   Edit Activity
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ margin: "20px", backgroundColor: "red" }}
+                  onClick={() => handleDeleteActivity()}
+                >
+                  Delete Activity
                 </Button>
               </div>
             ) : participantIds.includes(currentUserId) ? (
