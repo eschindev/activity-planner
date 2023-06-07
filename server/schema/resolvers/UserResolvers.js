@@ -140,6 +140,17 @@ const resolvers = {
         throw new AuthenticationError("You may only delete your own profile.");
       }
     },
+
+    removeFriend: async (_, { _id }, context) => {
+      isAuthenticated(context, "You must be logged in to remove a friend.");
+      await User.findByIdAndUpdate(context.user._id, {
+        $pull: { friends: _id },
+      });
+      await User.findByIdAndUpdate(_id, {
+        $pull: { friends: context.user._id },
+      });
+      return true;
+    },
   },
 };
 

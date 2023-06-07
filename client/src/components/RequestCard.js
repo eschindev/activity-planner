@@ -12,8 +12,6 @@ const RequestCard = ({ request }) => {
   const id = request._id;
   const [updateRequest, { error, requestData }] = useMutation(UPDATE_REQUEST);
   const handleRequestResponse = async (status) => {
-    console.log("id: ", id);
-    console.log("status: ", status);
     await updateRequest({
       variables: { id, status },
     });

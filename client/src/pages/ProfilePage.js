@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_USERNAME, QUERY_ME } from "../utils/queries";
-import { CREATE_REQUEST } from "../utils/mutations";
+import { CREATE_REQUEST, REMOVE_FRIEND } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import ActivityList from "../components/ActivityList";
@@ -18,14 +18,14 @@ const ProfilePage = () => {
   const token = auth.getProfile();
   const currentUserId = token.data._id;
 
-  const [createRequest, { error }] = useMutation(CREATE_REQUEST);
+  const [createRequest, { createRequestError }] = useMutation(CREATE_REQUEST);
+  const [removeFriend, { removeFriendError }] = useMutation(REMOVE_FRIEND);
+
   const { myData } = useQuery(QUERY_ME);
 
-  let currentUserFriendIds = [];
   let currentUserRequestSenderIds = [];
   if (myData) {
-    currentUserFriendIds = myData.getMyUser.friends.map((friend) => friend._id);
-    currentUserRequestSenderIds = data.getMyUser.requests.map(
+    currentUserRequestSenderIds = myData.getMyUser.requests.map(
       (request) => request.sender._id
     );
   }
@@ -44,7 +44,6 @@ const ProfilePage = () => {
   let user = {};
   if (data) {
     user = data?.getUserByUsername;
-    console.log(user);
     userFriendIds = user.friends.map((friend) => friend._id);
     userRequestSenderIds = user.requests.map((request) => request.sender._id);
   }
@@ -55,6 +54,17 @@ const ProfilePage = () => {
         variables: { recipient: user._id },
       });
       setRequestSent(true);
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
+  const handleRemoveFriend = async () => {
+    try {
+      await removeFriend({
+        variables: { id: user._id },
+      });
+      window.location.reload();
     } catch (error) {
       window.alert(error);
     }
@@ -83,6 +93,15 @@ const ProfilePage = () => {
                 sx={{ mt: "20px" }}
               >
                 Add Friend
+              </Button>
+            ) : null}
+            {userFriendIds.includes(currentUserId) ? (
+              <Button
+                variant="contained"
+                onClick={handleRemoveFriend}
+                sx={{ mt: "20px" }}
+              >
+                Remove Friend
               </Button>
             ) : null}
           </Grid>
