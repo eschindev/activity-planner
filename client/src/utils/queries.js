@@ -18,6 +18,7 @@ export const QUERY_ME = gql`
       }
       invites {
         _id
+        status
         sender {
           _id
           username
@@ -217,6 +218,7 @@ export const QUERY_ACTIVITY = gql`
       }
       invites {
         _id
+        status
         sender {
           _id
           username
