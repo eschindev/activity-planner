@@ -10,10 +10,11 @@ import {
 } from "../utils/mutations";
 import InviteList from "../components/InviteList";
 import UserList from "../components/UserList";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button, Box } from "@mui/material";
 import auth from "../utils/auth.js";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
+import InviteModal from "../components/InviteModal";
 
 const ActivityPage = () => {
   if (!auth.loggedIn()) {
@@ -25,6 +26,8 @@ const ActivityPage = () => {
   const [comments, setComments] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [participantIds, setParticipantIds] = useState([]);
+  const [invites, setInvites] = useState([]);
+  const [activity, setActivity] = useState({});
 
   const { id } = useParams();
   const { loading, data } = useQuery(QUERY_ACTIVITY, {
@@ -74,10 +77,14 @@ const ActivityPage = () => {
     }
   };
 
+  let ownerId;
   useEffect(() => {
     if (data) {
       setComments(data.getActivityById.comments);
       setParticipants(data.getActivityById.participants);
+      setInvites(data.getActivityById.invites);
+      setActivity(data.getActivityById);
+      ownerId = data.getActivityById.owner._id;
     }
   }, [data]);
 
@@ -87,11 +94,9 @@ const ActivityPage = () => {
     }
   }, [participants]);
 
-  if (loading) {
+  if (loading || !activity) {
     return <div>Loading...</div>;
   }
-
-  const activity = data?.getActivityById || {};
 
   return (
     <Grid container spacing={2}>
@@ -104,8 +109,14 @@ const ActivityPage = () => {
             <Typography variant="h6">{activity.description}</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
-            {activity.owner._id === currentUserId ? (
+            {ownerId === currentUserId ? (
               <div>
+                <InviteModal
+                  activity={activity}
+                  participantIds={participantIds}
+                  invites={invites}
+                  setInvites={setInvites}
+                />
                 <Button
                   variant="contained"
                   sx={{ margin: "20px" }}
@@ -124,13 +135,21 @@ const ActivityPage = () => {
                 </Button>
               </div>
             ) : participantIds.includes(currentUserId) ? (
-              <Button
-                variant="contained"
-                onClick={() => handleLeaveActivity()}
-                sx={{ margin: "20px" }}
-              >
-                Leave Activity
-              </Button>
+              <div>
+                <InviteModal
+                  activity={activity}
+                  participantIds={participantIds}
+                  invites={invites}
+                  setInvites={setInvites}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => handleLeaveActivity()}
+                  sx={{ margin: "20px" }}
+                >
+                  Leave Activity
+                </Button>
+              </div>
             ) : (
               <Button
                 variant="contained"
@@ -149,15 +168,21 @@ const ActivityPage = () => {
       </Grid>
       <Grid item xs={12} lg={6}>
         <Typography variant="h4">Active Invites:</Typography>
-        <InviteList invites={activity.invites} />
-      </Grid>
-      <Grid item xs={12}>
-        <CommentForm
-          activityId={id}
-          comments={comments}
-          setComments={setComments}
-        />
-        <CommentList comments={comments} activityId={id} />
+        <InviteList invites={invites} />
+        <br />
+        <Box sx={{ justifyContent: "center" }}>
+          <CommentForm
+            activityId={id}
+            comments={comments}
+            setComments={setComments}
+            sx={{ width: "100%" }}
+          />
+          <CommentList
+            comments={comments}
+            activityId={id}
+            sx={{ width: "100%" }}
+          />
+        </Box>
       </Grid>
     </Grid>
   );
