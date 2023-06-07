@@ -18,7 +18,6 @@ const InviteCard = ({ data }) => {
 
   const handleInviteResponse = async (status) => {
     const id = data._id;
-    console.log(data);
     const { updateData } = await updateInvite({
       variables: { id: id, status: status },
     });
