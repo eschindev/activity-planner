@@ -4,6 +4,7 @@ export const QUERY_ME = gql`
   # get data for your own profile
   query getMyUser {
     getMyUser {
+      _id
       username
       firstName
       lastName
