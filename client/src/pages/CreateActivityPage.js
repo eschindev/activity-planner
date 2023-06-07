@@ -17,6 +17,8 @@ import MenuItem from "@mui/material/MenuItem";
 import auth from "../utils/auth.js";
 import textFieldStyles from "../components/TextFieldStyles";
 import EditCalendarTwoToneIcon from "@mui/icons-material/EditCalendarTwoTone";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 
 const CreateActivityPage = () => {
   if (!auth.loggedIn()) {
@@ -39,6 +41,13 @@ const CreateActivityPage = () => {
       [name]: value,
     });
   };
+
+  const handleDateChange = (newValue) => {
+    setFormState({
+      ...formState,
+      "date": newValue
+    });
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -105,7 +114,8 @@ const CreateActivityPage = () => {
               value={formState.name}
               onChange={handleChange}
             />
-            <TextField
+            <DatePicker id="date" label="date" value={formState.date} onChange={handleDateChange}/>
+            {/* <TextField
               sx={{
                 "& label": {
                   marginTop: "-10px", // Adjust the value to position the label higher
@@ -121,7 +131,7 @@ const CreateActivityPage = () => {
               autoFocus
               value={formState.date}
               onChange={handleChange}
-            />
+            /> */}
             <TextField
               sx={{
                 "& label": {

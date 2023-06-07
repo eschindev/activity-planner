@@ -17,6 +17,8 @@ import Header from "./components/Header";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import ProfilePage from "./pages/ProfilePage";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -44,6 +46,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
@@ -66,6 +69,7 @@ function App() {
         </div>
       </Router>
     </ApolloProvider>
+    </LocalizationProvider>
   );
 }
 
