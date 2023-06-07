@@ -7,7 +7,7 @@ import "../style/requestListCard.css"
 export default function RequestList({ requests }) {
   return (
     <Container maxWidth="sm"
-    style={{ maxHeight: "200px", overflow: "auto" }}
+    style={{ maxHeight: "300px", overflow: "auto" }}
     className="request-list-container"
     >
       {requests ? (
