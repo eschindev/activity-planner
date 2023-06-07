@@ -15,7 +15,7 @@ const inviteSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "accepted", "rejected", "maybe"],
+    enum: ["pending", "accepted", "declined", "maybe"],
     default: "pending",
   },
 });
@@ -31,14 +31,14 @@ inviteSchema.post("save", async function (doc) {
 });
 
 inviteSchema.post("findOneAndUpdate", async function (doc) {
-  if (this._update.status === "accepted") {
+  if (this._update["$set"].status === "accepted") {
     await model("Activity").findByIdAndUpdate(doc.activity, {
       $addToSet: { participants: doc.recipient },
     });
     await model("User").findByIdAndUpdate(doc.recipient, {
       $addToSet: { activities: doc.activity },
     });
-  } else if (this._update.status === "rejected") {
+  } else if (this._update["$set"].status === "declined") {
     await model("Activity").findByIdAndUpdate(doc.activity, {
       $pull: { participants: doc.recipient },
     });
