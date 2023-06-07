@@ -44,7 +44,7 @@ const resolvers = {
             activity,
             sender: context.user._id,
           });
-          return invite;
+          return true;
         } else {
           throw new AuthenticationError(
             "You must be logged in to invite users to activities."
@@ -58,19 +58,23 @@ const resolvers = {
 
     updateInvite: async (_, { id, status }, context) => {
       isAuthenticated(context, "You must be logged in to respond to invites.");
-      
+
       console.log(status);
       console.log(id);
-     
+
       // if (context.user._id !== input.recipient) {
       //   throw new AuthenticationError(
       //     "You can only respond to invites addressed to you."
       //   );
       // }
-      const invite = await Invite.findByIdAndUpdate(id, {status: status}, {
-        new: true,
-      });
-      return invite;
+      const invite = await Invite.findByIdAndUpdate(
+        id,
+        { status: status },
+        {
+          new: true,
+        }
+      );
+      return true;
     },
 
     deleteInvite: async (_, { _id }, context) => {

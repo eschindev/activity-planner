@@ -185,6 +185,7 @@ export const QUERY_ACTIVITY = gql`
   # get activity page data
   query getActivityById($id: ID!) {
     getActivityById(_id: $id) {
+      _id
       name
       description
       date

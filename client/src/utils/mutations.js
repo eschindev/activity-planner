@@ -134,24 +134,7 @@ export const DELETE_COMMENT = gql`
 
 export const CREATE_INVITE = gql`
   mutation createInvite($recipient: ID!, $activity: ID!) {
-    createInvite(recipient: $recipient, activity: $activity) {
-      _id
-      sender {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      recipient {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      status
-    }
+    createInvite(recipient: $recipient, activity: $activity)
   }
 `;
 
