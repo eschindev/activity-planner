@@ -34,6 +34,7 @@ const userSchema = gql`
     login(email: String!, password: String!): Auth
     updateUser(input: UserUpdateInput): User
     deleteUser(_id: ID!): Boolean
+    removeFriend(_id: ID!): Boolean
   }
 
   input UserUpdateInput {

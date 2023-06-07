@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
-import textFieldStyles from './TextFieldStyles';
-import '../style/theme.css'
+import textFieldStyles from "./TextFieldStyles";
+import "../style/theme.css";
 
-import Auth from '../utils/auth';
-
-
+import Auth from "../utils/auth";
 
 const LoginForm = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   const handleChange = (event) => {
@@ -35,7 +33,6 @@ const LoginForm = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -47,41 +44,44 @@ const LoginForm = (props) => {
     }
 
     setFormState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   };
 
   return (
-
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '400px',
-          padding: '40px',
-          background: 'rgba(255,255,255, 0.8)',
-          boxSizing: 'border-box',
-          boxShadow: '0 15px 25px rgba(0, 0, 0, 0.5)',
-          borderRadius: '10px',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "400px",
+          padding: "40px",
+          background: "rgba(255,255,255, 0.8)",
+          boxSizing: "border-box",
+          boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
+          borderRadius: "10px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LoginTwoToneIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 2 }}>
+        <Box
+          component="form"
+          onSubmit={handleFormSubmit}
+          noValidate
+          sx={{ mt: 2 }}
+        >
           <TextField
             sx={{
               "& label": {
-                marginTop: "-10px", 
+                marginTop: "-10px",
               },
             }}
             style={textFieldStyles}
@@ -99,7 +99,7 @@ const LoginForm = (props) => {
           <TextField
             sx={{
               "& label": {
-                marginTop: "-10px", 
+                marginTop: "-10px",
               },
             }}
             style={textFieldStyles}
@@ -123,7 +123,6 @@ const LoginForm = (props) => {
             Sign In
           </Button>
           <Grid container>
-
             <Grid item>
               <Link component={RouterLink} to="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
@@ -133,7 +132,7 @@ const LoginForm = (props) => {
         </Box>
         {data ? (
           <Typography variant="body1" mt={2}>
-            Success! You may now head{' '}
+            Success! You may now head{" "}
             <RouterLink to="/" variant="body1">
               back to the homepage.
             </RouterLink>
@@ -141,7 +140,6 @@ const LoginForm = (props) => {
         ) : null}
       </Box>
     </Container>
-
   );
 };
 

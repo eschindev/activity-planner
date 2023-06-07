@@ -15,7 +15,6 @@ export default function UserCard({
 }) {
   const [requestSent, setRequestSent] = useState(false);
   const [createRequest, { error }] = useMutation(CREATE_REQUEST);
-  console.log(user);
 
   const userFriendIds = user.friends.map((friend) => friend._id);
   const userRequestSenderIds = user.requests.map(

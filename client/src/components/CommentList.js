@@ -5,8 +5,6 @@ import Container from "@mui/material/Container";
 import CommentCard from "./CommentCard";
 
 export default function CommentList({ comments, activityId }) {
-  console.log(comments);
-
   return (
     <Container maxWidth="sm">
       {comments ? (

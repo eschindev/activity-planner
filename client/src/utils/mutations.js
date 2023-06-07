@@ -61,6 +61,12 @@ export const DELETE_USER = gql`
   }
 `;
 
+export const REMOVE_FRIEND = gql`
+  mutation removeFriend($id: ID!) {
+    removeFriend(_id: $id)
+  }
+`;
+
 export const CREATE_ACTIVITY = gql`
   mutation createActivity($input: ActivityInput) {
     createActivity(input: $input) {

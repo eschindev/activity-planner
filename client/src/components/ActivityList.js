@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import ActivityCard from "./ActivityCard";
-import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Fuse from "fuse.js";
 import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
-import "../style/activityList.css"
+import "../style/activityList.css";
 
 export default function ActivityList({ activities }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +57,9 @@ export default function ActivityList({ activities }) {
       )}
       {filteredActivities.length > activitiesPerPage && (
         <Box display="flex" justifyContent="center" marginTop={2}>
-          <Pagination variant="outlined" color="secondary"
+          <Pagination
+            variant="outlined"
+            color="secondary"
             count={Math.ceil(filteredActivities.length / activitiesPerPage)}
             page={currentPage}
             onChange={handlePageChange}
