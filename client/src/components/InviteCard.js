@@ -35,7 +35,7 @@ const InviteCard = ({ data }) => {
       boxSizing: "border-box",
       boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
       borderRadius: "10px",
-      height: "150px"
+      height: "150px",
     }}>
       <CardContent >
         <Typography variant="h5" component="div">
