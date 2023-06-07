@@ -1,12 +1,12 @@
-import { useMutation } from "@apollo/client";
-import { useState } from "react";
-import Auth from "../utils/auth";
-import { CREATE_ACTIVITY } from "../utils/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import { useState, useEffect } from "react";
+import { UPDATE_ACTIVITY } from "../utils/mutations";
+import { QUERY_ACTIVITY } from "../utils/queries";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link as RouterLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -20,10 +20,16 @@ import EditCalendarTwoToneIcon from "@mui/icons-material/EditCalendarTwoTone";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
-const CreateActivityPage = () => {
+const EditActivityPage = () => {
   if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
+
+  const { id } = useParams();
+  const { loading, data } = useQuery(QUERY_ACTIVITY, {
+    variables: { id: id },
+  });
+
   const [formState, setFormState] = useState({
     name: "",
     date: dayjs(new Date()),
@@ -31,7 +37,7 @@ const CreateActivityPage = () => {
     description: "",
     private: true,
   });
-  const [addActivity, { error, data }] = useMutation(CREATE_ACTIVITY);
+  const [updateActivity] = useMutation(UPDATE_ACTIVITY);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -54,17 +60,34 @@ const CreateActivityPage = () => {
     console.log(formState);
 
     try {
-      const { data } = await addActivity({
-        variables: { input: formState },
+      await updateActivity({
+        variables: {
+          id: id,
+          input: formState,
+        },
       });
-      window.location.replace(`/activity/${data.createActivity._id}`);
+      window.location.replace(`/activity/${id}`);
     } catch (e) {
       window.alert(e);
     }
   };
 
-  if (!Auth.loggedIn()) {
-    return `Please log in`;
+  useEffect(() => {
+    if (data) {
+      const date = dayjs(new Date(data.getActivityById.date));
+      console.log(date);
+      setFormState({
+        name: data.getActivityById.name,
+        date: date,
+        location: data.getActivityById.location,
+        description: data.getActivityById.description,
+        private: data.getActivityById.private,
+      });
+    }
+  }, [data]);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -121,23 +144,6 @@ const CreateActivityPage = () => {
               value={formState.date}
               onChange={handleDateChange}
             />
-            {/* <TextField
-              sx={{
-                "& label": {
-                  marginTop: "-10px", // Adjust the value to position the label higher
-                },
-              }}
-              style={textFieldStyles}
-              margin="normal"
-              required
-              fullWidth
-              id="date"
-              label="Date"
-              name="date"
-              autoFocus
-              value={formState.date}
-              onChange={handleChange}
-            /> */}
             <TextField
               sx={{
                 "& label": {
@@ -169,7 +175,6 @@ const CreateActivityPage = () => {
               id="description"
               label="Description"
               name="description"
-              //   autoComplete=""
               value={formState.description}
               onChange={handleChange}
             />
@@ -197,25 +202,12 @@ const CreateActivityPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Create Activity!
+              Update Activity!
             </Button>
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
           </Box>
-          {data && (
-            <Typography variant="body1" mt={2}>
-              Success! You may now head{" "}
-              <RouterLink to="/" variant="body1">
-                back to the homepage.
-              </RouterLink>
-            </Typography>
-          )}
         </Box>
       </Container>
     </div>
   );
 };
-export default CreateActivityPage;
+export default EditActivityPage;

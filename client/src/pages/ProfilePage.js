@@ -17,9 +17,14 @@ const ProfilePage = () => {
 
   const token = auth.getProfile();
   const currentUserId = token.data._id;
+  const { username } = useParams();
 
-  const [createRequest, { createRequestError }] = useMutation(CREATE_REQUEST);
-  const [removeFriend, { removeFriendError }] = useMutation(REMOVE_FRIEND);
+  if (username === token.data.username) {
+    window.location.replace("/");
+  }
+
+  const [createRequest] = useMutation(CREATE_REQUEST);
+  const [removeFriend] = useMutation(REMOVE_FRIEND);
 
   const { myData } = useQuery(QUERY_ME);
 
@@ -30,7 +35,6 @@ const ProfilePage = () => {
     );
   }
 
-  const { username } = useParams();
   const { loading, data } = useQuery(QUERY_USERNAME, {
     variables: { username: username },
   });

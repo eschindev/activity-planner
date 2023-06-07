@@ -191,6 +191,7 @@ export const QUERY_ACTIVITY = gql`
       location
       private
       owner {
+        _id
         username
         firstName
         lastName
