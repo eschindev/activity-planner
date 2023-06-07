@@ -9,26 +9,25 @@ import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT } from "../utils/mutations";
 
 const CommentCard = ({ commentBody, timestamp, username, id, activityId }) => {
-    //query that gets wrapped up in function we can call
-    const [deleteComment, { error, loading, data }] = useMutation(DELETE_COMMENT);
-   const handleDeleteButton = async () => {
-   await deleteComment({ variables: {
-    id: activityId, //please define this
-    commentId: id}})};
+  //query that gets wrapped up in function we can call
+  const [deleteComment, { error, loading, data }] = useMutation(DELETE_COMMENT);
+  const handleDeleteButton = async () => {
+    await deleteComment({
+      variables: {
+        id: activityId, //please define this
+        commentId: id,
+      },
+    });
+  };
 
-  
   return (
     <Card sx={{ margin: "10px" }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          <Link to={`/user/${username}`}>
-            {username}
-          </Link>{" "}
-          <p>{commentBody} {timestamp}</p>
+          <Link to={`/user/${username}`}>{username}</Link> <p>{timestamp}</p>
+          <p>{commentBody}</p>
         </Typography>
-        <Button onClick={handleDeleteButton}>
-       Delete
-        </Button>
+        <Button onClick={handleDeleteButton}>Delete</Button>
       </CardContent>
     </Card>
   );

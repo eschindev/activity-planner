@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Container from "@mui/material/Container";
-import CommentCard from "./CommentForm";
+import CommentCard from "./CommentCard";
 
 export default function CommentList({ comments, activityId }) {
   console.log(comments);
@@ -11,7 +11,15 @@ export default function CommentList({ comments, activityId }) {
     <Container maxWidth="sm">
       {comments ? (
         comments.map((comment) => {
-          return <CommentCard username={'user'} id={'001'} activityId={activityId} commentBody={comment.commentBody} timestamp={'202020'} />;
+          return (
+            <CommentCard
+              username={comment.user.username}
+              key={comment._id || comments.length}
+              activityId={activityId}
+              commentBody={comment.commentBody}
+              timestamp={comment.timestamp}
+            />
+          );
         })
       ) : (
         <div>No comments found</div>
