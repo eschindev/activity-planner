@@ -2,16 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import InviteCard from "./InviteCard";
 import Container from "@mui/material/Container";
+import "../style/inviteListContainer.css"
 
 const InviteList = ({ invites }) => {
   return (
-    <Container maxWidth="sm">
-      {invites ? (
-        invites.map((invite) => {
-          return <InviteCard key={invite._id} data={invite} />;
-        })
+    <Container
+     maxWidth="sm" 
+     style={{ maxHeight: "300px", overflow: "auto" }}
+     className="invite-list-container"
+    >
+      
+      {invites && invites.length > 0 ? (
+        invites.map((invite) => <InviteCard key={invite._id} data={invite} />)
       ) : (
-        <div>There is currently no invites</div>
+        <div>There are currently no invites</div>
       )}
     </Container>
   );
