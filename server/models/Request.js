@@ -23,7 +23,7 @@ requestSchema.post("save", async function (doc) {
 });
 
 requestSchema.post("findOneAndUpdate", async function (doc) {
-  if (this._update.status === "accepted") {
+  if (this._update["$set"].status === "accepted") {
     await model("User").findByIdAndUpdate(doc.sender, {
       $addToSet: { friends: doc.recipient },
     });

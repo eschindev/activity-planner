@@ -151,27 +151,7 @@ export const CREATE_INVITE = gql`
 
 export const UPDATE_INVITE = gql`
   mutation updateInvite($id: ID!, $status: String!) {
-    updateInvite(_id: $id, status: $status) {
-      _id
-      sender {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      recipient {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      activity {
-        _id
-        name
-      }
-    }
+    updateInvite(_id: $id, status: $status)
   }
 `;
 
@@ -191,24 +171,7 @@ export const CREATE_REQUEST = gql`
 
 export const UPDATE_REQUEST = gql`
   mutation updateRequest($id: ID!, $status: String!) {
-    updateRequest(_id: $id, status: $status) {
-      _id
-      sender {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      recipient {
-        _id
-        username
-        firstName
-        lastName
-        fullName
-      }
-      status
-    }
+    updateRequest(_id: $id, status: $status)
   }
 `;
 

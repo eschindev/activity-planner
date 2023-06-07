@@ -30,8 +30,21 @@ const resolvers = {
       // previously getFullUserById
       isAuthenticated(context, "You must be logged in to view user profiles.");
       const user = await User.findOne({ username })
-        .populate("friends")
-        .populate("activities");
+        .populate("activities")
+        .populate({
+          path: "friends",
+          populate: [
+            { path: "friends", model: "User" },
+            { path: "requests", model: "Request" },
+          ],
+        })
+        .populate({
+          path: "requests",
+          populate: {
+            path: "sender recipient",
+            model: "User",
+          },
+        });
       return user;
     },
 
@@ -44,7 +57,13 @@ const resolvers = {
     getMyUser: async (_, __, context) => {
       isAuthenticated(context, "You must be logged in to view your profile.");
       const user = await User.findById(context.user._id)
-        .populate("friends")
+        .populate({
+          path: "friends",
+          populate: [
+            { path: "friends", model: "User" },
+            { path: "requests", model: "Request" },
+          ],
+        })
         .populate("activities")
         .populate({
           path: "invites",
@@ -73,7 +92,9 @@ const resolvers = {
       const users = await User.find({
         $text: { $search: searchTerm },
         _id: { $ne: context.user._id },
-      });
+      })
+        .populate("friends")
+        .populate("requests");
       if (!users) {
         throw new Error("No users found matching your search.");
       }

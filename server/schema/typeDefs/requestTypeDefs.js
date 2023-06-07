@@ -15,7 +15,7 @@ const requestSchema = gql`
 
   type Mutation {
     createRequest(recipient: ID!): Request
-    updateRequest(_id: ID!, status: String!): Request
+    updateRequest(_id: ID!, status: String!): Boolean
     deleteRequest(_id: ID!): Boolean
   }
 `;

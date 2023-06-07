@@ -14,7 +14,13 @@ const resolvers = {
       isAuthenticated(context, "You must be logged in to view activities.");
       const activity = await Activity.findById(_id)
         .populate("owner")
-        .populate("participants")
+        .populate({
+          path: "participants",
+          populate: [
+            { path: "friends", model: "User" },
+            { path: "requests", model: "Request" },
+          ],
+        })
         .populate({
           path: "invites",
           populate: [
