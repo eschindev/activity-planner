@@ -28,6 +28,7 @@ const ActivityPage = () => {
   const [participantIds, setParticipantIds] = useState([]);
   const [invites, setInvites] = useState([]);
   const [activity, setActivity] = useState({});
+  const [ownerId, setOwnerId] = useState(undefined);
 
   const { id } = useParams();
   const { loading, data } = useQuery(QUERY_ACTIVITY, {
@@ -77,14 +78,13 @@ const ActivityPage = () => {
     }
   };
 
-  let ownerId;
   useEffect(() => {
     if (data) {
       setComments(data.getActivityById.comments);
       setParticipants(data.getActivityById.participants);
       setInvites(data.getActivityById.invites);
       setActivity(data.getActivityById);
-      ownerId = data.getActivityById.owner._id;
+      setOwnerId(data.getActivityById.owner._id);
     }
   }, [data]);
 
