@@ -43,6 +43,17 @@ export const QUERY_ME = gql`
         firstName
         lastName
         fullName
+        friends {
+          _id
+        }
+        requests {
+          sender {
+            _id
+          }
+          recipient {
+            _id
+          }
+        }
       }
       requests {
         _id
@@ -76,12 +87,28 @@ export const QUERY_USER = gql`
         friends {
           _id
         }
+        requests {
+          sender {
+            _id
+          }
+          recipient {
+            _id
+          }
+        }
       }
       activities {
         _id
         name
         date
         location
+      }
+    }
+    requests {
+      sender {
+        _id
+      }
+      recipient {
+        _id
       }
     }
   }
@@ -103,12 +130,28 @@ export const QUERY_USERNAME = gql`
         firstName
         lastName
         fullName
+        friends {
+          _id
+        }
+        requests {
+          sender {
+            _id
+          }
+          recipient {
+            _id
+          }
+        }
       }
       activities {
         _id
         name
         date
         location
+      }
+      requests {
+        sender {
+          _id
+        }
       }
     }
   }
@@ -122,6 +165,17 @@ export const QUERY_USERS = gql`
       firstName
       lastName
       fullName
+      friends {
+        _id
+      }
+      requests {
+        sender {
+          _id
+        }
+        recipient {
+          _id
+        }
+      }
     }
   }
 `;
@@ -146,6 +200,17 @@ export const QUERY_ACTIVITY = gql`
         firstName
         lastName
         fullName
+        friends {
+          _id
+        }
+        requests {
+          sender {
+            _id
+          }
+          recipient {
+            _id
+          }
+        }
       }
       invites {
         _id

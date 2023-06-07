@@ -47,20 +47,20 @@ const resolvers = {
       // post-create hook for adding request to recipient's requests array
     },
 
-    updateRequest: async (_, { id, status }, context) => {
+    updateRequest: async (_, { _id, status }, context) => {
       isAuthenticated(context, "You must be logged in to respond to requests.");
       // if (context.user._id === id) {
-        const request = await Request.findByIdAndUpdate(
-          id,
-          { status },
-          {
-            new: true,
-          }
-        );
-        // post-findOneAndUpdate hook adds friends to both users' friends arrays if accepted
-        // that same hook then deletes the request document
-        // a pre-delete hook removes the request ID from both users' requests arrays
-        return request;
+      const request = await Request.findByIdAndUpdate(
+        _id,
+        { status },
+        {
+          new: true,
+        }
+      );
+      // post-findOneAndUpdate hook adds friends to both users' friends arrays if accepted
+      // that same hook then deletes the request document
+      // a pre-delete hook removes the request ID from both users' requests arrays
+      return true;
       // } else {
       //   throw new AuthenticationError(
       //     "You may only respond to requests sent to you."

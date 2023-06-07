@@ -5,21 +5,26 @@ import Container from "@mui/material/Container";
 import Fuse from "fuse.js";
 import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
+import "../style/userList.css";
+import auth from "../utils/auth.js";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
-import "../style/userList.css";
 
 export default function UserList({ users }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 4;
 
-  const { data } = useQuery(QUERY_ME);
-
-  let currentUserFriendIds = [];
+  const { loading, data } = useQuery(QUERY_ME);
+  let currentUserRequestSenderIds = [];
   if (data) {
-    currentUserFriendIds = data.getMyUser.friends.map((friend) => friend._id);
+    currentUserRequestSenderIds = data.getMyUser.requests.map(
+      (request) => request.sender._id
+    );
   }
+
+  const token = auth.getProfile();
+  const currentUserId = token.data._id;
 
   const fuse = new Fuse(users, {
     keys: ["username", "firstName", "lastName", "email"],
@@ -61,7 +66,8 @@ export default function UserList({ users }) {
             <UserCard
               key={user._id}
               user={user}
-              currentUserFriendIds={currentUserFriendIds}
+              currentUserId={currentUserId}
+              currentUserRequestSenderIds={currentUserRequestSenderIds}
             />
           );
         })

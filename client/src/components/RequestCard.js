@@ -9,13 +9,15 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_REQUEST } from "../utils/mutations";
 
 const RequestCard = ({ request }) => {
-  console.log(request);
+  const id = request._id;
   const [updateRequest, { error, requestData }] = useMutation(UPDATE_REQUEST);
   const handleRequestResponse = async (status) => {
-    debugger;
+    console.log("id: ", id);
+    console.log("status: ", status);
     await updateRequest({
-      variables: { id: request._id, status: status },
+      variables: { id, status },
     });
+    window.location.reload();
   };
 
   return (

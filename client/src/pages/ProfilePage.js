@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_USERNAME, QUERY_ME } from "../utils/queries";
 import { CREATE_REQUEST } from "../utils/mutations";
@@ -12,6 +13,8 @@ const ProfilePage = () => {
   if (!auth.loggedIn()) {
     window.location.replace("/login");
   }
+  const [requestSent, setRequestSent] = useState(false);
+
   const token = auth.getProfile();
   const currentUserId = token.data._id;
 
@@ -19,8 +22,12 @@ const ProfilePage = () => {
   const { myData } = useQuery(QUERY_ME);
 
   let currentUserFriendIds = [];
+  let currentUserRequestSenderIds = [];
   if (myData) {
     currentUserFriendIds = myData.getMyUser.friends.map((friend) => friend._id);
+    currentUserRequestSenderIds = data.getMyUser.requests.map(
+      (request) => request.sender._id
+    );
   }
 
   const { username } = useParams();
@@ -31,20 +38,35 @@ const ProfilePage = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  const user = data?.getUserByUsername || {};
+
+  let userFriendIds = [];
+  let userRequestSenderIds = [];
+  let user = {};
+  if (data) {
+    user = data?.getUserByUsername;
+    console.log(user);
+    userFriendIds = user.friends.map((friend) => friend._id);
+    userRequestSenderIds = user.requests.map((request) => request.sender._id);
+  }
 
   const sendFriendRequest = async () => {
-    console.log("user: ", user);
     try {
       await createRequest({
         variables: { recipient: user._id },
       });
+      setRequestSent(true);
     } catch (error) {
       window.alert(error);
     }
   };
 
-  console.log(user);
+  const mayRequest = !(
+    userFriendIds.includes(currentUserId) ||
+    userRequestSenderIds.includes(currentUserId) ||
+    currentUserRequestSenderIds.includes(user._id) ||
+    requestSent
+  );
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -54,7 +76,7 @@ const ProfilePage = () => {
             <Typography variant="h5">{user.fullName}</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
-            {!currentUserFriendIds.includes(user._id) ? (
+            {mayRequest ? (
               <Button
                 variant="contained"
                 onClick={sendFriendRequest}

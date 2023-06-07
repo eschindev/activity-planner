@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
@@ -7,20 +7,38 @@ import { Grid, Typography, Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { CREATE_REQUEST } from "../utils/mutations";
 import "../style/userCardStyle.css";
-import { create } from "@mui/material/styles/createTransitions";
 
-export default function UserCard({ user, currentUserFriendIds }) {
+export default function UserCard({
+  user,
+  currentUserId,
+  currentUserRequestSenderIds,
+}) {
+  const [requestSent, setRequestSent] = useState(false);
   const [createRequest, { error }] = useMutation(CREATE_REQUEST);
+  console.log(user);
+
+  const userFriendIds = user.friends.map((friend) => friend._id);
+  const userRequestSenderIds = user.requests.map(
+    (request) => request.sender._id
+  );
 
   const sendFriendRequest = async () => {
     try {
       await createRequest({
         variables: { recipient: user._id },
       });
+      setRequestSent(true);
     } catch (error) {
       window.alert(error);
     }
   };
+
+  const mayRequest = !(
+    userFriendIds.includes(currentUserId) ||
+    userRequestSenderIds.includes(currentUserId) ||
+    currentUserRequestSenderIds.includes(user._id) ||
+    requestSent
+  );
 
   return (
     <div className="user-container">
@@ -54,13 +72,13 @@ export default function UserCard({ user, currentUserFriendIds }) {
                 {user.fullName}
               </Typography>
             </Grid>
-            {!currentUserFriendIds.includes(user._id) ? (
-              <Grid item xs={12}>
+            <Grid item xs={12}>
+              {mayRequest ? (
                 <Button variant="contained" onClick={sendFriendRequest}>
                   Add Friend
                 </Button>
-              </Grid>
-            ) : null}
+              ) : null}
+            </Grid>
           </Grid>
         </CardContent>
       </motion.div>
