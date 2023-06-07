@@ -19,10 +19,21 @@ const RequestCard = ({ request }) => {
   };
 
   return (
-    <Card sx={{ margin: "10px" }}>
-      <CardContent>
+    <Card sx={{
+      margin: "10px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "3px",
+      background: "rgba(255,255,255, 0.8)",
+      boxSizing: "border-box",
+      boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
+      borderRadius: "10px",
+      height: "150px"
+    }}>
+      <CardContent >
         <Typography variant="h5" component="div">
-          <Link to={`/user/${request.sender.username}`}>
+          <Link to={`/user/${request.sender.username}`} style={{ textDecoration: 'none' }}>
             {request.sender.fullName}
           </Link>{" "}
         </Typography>
