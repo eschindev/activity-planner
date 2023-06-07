@@ -13,7 +13,7 @@ import { useQuery } from "@apollo/client";
 export default function UserList({ users }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const usersPerPage = 4;
 
   const { loading, data } = useQuery(QUERY_ME);
   let currentUserRequestSenderIds = [];

@@ -9,8 +9,7 @@ import "../style/activityList.css";
 export default function ActivityList({ activities }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const activitiesPerPage = 4;
-
+  const activitiesPerPage = 4
   const fuse = new Fuse(activities, {
     keys: ["name", "date", "location", "description"],
     includeScore: true,
