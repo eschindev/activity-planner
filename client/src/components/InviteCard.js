@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
 import { UPDATE_INVITE } from "../utils/mutations";
 import auth from "../utils/auth.js";
+import "../style/inviteCardStyle.css"
 
 const InviteCard = ({ data }) => {
   const token = auth.getProfile();
@@ -24,22 +25,33 @@ const InviteCard = ({ data }) => {
   };
 
   return (
-    <Card sx={{ margin: "10px" }}>
-      <CardContent>
+    <Card  sx={{
+      margin: "10px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "3px",
+      background: "rgba(255,255,255, 0.8)",
+      boxSizing: "border-box",
+      boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
+      borderRadius: "10px",
+      height: "150px"
+    }}>
+      <CardContent >
         <Typography variant="h5" component="div">
-          <Link to={`/user/${data.sender.username}`}>
+          <Link to={`/user/${data.sender.username}`} style={{ textDecoration: 'none' }}>
             {data.sender.firstName}
           </Link>{" "}
           has invited{" "}
           {isRecipient ? (
             "you"
           ) : (
-            <Link to={`/user/${data.recipient.username}`}>
+            <Link to={`/user/${data.recipient.username}`} style={{ textDecoration: 'none' }}>
               {data.recipient.firstName}
             </Link>
           )}{" "}
           to{" "}
-          <Link to={`/activity/${data.activity._id}`}>
+          <Link to={`/activity/${data.activity._id}`} style={{ textDecoration: 'none' }}>
             {data.activity.name}
           </Link>
         </Typography>
@@ -50,13 +62,13 @@ const InviteCard = ({ data }) => {
           {data.activity.location}
         </Typography>
         {isRecipient ? (
-          <>
-            <Button onClick={() => handleInviteResponse("accepted")}>
+         <div className="button-container">
+            <Button variant="outlined" color="success" onClick={() => handleInviteResponse("accepted")}>
               Yes
             </Button>
-            <Button onClick={() => handleInviteResponse("declined")}>No</Button>
-            <Button onClick={() => handleInviteResponse("maybe")}>Maybe</Button>
-          </>
+            <Button variant="outlined" color="error" onClick={() => handleInviteResponse("declined")}>No</Button>
+            <Button  variant="outlined" color="secondary" onClick={() => handleInviteResponse("maybe")}>Maybe</Button>
+            </div>
         ) : null}
       </CardContent>
     </Card>

@@ -55,7 +55,7 @@ export default function UserCard({
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={4}>
-              <Link to={`/user/${user.username}`}>
+              <Link to={`/user/${user.username}`} style={{ textDecoration: 'none' }}>
                 <AccountBoxIcon
                   className="custom-icon"
                   style={{ fontSize: 60 }}
@@ -63,7 +63,7 @@ export default function UserCard({
               </Link>
             </Grid>
             <Grid item xs={8}>
-              <Link to={`/user/${user.username}`}>
+              <Link to={`/user/${user.username}`} style={{ textDecoration: 'none' }}>
                 <Typography variant="h5" component="div">
                   {user.username}
                 </Typography>

@@ -21,7 +21,7 @@ const ActivityCard = ({ data }) => {
         }}
       >
         <CardContent>
-          <Link to={`/activity/${data._id}`}>
+          <Link to={`/activity/${data._id}`} style={{ textDecoration: 'none' }}>
             <Typography variant="h5" component="div" sx={{ mb: 1.5 }}>
               <TheaterComedyIcon
                 className="activity-icon"

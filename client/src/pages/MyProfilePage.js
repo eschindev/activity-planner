@@ -72,19 +72,19 @@ const MyProfilePage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Activities:</Typography>
+        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activities:</Typography>
         <ActivityList activities={user.activities} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Friends:</Typography>
+        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friends:</Typography>
         <UserList users={user.friends} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Activity Invites:</Typography>
+        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Activity Invites:</Typography>
         <InviteList invites={user.invites} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Friend Requests:</Typography>
+        <Typography sx={{display: "flex", justifyContent:"center", mg: 2.0}} variant="h4">Friend Requests:</Typography>
         <RequestList requests={user.requests} />
       </Grid>
     </Grid>
