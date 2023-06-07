@@ -28,7 +28,7 @@ const CommentForm = ({ activityId, comments, setComments }) => {
         ...comments,
         {
           commentBody: commentText,
-          username: Auth.getProfile().data.username,
+          user: Auth.getProfile().data,
           timestamp: Date.now(),
         },
       ]);
