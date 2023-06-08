@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import UserCard from "./UserCard";
 import Container from "@mui/material/Container";
 import Fuse from "fuse.js";
@@ -16,7 +15,7 @@ export default function UserList({ users }) {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
 
-  const { loading, data } = useQuery(QUERY_ME);
+  const { data } = useQuery(QUERY_ME);
   let currentUserRequestSenderIds = [];
   if (data) {
     currentUserRequestSenderIds = data.getMyUser.requests.map(
@@ -73,10 +72,9 @@ export default function UserList({ users }) {
           );
         })
       ) : (
-         <div className="not-found-container">
-        <h1 className="text">No users found</h1>
-    
-      </div>
+        <div className="not-found-container">
+          <h1 className="text">No users found</h1>
+        </div>
       )}
       <Box display="flex" justifyContent="center" marginTop={2}>
         <Pagination

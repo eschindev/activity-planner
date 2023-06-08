@@ -9,7 +9,7 @@ import "../style/activityList.css";
 export default function ActivityList({ activities }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const activitiesPerPage = 4
+  const activitiesPerPage = 4;
   const fuse = new Fuse(activities, {
     keys: ["name", "date", "location", "description"],
     includeScore: true,
@@ -53,9 +53,8 @@ export default function ActivityList({ activities }) {
         ))
       ) : (
         <div className="not-found-container">
-        <h1 className="text">No activities found</h1>
-        <p>Sorry, the activity you are looking for does not exist.</p>
-      </div>
+          <h1 className="text">No activities found</h1>
+        </div>
       )}
       {filteredActivities.length > activitiesPerPage && (
         <Box display="flex" justifyContent="center" marginTop={2}>
