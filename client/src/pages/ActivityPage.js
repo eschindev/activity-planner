@@ -17,7 +17,7 @@ import InviteModal from "../components/InviteModal";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import dayjs from "dayjs";
-import "../style/activityPage.css"
+import "../style/activityPage.css";
 
 const ActivityPage = () => {
   if (!auth.loggedIn()) {
@@ -120,9 +120,9 @@ const ActivityPage = () => {
             <Typography variant="h5">{activity.location}</Typography>
             <Typography variant="h6">{activity.description}</Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} sx={{ textAlign: "right" }}>
             {ownerId === currentUserId ? (
-              <div >
+              <div>
                 <InviteModal
                   activity={activity}
                   participantIds={participantIds}
@@ -132,7 +132,7 @@ const ActivityPage = () => {
                 <Button
                   variant="contained"
                   color="success"
-                  sx={{ margin: "20px" }}
+                  sx={{ margin: "20px", width: "160px" }}
                   onClick={() =>
                     window.location.replace(`/edit-activity/${id}`)
                   }
@@ -176,11 +176,15 @@ const ActivityPage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography className="header-style" variant="h4">Participants:</Typography>
+        <Typography className="header-style" variant="h4">
+          Participants:
+        </Typography>
         <UserList users={participants} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography className="header-style" variant="h4">Active Invites:</Typography>
+        <Typography className="header-style" variant="h4">
+          Active Invites:
+        </Typography>
         <InviteList invites={invites} />
         <br />
         <Box sx={{ justifyContent: "center" }}>

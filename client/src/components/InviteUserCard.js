@@ -64,7 +64,7 @@ export default function InviteUserCard({
       >
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item xs={4}>
+            <Grid item>
               <Link
                 to={`/user/${user.username}`}
                 style={{ textDecoration: "none" }}
@@ -75,7 +75,7 @@ export default function InviteUserCard({
                 />
               </Link>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item>
               <Link
                 to={`/user/${user.username}`}
                 style={{ textDecoration: "none" }}
@@ -84,11 +84,9 @@ export default function InviteUserCard({
                   {user.username}
                 </Typography>
               </Link>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {user.fullName}
-              </Typography>
+              <Typography color="text.secondary">{user.fullName}</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ textAlign: "right" }}>
               <Button variant="contained" onClick={sendInvite}>
                 Invite
               </Button>

@@ -10,8 +10,7 @@ import { Grid, Typography, Button } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import auth from "../utils/auth.js";
-import "../style/activityPage.css"
-
+import "../style/activityPage.css";
 
 const ProfilePage = () => {
   if (!auth.loggedIn()) {
@@ -74,13 +73,15 @@ const ProfilePage = () => {
   };
 
   const handleRemoveFriend = async () => {
-    try {
-      await removeFriend({
-        variables: { id: user._id },
-      });
-      window.location.reload();
-    } catch (error) {
-      window.alert(error);
+    if (window.confirm(`Are you sure you want to unfriend ${user.fullName}?`)) {
+      try {
+        await removeFriend({
+          variables: { id: user._id },
+        });
+        window.location.reload();
+      } catch (error) {
+        window.alert(error);
+      }
     }
   };
 
@@ -99,7 +100,7 @@ const ProfilePage = () => {
             <Typography variant="h2">{user.username}</Typography>
             <Typography variant="h5">{user.fullName}</Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} sx={{ textAlign: "right" }}>
             {mayRequest ? (
               <Button
                 variant="contained"
@@ -113,7 +114,7 @@ const ProfilePage = () => {
               <Button
                 variant="contained"
                 onClick={handleRemoveFriend}
-                sx={{ mt: "20px" }}
+                sx={{ mt: "20px", backgroundColor: "red" }}
               >
                 Remove Friend
               </Button>
@@ -122,11 +123,15 @@ const ProfilePage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography className="header-style" variant="h4">Activities:</Typography>
+        <Typography className="header-style" variant="h4">
+          Activities:
+        </Typography>
         <ActivityList activities={user.activities} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography   className="header-style" variant="h4">Friends:</Typography>
+        <Typography className="header-style" variant="h4">
+          Friends:
+        </Typography>
         <UserList users={user.friends} />
       </Grid>
     </Grid>
