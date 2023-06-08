@@ -34,7 +34,7 @@ const activitySchema = gql`
     createActivity(input: ActivityInput): Activity
     updateActivity(_id: ID!, input: ActivityUpdateInput): Activity
     deleteActivity(_id: ID!): Boolean
-    addComment(_id: ID!, commentBody: String!): Boolean
+    addComment(_id: ID!, commentBody: String!): Activity
     deleteComment(_id: ID!, commentId: ID!): Boolean
     joinActivity(_id: ID!): Boolean
     leaveActivity(_id: ID!): Boolean

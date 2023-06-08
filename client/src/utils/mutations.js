@@ -121,7 +121,19 @@ export const LEAVE_ACTIVITY = gql`
 
 export const ADD_COMMENT = gql`
   mutation addComment($id: ID!, $commentBody: String!) {
-    addComment(_id: $id, commentBody: $commentBody)
+    addComment(_id: $id, commentBody: $commentBody) {
+      _id
+      comments {
+        _id
+        commentBody
+        username
+        timestamp
+        user {
+          _id
+          username
+        }
+      }
+    }
   }
 `;
 

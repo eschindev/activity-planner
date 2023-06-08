@@ -1,21 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import CommentCard from "./CommentCard";
 
-export default function CommentList({ comments, activityId }) {
+export default function CommentList({ comments, activityId, setComments }) {
   return (
     <Container maxWidth="sm">
       {comments ? (
         comments.map((comment) => {
           return (
             <CommentCard
-              username={comment.user.username}
-              key={comment._id || comments.length}
+              key={comment._id || Math.random()}
               activityId={activityId}
-              commentBody={comment.commentBody}
-              timestamp={comment.timestamp}
+              comments={comments}
+              setComments={setComments}
+              comment={comment}
             />
           );
         })
