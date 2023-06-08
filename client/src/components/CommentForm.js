@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-
 import { ADD_COMMENT } from "../utils/mutations";
-
 import Auth from "../utils/auth";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -55,8 +53,11 @@ const CommentForm = ({ activityId, comments, setComments }) => {
         maxWidth: "900px",
         bgcolor: "white",
         padding: "20px",
-        borderRadius: "5px",
+        borderRadius: "20px",
         justifyContent: "center",
+        boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
+        background: "rgba(255,255,255, 0.8)",
+        marginBottom: "40px",
       }}
     >
       <div>
@@ -78,14 +79,17 @@ const CommentForm = ({ activityId, comments, setComments }) => {
             >
               <div>
                 <TextField
+                 sx={{
+                  backgroundColor: 'rgba(0,0,0,0.1)',
+                 }}
                   name="commentText"
                   placeholder="Add your comment..."
                   value={commentText}
                   className="form-input w-100"
                   style={{
-                    lineHeight: "1.5",
-                    resize: "vertical",
-                    width: "60vw",
+                  lineHeight: "1.5",
+                  resize: "vertical",
+                  width: "60vw",
                   }}
                   onChange={handleChange}
                 ></TextField>

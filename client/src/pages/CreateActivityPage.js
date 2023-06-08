@@ -19,6 +19,7 @@ import textFieldStyles from "../components/TextFieldStyles";
 import EditCalendarTwoToneIcon from "@mui/icons-material/EditCalendarTwoTone";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import { colors } from "@mui/material";
 
 const CreateActivityPage = () => {
   if (!auth.loggedIn()) {
@@ -97,10 +98,12 @@ const CreateActivityPage = () => {
             noValidate
             sx={{ mt: 1 }}
           >
+            
+
             <TextField
               sx={{
                 "& label": {
-                  marginTop: "-10px", // Adjust the value to position the label higher
+                  marginTop: "-10px",
                 },
               }}
               style={textFieldStyles}
@@ -115,29 +118,22 @@ const CreateActivityPage = () => {
               value={formState.name}
               onChange={handleChange}
             />
-            <DatePicker
+             <DatePicker
+               sx={{ 
+                "& label": {
+                  marginTop: "-10px", // Adjust the value to position the label higher
+                },
+                marginTop: "14px",
+                width: "100%",
+                backgroundColor: 'rgba(0,0,0,0.1)'
+              }}
+              style={textFieldStyles}
               id="date"
               label="date"
               value={formState.date}
               onChange={handleDateChange}
             />
-            {/* <TextField
-              sx={{
-                "& label": {
-                  marginTop: "-10px", // Adjust the value to position the label higher
-                },
-              }}
-              style={textFieldStyles}
-              margin="normal"
-              required
-              fullWidth
-              id="date"
-              label="Date"
-              name="date"
-              autoFocus
-              value={formState.date}
-              onChange={handleChange}
-            /> */}
+           
             <TextField
               sx={{
                 "& label": {
