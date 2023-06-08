@@ -1,7 +1,7 @@
 import React from "react";
-
 import Container from "@mui/material/Container";
 import CommentCard from "./CommentCard";
+import "../style/notFound.css"
 
 export default function CommentList({ comments, activityId, setComments }) {
   return (
@@ -19,7 +19,10 @@ export default function CommentList({ comments, activityId, setComments }) {
           );
         })
       ) : (
-        <div>No comments found</div>
+     <div className="not-found-container">
+        <h1 className="text">No activity found</h1>
+        <p>Sorry, the activity you are looking for does not exist.</p>
+      </div>
       )}
     </Container>
   );
