@@ -9,6 +9,7 @@ import "../style/userList.css";
 import auth from "../utils/auth.js";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
+import "../style/activityList.css";
 
 export default function UserList({ users }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,7 +73,10 @@ export default function UserList({ users }) {
           );
         })
       ) : (
-        <div>No users found</div>
+         <div className="not-found-container">
+        <h1 className="text">No users found</h1>
+    
+      </div>
       )}
       <Box display="flex" justifyContent="center" marginTop={2}>
         <Pagination

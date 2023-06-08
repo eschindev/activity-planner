@@ -52,7 +52,10 @@ export default function ActivityList({ activities }) {
           <ActivityCard key={activity._id} data={activity} />
         ))
       ) : (
-        <div>No activities found</div>
+        <div className="not-found-container">
+        <h1 className="text">No activities found</h1>
+        <p>Sorry, the activity you are looking for does not exist.</p>
+      </div>
       )}
       {filteredActivities.length > activitiesPerPage && (
         <Box display="flex" justifyContent="center" marginTop={2}>

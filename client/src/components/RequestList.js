@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import RequestCard from "./RequestCard";
 import Container from "@mui/material/Container";
 import "../style/requestListCard.css"
+import "../style/notFound.css"
 
 export default function RequestList({ requests }) {
   return (
@@ -15,7 +16,9 @@ export default function RequestList({ requests }) {
           return <RequestCard key={request._id} request={request} />;
         })
       ) : (
-        <div>No requests found</div>
+        <div className="not-found-container">
+        <h1 className="text">No requests found</h1>
+      </div>
       )}
     </Container>
   );

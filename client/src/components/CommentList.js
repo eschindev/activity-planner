@@ -1,7 +1,7 @@
 import React from "react";
-
 import Container from "@mui/material/Container";
 import CommentCard from "./CommentCard";
+import "../style/notFound.css"
 
 export default function CommentList({ comments, activityId, setComments }) {
   return (
@@ -19,12 +19,10 @@ export default function CommentList({ comments, activityId, setComments }) {
           );
         })
       ) : (
-        <div>No comments found</div>
+     <div className="not-found-container">
+        <h1 className="text">No comments found</h1>
+      </div>
       )}
     </Container>
   );
 }
-//'user' will become {comment.username}
-//001 will = {comment.id}
-//007 = {comment.activityId}
-//comment

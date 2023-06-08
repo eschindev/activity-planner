@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT } from "../utils/mutations";
-import "../style/commentCard.css";
 import auth from "../utils/auth";
 
 const CommentCard = ({ activityId, comment, comments, setComments }) => {
