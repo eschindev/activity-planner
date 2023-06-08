@@ -1,4 +1,31 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative; 
+}
 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 50px;
+}
+
+.account-circle-icon {
+  margin-top: 15px;
+
+}
+
+.user-name {
+ color: white
+}
+
+.full-name {
+  font-size: 50px;
+  position: relative;
+  margin: -50px;
+}
  
 .header-style {
 border-radius: 10px;
