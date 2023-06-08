@@ -10,7 +10,7 @@ import { DELETE_COMMENT } from "../utils/mutations";
 
 const CommentCard = ({ commentBody, timestamp, username, id, activityId }) => {
   //query that gets wrapped up in function we can call
-  const [deleteComment, { error, loading, data }] = useMutation(DELETE_COMMENT);
+  const [deleteComment] = useMutation(DELETE_COMMENT);
   const handleDeleteButton = async () => {
     await deleteComment({
       variables: {
@@ -20,14 +20,13 @@ const CommentCard = ({ commentBody, timestamp, username, id, activityId }) => {
     });
   };
 
-  return ( 
+  return (
     <Card sx={{ margin: "10px" }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          <Link to={`/user/${username}`}>{username}</Link> 
+          <Link to={`/user/${username}`}>{username}</Link>
           <p>{commentBody}</p>
           <p>{dayjs(timestamp.date).format("M/D/YY, h:mm A")}</p>
-         
         </Typography>
         <Button onClick={handleDeleteButton}>Delete</Button>
       </CardContent>

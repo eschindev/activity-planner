@@ -15,7 +15,7 @@ const InviteCard = ({ data }) => {
   const currentUserId = token.data._id;
   const isRecipient = data.recipient._id === currentUserId;
   console.log(data.status);
-  const [updateInvite, { error, inviteData }] = useMutation(UPDATE_INVITE);
+  const [updateInvite] = useMutation(UPDATE_INVITE);
   const [status, setStatus] = useState(data.status);
 
   const handleInviteResponse = async (statusUpdate) => {
