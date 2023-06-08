@@ -11,31 +11,20 @@ const app = express();
 
 const server = new ApolloServer({ schema, context: authMiddleware });
 
-// import { makeExecutableSchema } from '@graphql-tools/schema';
-// import { DateTimeResolver, DateTimeTypeDefinition } from "graphql-scalars"
-
-// const server = new ApolloServer({
-//   schema: makeExecutableSchema({
-//     typeDefs: [
-//       ...DateTimeTypeDefinition
-//     ],
-//     resolvers: {
-//       ...DateTimeResolver
-//     },
-//   }),
-// });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  });
 } else {
   app.use(express.static(path.join(__dirname, "../client/public")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/public", "index.html"));
+  });
 }
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/public/index.html"));
-});
 
 const startApolloServer = async () => {
   await server.start();

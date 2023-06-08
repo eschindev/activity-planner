@@ -2,7 +2,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { DELETE_USER } from "../utils/mutations";
 import auth from "../utils/auth";
-import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 import ActivityList from "../components/ActivityList";
 import UserList from "../components/UserList";
@@ -22,7 +21,7 @@ const MyProfilePage = () => {
   const token = auth.getProfile();
   const currentUserId = token.data._id;
 
-  const [deleteUser, { error }] = useMutation(DELETE_USER);
+  const [deleteUser] = useMutation(DELETE_USER);
 
   const { loading, data } = useQuery(QUERY_ME);
 
