@@ -60,7 +60,7 @@ const CommentForm = ({ activityId, comments, setComments }) => {
         marginBottom: "40px",
       }}
     >
-      <div>
+
         <h4>Comments</h4>
 
         {Auth.loggedIn() ? (
@@ -112,7 +112,7 @@ const CommentForm = ({ activityId, comments, setComments }) => {
             <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
           </p>
         )}
-      </div>
+  
     </Box>
   );
 };

@@ -32,17 +32,16 @@ const InviteCard = ({ data }) => {
         margin: "10px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        padding: "3px",
         background: "rgba(255,255,255, 0.8)",
         boxSizing: "border-box",
         boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
         borderRadius: "10px",
-        height: "150px",
+        height: "auto",
+        width: "auto"
       }}
     >
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography variant="h6" component="div">
           <Link
             to={`/user/${data.sender.username}`}
             style={{ textDecoration: "none" }}
@@ -69,7 +68,7 @@ const InviteCard = ({ data }) => {
           </Link>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {dayjs(data.activity.date).format("D/M/YY")}
+          {dayjs(data.activity.date).format("M/D/YY")}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {data.activity.location}
