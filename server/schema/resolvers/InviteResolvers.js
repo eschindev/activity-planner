@@ -25,6 +25,10 @@ const resolvers = {
 
   Mutation: {
     createInvite: async (_, { recipient, activity }, context) => {
+      isAuthenticated(
+        context,
+        "You must be logged in to respond to create invites."
+      );
       try {
         //first check if user has already received an invite to this activity
         if (context.user) {
@@ -61,12 +65,6 @@ const resolvers = {
 
       console.log(status);
       console.log(_id);
-
-      // if (context.user._id !== input.recipient) {
-      //   throw new AuthenticationError(
-      //     "You can only respond to invites addressed to you."
-      //   );
-      // }
       await Invite.findByIdAndUpdate(_id, { status: status });
       return true;
     },
