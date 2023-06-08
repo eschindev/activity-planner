@@ -14,12 +14,10 @@ const InviteCard = ({ data }) => {
   const token = auth.getProfile();
   const currentUserId = token.data._id;
   const isRecipient = data.recipient._id === currentUserId;
-  console.log(data.status);
   const [updateInvite] = useMutation(UPDATE_INVITE);
   const [status, setStatus] = useState(data.status);
 
   const handleInviteResponse = async (statusUpdate) => {
-    console.log(data._id);
     await updateInvite({
       variables: { id: data._id, status: statusUpdate },
     });
@@ -37,7 +35,7 @@ const InviteCard = ({ data }) => {
         boxShadow: "0 15px 25px rgba(0, 0, 0, 0.5)",
         borderRadius: "10px",
         height: "auto",
-        width: "auto"
+        width: "auto",
       }}
     >
       <CardContent>

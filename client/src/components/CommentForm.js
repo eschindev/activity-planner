@@ -23,16 +23,8 @@ const CommentForm = ({ activityId, comments, setComments }) => {
           commentBody: commentText,
         },
       });
-
       setCommentText("");
-      setComments([
-        ...comments,
-        {
-          commentBody: commentText,
-          user: Auth.getProfile().data,
-          timestamp: Date.now(),
-        },
-      ]);
+      setComments(data.addComment.comments);
     } catch (err) {
       console.error(err);
     }
@@ -60,59 +52,57 @@ const CommentForm = ({ activityId, comments, setComments }) => {
         marginBottom: "40px",
       }}
     >
+      <h4>Comments</h4>
 
-        <h4>Comments</h4>
-
-        {Auth.loggedIn() ? (
-          <>
-            <p
-              className={`m-0 ${
-                characterCount === 280 || error ? "text-danger" : ""
-              }`}
-            >
-              Character Count: {characterCount}/280
-              {error && <span className="ml-2">{error.message}</span>}
-            </p>
-            <form
-              className="flex-row justify-center justify-space-between-md align-center"
-              onSubmit={handleFormSubmit}
-            >
-              <div>
-                <TextField
-                 sx={{
-                  backgroundColor: 'rgba(0,0,0,0.1)',
-                 }}
-                  name="commentText"
-                  placeholder="Add your comment..."
-                  value={commentText}
-                  className="form-input w-100"
-                  style={{
+      {Auth.loggedIn() ? (
+        <>
+          <p
+            className={`m-0 ${
+              characterCount === 280 || error ? "text-danger" : ""
+            }`}
+          >
+            Character Count: {characterCount}/280
+            {error && <span className="ml-2">{error.message}</span>}
+          </p>
+          <form
+            className="flex-row justify-center justify-space-between-md align-center"
+            onSubmit={handleFormSubmit}
+          >
+            <div>
+              <TextField
+                sx={{
+                  backgroundColor: "rgba(0,0,0,0.1)",
+                }}
+                name="commentText"
+                placeholder="Add your comment..."
+                value={commentText}
+                className="form-input w-100"
+                style={{
                   lineHeight: "1.5",
                   resize: "vertical",
                   width: "60vw",
-                  }}
-                  onChange={handleChange}
-                ></TextField>
-              </div>
+                }}
+                onChange={handleChange}
+              ></TextField>
+            </div>
 
-              <div className="col-12 col-lg-3">
-                <Button
-                  variant="contained"
-                  sx={{ margin: "10px", whiteSpace: "nowrap" }}
-                  type="submit"
-                >
-                  Add Comment
-                </Button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <p>
-            You need to be logged in to share your thoughts. Please{" "}
-            <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
-          </p>
-        )}
-  
+            <div className="col-12 col-lg-3">
+              <Button
+                variant="contained"
+                sx={{ margin: "10px", whiteSpace: "nowrap" }}
+                type="submit"
+              >
+                Add Comment
+              </Button>
+            </div>
+          </form>
+        </>
+      ) : (
+        <p>
+          You need to be logged in to share your thoughts. Please{" "}
+          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+        </p>
+      )}
     </Box>
   );
 };

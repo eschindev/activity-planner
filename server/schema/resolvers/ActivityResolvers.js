@@ -140,18 +140,21 @@ const resolvers = {
         _id,
         { $addToSet: { comments: comment } },
         { new: true }
-      );
-      return true;
+      ).populate({
+        path: "comments",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      });
+      return activity;
     },
 
-    deleteComment: async (_, { commentId }, context) => {
+    deleteComment: async (_, { _id, commentId }, context) => {
       isAuthenticated(context, "You must be logged in to delete comments.");
-      const activity = await Activity.findOneAndUpdate(
-        {
-          "comments.commentId": commentId,
-          "comments.user": context.user._id,
-        },
-        { $pull: { comments: { commentId } } },
+      const activity = await Activity.findByIdAndUpdate(
+        _id,
+        { $pull: { comments: { _id: commentId } } },
         { new: true }
       );
       if (!activity) {

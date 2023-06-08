@@ -17,7 +17,6 @@ import CommentList from "../components/CommentList";
 import InviteModal from "../components/InviteModal";
 import dayjs from "dayjs";
 
-
 const ActivityPage = () => {
   if (!auth.loggedIn()) {
     window.location.replace("/login");
@@ -106,7 +105,9 @@ const ActivityPage = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} md={8}>
             <Typography variant="h2">{activity.name}</Typography>
-            <Typography variant="h5">{dayjs(activity.date).format("MMMM D, YYYY")}</Typography>
+            <Typography variant="h5">
+              {dayjs(activity.date).format("MMMM D, YYYY")}
+            </Typography>
             <Typography variant="h5">{activity.location}</Typography>
             <Typography variant="h6">{activity.description}</Typography>
           </Grid>
@@ -181,6 +182,7 @@ const ActivityPage = () => {
           />
           <CommentList
             comments={comments}
+            setComments={setComments}
             activityId={id}
             sx={{ width: "100%" }}
           />
@@ -190,6 +192,3 @@ const ActivityPage = () => {
   );
 };
 export default ActivityPage;
-
-
-

@@ -66,7 +66,7 @@ const MyProfilePage = () => {
               sx={{ fontSize: "150px" }}
             />
 
-            <div class="content-container">
+            <div className="content-container">
               <Typography className="user-name" variant="h3">
                 {user.username}
               </Typography>
