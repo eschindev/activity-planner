@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-
 import { QUERY_ACTIVITY, QUERY_ME } from "../utils/queries";
 import {
   JOIN_ACTIVITY,
@@ -15,7 +14,10 @@ import auth from "../utils/auth.js";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 import InviteModal from "../components/InviteModal";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import dayjs from "dayjs";
+import "../style/activityPage.css"
 
 const ActivityPage = () => {
   if (!auth.loggedIn()) {
@@ -96,7 +98,14 @@ const ActivityPage = () => {
   }, [participants]);
 
   if (loading || !activity) {
-    return <div>Loading...</div>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   return (
@@ -113,7 +122,7 @@ const ActivityPage = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             {ownerId === currentUserId ? (
-              <div>
+              <div >
                 <InviteModal
                   activity={activity}
                   participantIds={participantIds}
@@ -122,6 +131,7 @@ const ActivityPage = () => {
                 />
                 <Button
                   variant="contained"
+                  color="success"
                   sx={{ margin: "20px" }}
                   onClick={() =>
                     window.location.replace(`/edit-activity/${id}`)
@@ -166,11 +176,11 @@ const ActivityPage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Participants:</Typography>
+        <Typography className="header-style" variant="h4">Participants:</Typography>
         <UserList users={participants} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Active Invites:</Typography>
+        <Typography className="header-style" variant="h4">Active Invites:</Typography>
         <InviteList invites={invites} />
         <br />
         <Box sx={{ justifyContent: "center" }}>

@@ -7,7 +7,11 @@ import { useParams } from "react-router-dom";
 import ActivityList from "../components/ActivityList";
 import UserList from "../components/UserList";
 import { Grid, Typography, Button } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import auth from "../utils/auth.js";
+import "../style/activityPage.css"
+
 
 const ProfilePage = () => {
   if (!auth.loggedIn()) {
@@ -40,9 +44,15 @@ const ProfilePage = () => {
   });
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
-
   let userFriendIds = [];
   let userRequestSenderIds = [];
   let user = {};
@@ -112,11 +122,11 @@ const ProfilePage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Activities:</Typography>
+        <Typography className="header-style" variant="h4">Activities:</Typography>
         <ActivityList activities={user.activities} />
       </Grid>
       <Grid item xs={12} lg={6}>
-        <Typography variant="h4">Friends:</Typography>
+        <Typography   className="header-style" variant="h4">Friends:</Typography>
         <UserList users={user.friends} />
       </Grid>
     </Grid>
