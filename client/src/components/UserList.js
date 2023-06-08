@@ -74,8 +74,8 @@ export default function UserList({ users }) {
         })
       ) : (
          <div className="not-found-container">
-        <h1 className="text">No user found</h1>
-        <p>Sorry, the user you are looking for does not exist.</p>
+        <h1 className="text">No users found</h1>
+    
       </div>
       )}
       <Box display="flex" justifyContent="center" marginTop={2}>

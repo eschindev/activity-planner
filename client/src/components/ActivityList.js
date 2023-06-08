@@ -53,7 +53,7 @@ export default function ActivityList({ activities }) {
         ))
       ) : (
         <div className="not-found-container">
-        <h1 className="text">No activity found</h1>
+        <h1 className="text">No activities found</h1>
         <p>Sorry, the activity you are looking for does not exist.</p>
       </div>
       )}
