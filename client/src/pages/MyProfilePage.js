@@ -80,14 +80,14 @@ const MyProfilePage = () => {
             <Button
               variant="contained"
               onClick={createActivity}
-              sx={{ margin: "20px", ml: 1.0, mb:"0" }}
+              sx={{ margin: "20px", ml: 1.0, mb: "0" }}
             >
               Create Activity
             </Button>
             <Button
               variant="contained"
               onClick={handleDeleteAccount}
-              sx={{ margin: "20px",  mb: 0, ml: 1.0, backgroundColor: "red" }}
+              sx={{ margin: "20px", mb: 0, ml: 1.0, backgroundColor: "red" }}
             >
               Delete Account
             </Button>

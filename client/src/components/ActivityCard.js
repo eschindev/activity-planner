@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import dayjs from "dayjs";
+import "dayjs/locale/en"; // Example: importing English locale
+
 import "../style/activityCard.css";
 
 const ActivityCard = ({ data }) => {
@@ -21,7 +24,7 @@ const ActivityCard = ({ data }) => {
         }}
       >
         <CardContent>
-          <Link to={`/activity/${data._id}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/activity/${data._id}`} style={{ textDecoration: "none" }}>
             <Typography variant="h5" component="div" sx={{ mb: 1.5 }}>
               <TheaterComedyIcon
                 className="activity-icon"
@@ -36,8 +39,9 @@ const ActivityCard = ({ data }) => {
               className="calendar-icon"
               sx={{ mr: 1.5, fontSize: "30px" }}
             />
-            {data.date}
+            {dayjs(data.date).format("M/D/YY")}
           </Typography>
+
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             <LocationOnIcon
               className="location-icon"
