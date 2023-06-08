@@ -69,7 +69,7 @@ const InviteCard = ({ data }) => {
           </Link>
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {dayjs(data.activity.date).format("DD-MM-YYYY HH:MM")}
+          {dayjs(data.activity.date).format("D/M/YY")}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {data.activity.location}

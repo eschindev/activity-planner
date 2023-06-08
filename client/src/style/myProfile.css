@@ -1,7 +1,33 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
 
- 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 65px;
+}
+
+.account-circle-icon {
+  margin-top: 15px;
+  color: rgba(37, 37, 37, 0.871);
+}
+
+.user-name {
+  color: white;
+  color: rgba(37, 37, 37, 0.871);
+}
+
+.full-name {
+  font-size: 50px;
+}
+
 .header-style {
-border-radius: 10px;
-background: rgba(92, 4, 156, 0.854);
-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  background: rgba(92, 4, 156, 0.854);
+  color: rgb(255, 255, 255);
 }
